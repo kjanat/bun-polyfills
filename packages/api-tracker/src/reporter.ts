@@ -188,6 +188,7 @@ export function generateReport(
   bunTypesVersion: string,
 ): CoverageReport {
   return {
+    logo: "bun",
     generated: new Date().toISOString(),
     bunTypesVersion,
     summary: calculateSummary(implementations),

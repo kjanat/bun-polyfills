@@ -173,6 +173,9 @@ export interface CategoryStats {
  * Full coverage report
  */
 export interface CoverageReport {
+  /** Logo identifier for shields.io endpoint badge */
+  logo: string;
+
   /** ISO timestamp of generation */
   generated: string;
 
