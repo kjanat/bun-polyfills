@@ -330,14 +330,15 @@ function isRegionalIndicator(code: number): boolean {
  */
 export function stringWidth(
   input: string,
-  options?: { countAnsiEscapeCodes?: boolean },
+  options?: { countAnsiEscapeCodes?: boolean; ambiguousIsNarrow?: boolean },
 ): number {
   const countAnsi = options?.countAnsiEscapeCodes ?? false;
+  const ambiguousIsNarrow = options?.ambiguousIsNarrow ?? true;
 
   // If counting ANSI codes, use raw string. Otherwise strip them.
   const str = countAnsi ? input : stripANSI(input);
 
-  if (str.length === 0) {
+  if (!str || str.length === 0) {
     return 0;
   }
 

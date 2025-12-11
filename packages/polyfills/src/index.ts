@@ -41,6 +41,20 @@ export {
   concatArrayBuffers,
   inspect,
 } from "./utils.ts";
+export {
+  initCrypto,
+  hash,
+  CryptoHasher,
+  MD4,
+  MD5,
+  SHA1,
+  SHA224,
+  SHA256,
+  SHA384,
+  SHA512,
+  SHA512_256,
+  password,
+} from "./crypto.ts";
 
 import type { PolyfillBun } from "./types.ts";
 
@@ -55,6 +69,7 @@ import { initProcess } from "./process.ts";
 import { initCompression } from "./compression.ts";
 import { initGlob } from "./glob.ts";
 import { initTOML } from "./toml.ts";
+import { initCrypto } from "./crypto.ts";
 
 /**
  * Initialize all Bun polyfills on globalThis.Bun
@@ -81,6 +96,7 @@ export async function initBunShims(): Promise<void> {
   initGlob(bun);
   initTOML(bun);
   initUtils(bun);
+  initCrypto(bun);
 }
 
 export default initBunShims;

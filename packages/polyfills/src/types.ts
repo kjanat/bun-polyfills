@@ -262,4 +262,43 @@ export interface PolyfillBun {
     arg: unknown,
     options?: { depth?: number; colors?: boolean },
   ) => string;
+
+  // Crypto - Fast non-cryptographic hash
+  hash: (
+    input: string | ArrayBufferView | ArrayBuffer,
+    seed?: number | bigint,
+  ) => bigint;
+
+  // Crypto classes
+  CryptoHasher: typeof import("./crypto.ts").CryptoHasher;
+  MD4: typeof import("./crypto.ts").MD4;
+  MD5: typeof import("./crypto.ts").MD5;
+  SHA1: typeof import("./crypto.ts").SHA1;
+  SHA224: typeof import("./crypto.ts").SHA224;
+  SHA256: typeof import("./crypto.ts").SHA256;
+  SHA384: typeof import("./crypto.ts").SHA384;
+  SHA512: typeof import("./crypto.ts").SHA512;
+  SHA512_256: typeof import("./crypto.ts").SHA512_256;
+
+  // Password utilities
+  password: {
+    hash: (
+      input: string,
+      options?: {
+        algorithm?: "argon2id" | "bcrypt";
+        memoryCost?: number;
+        timeCost?: number;
+      },
+    ) => Promise<string>;
+    verify: (input: string, hash: string) => Promise<boolean>;
+    hashSync: (
+      input: string,
+      options?: {
+        algorithm?: "argon2id" | "bcrypt";
+        memoryCost?: number;
+        timeCost?: number;
+      },
+    ) => string;
+    verifySync: (input: string, hash: string) => boolean;
+  };
 }
