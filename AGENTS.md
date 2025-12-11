@@ -15,21 +15,21 @@ code to run on Node.js. It uses Bun workspaces with a shared dependency catalog.
 
 ## Monorepo Structure
 
-```
+```tree
 bun-polyfills/
-├── package.json          # Root workspace config with catalog
+├── package.json           # Root workspace config with catalog
 ├── packages/
-│   ├── polyfills/        # Core polyfill implementations
+│   ├── polyfills/         # Core polyfill implementations
 │   │   └── src/
-│   │       ├── index.ts  # Main entry, initBunShims()
-│   │       ├── file.ts   # Bun.file(), Bun.write(), BunFile, FileSink
-│   │       ├── shell.ts  # Bun.$ (uses zx)
-│   │       ├── spawn.ts  # Bun.spawn(), Bun.spawnSync()
-│   │       ├── env.ts    # Bun.env, Bun.version, Bun.revision
+│   │       ├── index.ts   # Main entry, initBunShims()
+│   │       ├── file.ts    # Bun.file(), Bun.write(), BunFile, FileSink
+│   │       ├── shell.ts   # Bun.$ (uses zx)
+│   │       ├── spawn.ts   # Bun.spawn(), Bun.spawnSync()
+│   │       ├── env.ts     # Bun.env, Bun.version, Bun.revision
 │   │       ├── modules.ts # Bun.resolve(), pathToFileURL(), fileURLToPath()
-│   │       └── types.ts  # Shared type definitions
-│   ├── plugin/           # Build plugin for dual-target builds
-│   └── api-tracker/      # Coverage tracking tool
+│   │       └── types.ts   # Shared type definitions
+│   ├── plugin/            # Build plugin for dual-target builds
+│   └── api-tracker/       # Coverage tracking tool
 │       ├── src/
 │       │   ├── extractor.ts  # Parses @types/bun .d.ts files
 │       │   ├── detector.ts   # Scans polyfills for implementations
@@ -54,8 +54,8 @@ bun run coverage       # Generate API coverage report
 bun run coverage:badge # Generate badge.json for README
 
 # Package-specific
-bun run --cwd packages/polyfills build
-bun run --cwd packages/api-tracker report
+bun run --filter @kjanat/bun-polyfills build
+bun run --filter @kjanat/bun-api-tracker report
 ```
 
 ## Dependency Catalog

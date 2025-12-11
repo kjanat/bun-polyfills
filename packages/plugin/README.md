@@ -45,4 +45,4 @@ native Bun doesn't need polyfills.
 
 ## License
 
-GPL-3.0-only
+AGPL-3.0
