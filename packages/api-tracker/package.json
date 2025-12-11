@@ -1,7 +1,7 @@
 {
-  "name": "@kjanat/bun-polyfills",
+  "name": "@kjanat/bun-api-tracker",
   "version": "0.1.0",
-  "description": "Polyfills for Bun APIs to run on Node.js",
+  "description": "Automated Bun API detection and coverage tracking for bun-polyfills",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,77 +10,59 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./env": {
-      "types": "./dist/env.d.ts",
-      "import": "./dist/env.js"
-    },
-    "./file": {
-      "types": "./dist/file.d.ts",
-      "import": "./dist/file.js"
-    },
-    "./shell": {
-      "types": "./dist/shell.d.ts",
-      "import": "./dist/shell.js"
-    },
-    "./spawn": {
-      "types": "./dist/spawn.d.ts",
-      "import": "./dist/spawn.js"
-    },
-    "./modules": {
-      "types": "./dist/modules.d.ts",
-      "import": "./dist/modules.js"
-    },
     "./types": {
       "types": "./dist/types.d.ts",
       "import": "./dist/types.js"
     }
   },
+  "bin": {
+    "bun-api-tracker": "./dist/cli.js"
+  },
   "files": [
     "dist",
     "src",
+    "data",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
     "build": "bun build:bundle && bun build:types",
-    "build:bundle": "bun build ./src/index.ts ./src/env.ts ./src/file.ts ./src/shell.ts ./src/spawn.ts ./src/modules.ts ./src/types.ts --outdir dist --target node",
+    "build:bundle": "bun build ./src/index.ts ./src/cli.ts ./src/types.ts --outdir dist --target node",
     "build:types": "tsc --emitDeclarationOnly",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist output",
+    "report": "bun run src/cli.ts report",
+    "check": "bun run src/cli.ts check",
+    "badge": "bun run src/cli.ts badge"
   },
   "dependencies": {
-    "zx": "catalog:"
+    "typescript": "catalog:"
   },
   "devDependencies": {
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "bun-types": "catalog:"
   },
   "peerDependencies": {
-    "@types/bun": "catalog:"
-  },
-  "peerDependenciesMeta": {
-    "@types/bun": {
-      "optional": true
-    }
+    "bun-types": ">=1.0.0"
   },
   "engines": {
-    "node": ">=22"
+    "bun": ">=1.0.0"
   },
   "keywords": [
     "bun",
-    "polyfill",
-    "node",
-    "compatibility",
-    "shim"
+    "api",
+    "tracker",
+    "coverage",
+    "polyfill"
   ],
   "author": "Kaj Kowalski",
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/kjanat/bun-polyfills.git",
-    "directory": "packages/polyfills"
+    "directory": "packages/api-tracker"
   },
   "bugs": {
     "url": "https://github.com/kjanat/bun-polyfills/issues"

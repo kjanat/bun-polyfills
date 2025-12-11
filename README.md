@@ -1,5 +1,7 @@
 # bun-polyfills
 
+[![Bun API Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/kjanat/bun-polyfills/master/packages/api-tracker/output/badge.json)](./packages/api-tracker/output/COVERAGE.md)
+
 Bun API polyfills for Node.js runtime. Use Bun APIs (`Bun.file()`, `Bun.$`, `Bun.spawn()`, etc.) in Node.js environments.
 
 ## Packages

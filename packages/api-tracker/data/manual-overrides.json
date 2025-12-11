@@ -1,0 +1,104 @@
+[
+  {
+    "fullPath": "Bun.file",
+    "status": "implemented",
+    "completeness": 90,
+    "notes": "Core functionality working",
+    "missingFeatures": ["stat", "unlink"],
+    "implementedFeatures": [
+      "text",
+      "json",
+      "arrayBuffer",
+      "bytes",
+      "stream",
+      "slice",
+      "exists",
+      "writer",
+      "delete"
+    ]
+  },
+  {
+    "fullPath": "Bun.write",
+    "status": "implemented",
+    "completeness": 95,
+    "notes": "Most data types supported"
+  },
+  {
+    "fullPath": "Bun.stdin",
+    "status": "implemented",
+    "completeness": 80,
+    "notes": "Basic stdin reading works"
+  },
+  {
+    "fullPath": "Bun.stdout",
+    "status": "implemented",
+    "completeness": 80
+  },
+  {
+    "fullPath": "Bun.stderr",
+    "status": "implemented",
+    "completeness": 80
+  },
+  {
+    "fullPath": "Bun.$",
+    "status": "implemented",
+    "completeness": 70,
+    "notes": "Uses zx as backend",
+    "missingFeatures": ["braces", "escape", "cwd", "env on promise"],
+    "implementedFeatures": [
+      "quiet",
+      "nothrow",
+      "throws",
+      "text",
+      "json",
+      "lines"
+    ]
+  },
+  {
+    "fullPath": "Bun.spawn",
+    "status": "implemented",
+    "completeness": 85,
+    "notes": "Core spawn functionality working"
+  },
+  {
+    "fullPath": "Bun.spawnSync",
+    "status": "implemented",
+    "completeness": 85
+  },
+  {
+    "fullPath": "Bun.env",
+    "status": "implemented",
+    "completeness": 100,
+    "notes": "Direct pass-through to process.env"
+  },
+  {
+    "fullPath": "Bun.version",
+    "status": "implemented",
+    "completeness": 100
+  },
+  {
+    "fullPath": "Bun.revision",
+    "status": "implemented",
+    "completeness": 100
+  },
+  {
+    "fullPath": "Bun.resolve",
+    "status": "implemented",
+    "completeness": 90
+  },
+  {
+    "fullPath": "Bun.resolveSync",
+    "status": "implemented",
+    "completeness": 90
+  },
+  {
+    "fullPath": "Bun.pathToFileURL",
+    "status": "implemented",
+    "completeness": 100
+  },
+  {
+    "fullPath": "Bun.fileURLToPath",
+    "status": "implemented",
+    "completeness": 100
+  }
+]
