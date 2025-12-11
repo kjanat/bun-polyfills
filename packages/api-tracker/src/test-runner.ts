@@ -20,11 +20,12 @@ const TEST_TO_API_MAP: Record<string, string[]> = {
     "BunFile.bytes",
   ],
   "file/bun-file-exists.test.js": ["BunFile.exists"],
+  "file/file-type.test.ts": ["BunFile.type"],
 
   // Spawn APIs
   "spawn/spawn.test.ts": ["Bun.spawn", "Subprocess"],
   "spawn/spawnSync.test.ts": ["Bun.spawnSync", "SyncSubprocess"],
-  "spawn/spawn-env.test.ts": ["Bun.spawn", "Subprocess.env"],
+  "spawn/spawn-env.test.ts": ["Bun.spawn"],
 
   // Shell APIs
   "shell/bunshell.test.ts": ["Bun.$", "ShellPromise", "ShellOutput"],
@@ -34,17 +35,28 @@ const TEST_TO_API_MAP: Record<string, string[]> = {
   "util/sleep.test.ts": ["Bun.sleep"],
   "util/sleepSync.test.ts": ["Bun.sleepSync"],
   "util/which.test.ts": ["Bun.which"],
+  "util/escapeHTML.test.js": ["Bun.escapeHTML"],
+  "util/inspect.test.js": ["Bun.inspect"],
+  "util/peek.test.ts": ["Bun.peek"],
+  "util/bun-isMainThread.test.js": ["Bun.isMainThread"],
+  "util/bun-main.test.ts": ["Bun.main"],
+  "util/fileUrl.test.js": ["Bun.pathToFileURL", "Bun.fileURLToPath"],
+  "util/concat.test.js": ["Bun.concatArrayBuffers"],
+  "util/stringWidth.test.ts": ["Bun.stringWidth"],
+  "util/stripANSI.test.ts": ["Bun.stripANSI"],
 
   // Glob
   "glob/glob.test.ts": ["Bun.Glob"],
 
   // Compression
-  "compression/zlib.test.ts": [
-    "Bun.gzipSync",
-    "Bun.gunzipSync",
-    "Bun.deflateSync",
-    "Bun.inflateSync",
+  "compression/zstd.test.ts": [
+    "Bun.zstdCompressSync",
+    "Bun.zstdDecompressSync",
   ],
+
+  // Crypto
+  "crypto/hash.test.js": ["Bun.hash"],
+  "crypto/password.test.ts": ["Bun.password"],
 };
 
 /**

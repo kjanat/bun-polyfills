@@ -15,6 +15,7 @@ const TEST_MAPPINGS: Record<string, string> = {
   "js/bun/util/filesink.test.ts": "file/filesink.test.ts",
   "js/bun/util/bun-file-read.test.ts": "file/bun-file-read.test.ts",
   "js/bun/util/bun-file-exists.test.js": "file/bun-file-exists.test.js",
+  "js/bun/util/file-type.test.ts": "file/file-type.test.ts",
 
   // Spawn APIs
   "js/bun/spawn/spawn.test.ts": "spawn/spawn.test.ts",
@@ -29,12 +30,25 @@ const TEST_MAPPINGS: Record<string, string> = {
   "js/bun/util/sleep.test.ts": "util/sleep.test.ts",
   "js/bun/util/sleepSync.test.ts": "util/sleepSync.test.ts",
   "js/bun/util/which.test.ts": "util/which.test.ts",
+  "js/bun/util/escapeHTML.test.js": "util/escapeHTML.test.js",
+  "js/bun/util/inspect.test.js": "util/inspect.test.js",
+  "js/bun/util/peek.test.ts": "util/peek.test.ts",
+  "js/bun/util/bun-isMainThread.test.js": "util/bun-isMainThread.test.js",
+  "js/bun/util/bun-main.test.ts": "util/bun-main.test.ts",
+  "js/bun/util/fileUrl.test.js": "util/fileUrl.test.js",
+  "js/bun/util/concat.test.js": "util/concat.test.js",
+  "js/bun/util/stringWidth.test.ts": "util/stringWidth.test.ts",
+  "js/bun/util/stripANSI.test.ts": "util/stripANSI.test.ts",
 
   // Glob
   "js/bun/glob/glob.test.ts": "glob/glob.test.ts",
 
-  // Compression (if exists)
-  // "js/bun/util/zlib.test.ts": "compression/zlib.test.ts",
+  // Compression
+  "js/bun/util/zstd.test.ts": "compression/zstd.test.ts",
+
+  // Hash/Crypto (some may need native)
+  "js/bun/util/hash.test.js": "crypto/hash.test.js",
+  "js/bun/util/password.test.ts": "crypto/password.test.ts",
 };
 
 /**
@@ -69,6 +83,7 @@ const NATIVE_BUN_PATTERNS = [
  */
 function transformTestFile(content: string, sourcePath: string): string {
   let transformed = content;
+  const isTypeScript = sourcePath.endsWith(".ts");
 
   // 1. Replace harness import path
   transformed = transformed.replace(
@@ -81,7 +96,7 @@ function transformTestFile(content: string, sourcePath: string): string {
   if (!hasPolyfillInit) {
     // Find the end of imports
     const importEndMatch = transformed.match(/^((?:import[^;]+;?\s*)+)/m);
-    if (importEndMatch && importEndMatch[1]) {
+    if (importEndMatch?.[1]) {
       const importSection = importEndMatch[1];
       const polyfillImport = `
 // Initialize polyfills for Node.js compatibility
@@ -111,20 +126,30 @@ await initBunShims();
   transformed = transformed.replace(/bunExe\(\)/g, "nodeWithPolyfillsExe()");
 
   // 5. Add nodeWithPolyfillsExe helper if bunExe was replaced
+  // Use TypeScript syntax only for .ts files
   if (
     transformed.includes("nodeWithPolyfillsExe()") &&
     !transformed.includes("function nodeWithPolyfillsExe")
   ) {
-    const helperCode = `
+    const helperCode =
+      isTypeScript ?
+        `
 // Helper to run Node.js with polyfills loaded
 function nodeWithPolyfillsExe(): string {
+  // In polyfill tests, we use Node.js with the polyfill preload
+  return process.execPath;
+}
+`
+      : `
+// Helper to run Node.js with polyfills loaded
+function nodeWithPolyfillsExe() {
   // In polyfill tests, we use Node.js with the polyfill preload
   return process.execPath;
 }
 `;
     // Add after imports
     const importEndMatch2 = transformed.match(/^((?:import[^;]+;?\s*)+)/m);
-    if (importEndMatch2 && importEndMatch2[1]) {
+    if (importEndMatch2?.[1]) {
       const importSection = importEndMatch2[1];
       transformed = transformed.replace(
         importSection,

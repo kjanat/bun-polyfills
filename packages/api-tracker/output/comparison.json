@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-11T12:47:01.087Z",
+  "timestamp": "2025-12-11T13:16:01.211Z",
   "bunTypesPath": "/home/kjanat/projects/bun-polyfills/packages/api-tracker/node_modules/bun-types",
   "polyfillTypesPath": "/home/kjanat/projects/bun-polyfills/packages/polyfills/src/types.ts",
   "interfaces": [
@@ -18,16 +18,17 @@
         {
           "name": "stringWidth",
           "fullPath": "Bun.stringWidth",
-          "status": "missing",
+          "status": "partial",
           "bunSignature": "(input: string, options?: StringWidthOptions | undefined) => number",
-          "polyfillSignature": null
+          "polyfillSignature": "(input: string) => number",
+          "signatureDiff": "Signature mismatch: Bun=\"(input: string, options?: StringWidthOptions | undefined) => number\" vs Polyfill=\"(input: string) => number\""
         },
         {
           "name": "stripANSI",
           "fullPath": "Bun.stripANSI",
-          "status": "missing",
+          "status": "implemented",
           "bunSignature": "(input: string) => string",
-          "polyfillSignature": null
+          "polyfillSignature": "(input: string) => string"
         },
         {
           "name": "resolveSync",
@@ -56,9 +57,10 @@
         {
           "name": "concatArrayBuffers",
           "fullPath": "Bun.concatArrayBuffers",
-          "status": "missing",
+          "status": "partial",
           "bunSignature": "{ (buffers: (ArrayBufferLike | ArrayBufferView<ArrayBufferLike>)[], maxLength?: number | undefined): ArrayBuffer; (buffers: (ArrayBufferLike | ArrayBufferView<...>)[], maxLength: number, asUint8Array: false): ArrayBuffer; (buffers: (ArrayBufferLike | ArrayBufferView<...>)[], maxLength: number, asUint8Array: true): U...",
-          "polyfillSignature": null
+          "polyfillSignature": "(buffers: (ArrayBufferLike | ArrayBufferView<ArrayBufferLike>)[], maxLength?: number | undefined) => ArrayBuffer",
+          "signatureDiff": "Signature mismatch: Bun=\"{ (buffers: (ArrayBufferLike | ArrayBufferView<ArrayBufferLike>)[], maxLength?: number | undefined): ArrayBuffer; (buffers: (ArrayBufferLike | ArrayBufferView<...>)[], maxLength: number, asUint8Array: false): ArrayBuffer; (buffers: (ArrayBufferLike | ArrayBufferView<...>)[], maxLength: number, asUint8Array: true): U...\" vs Polyfill=\"(buffers: (ArrayBufferLike | ArrayBufferView<ArrayBufferLike>)[], maxLength?: number | undefined) => ArrayBuffer\""
         },
         {
           "name": "readableStreamToArrayBuffer",
@@ -84,9 +86,9 @@
         {
           "name": "escapeHTML",
           "fullPath": "Bun.escapeHTML",
-          "status": "missing",
+          "status": "implemented",
           "bunSignature": "(input: string | number | boolean | object) => string",
-          "polyfillSignature": null
+          "polyfillSignature": "(input: string | number | boolean | object) => string"
         },
         {
           "name": "pathToFileURL",
@@ -98,9 +100,10 @@
         {
           "name": "peek",
           "fullPath": "Bun.peek",
-          "status": "missing",
+          "status": "partial",
           "bunSignature": "typeof peek",
-          "polyfillSignature": null
+          "polyfillSignature": "{ <T>(promise: T | Promise<T>): T | Promise<T>; status: <T>(promise: Promise<T>) => \"pending\" | \"fulfilled\" | \"rejected\"; }",
+          "signatureDiff": "Signature mismatch: Bun=\"typeof peek\" vs Polyfill=\"{ <T>(promise: T | Promise<T>): T | Promise<T>; status: <T>(promise: Promise<T>) => \"pending\" | \"fulfilled\" | \"rejected\"; }\""
         },
         {
           "name": "fileURLToPath",
@@ -112,16 +115,17 @@
         {
           "name": "deepEquals",
           "fullPath": "Bun.deepEquals",
-          "status": "missing",
+          "status": "partial",
           "bunSignature": "(a: any, b: any, strict?: boolean | undefined) => boolean",
-          "polyfillSignature": null
+          "polyfillSignature": "(a: unknown, b: unknown, strict?: boolean | undefined) => boolean",
+          "signatureDiff": "Signature mismatch: Bun=\"(a: any, b: any, strict?: boolean | undefined) => boolean\" vs Polyfill=\"(a: unknown, b: unknown, strict?: boolean | undefined) => boolean\""
         },
         {
           "name": "deepMatch",
           "fullPath": "Bun.deepMatch",
-          "status": "missing",
+          "status": "implemented",
           "bunSignature": "(subset: unknown, a: unknown) => boolean",
-          "polyfillSignature": null
+          "polyfillSignature": "(subset: unknown, a: unknown) => boolean"
         },
         {
           "name": "build",
@@ -148,9 +152,10 @@
         {
           "name": "inspect",
           "fullPath": "Bun.inspect",
-          "status": "missing",
+          "status": "partial",
           "bunSignature": "typeof inspect",
-          "polyfillSignature": null
+          "polyfillSignature": "(arg: unknown, options?: { depth?: number | undefined; colors?: boolean | undefined; } | undefined) => string",
+          "signatureDiff": "Signature mismatch: Bun=\"typeof inspect\" vs Polyfill=\"(arg: unknown, options?: { depth?: number | undefined; colors?: boolean | undefined; } | undefined) => string\""
         },
         {
           "name": "mmap",
@@ -2173,10 +2178,10 @@
       ],
       "stats": {
         "total": 306,
-        "implemented": 8,
-        "partial": 21,
-        "missing": 277,
-        "percentComplete": 6
+        "implemented": 11,
+        "partial": 26,
+        "missing": 269,
+        "percentComplete": 8
       }
     },
     {
@@ -2753,10 +2758,10 @@
   ],
   "summary": {
     "total": 375,
-    "implemented": 44,
-    "partial": 44,
-    "missing": 287,
-    "percentComplete": 18
+    "implemented": 47,
+    "partial": 49,
+    "missing": 279,
+    "percentComplete": 19
   },
   "warnings": [
     "Could not find Bun type: FileSink",

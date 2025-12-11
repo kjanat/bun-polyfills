@@ -318,6 +318,23 @@ export function generateMarkdownReport(report: CoverageReport): string {
 }
 
 /**
+ * Format content with Prettier
+ */
+async function formatWithPrettier(
+  content: string,
+  filepath: string,
+): Promise<string> {
+  try {
+    const prettier = await import("prettier");
+    const options = await prettier.resolveConfig(filepath);
+    return prettier.format(content, { ...options, filepath });
+  } catch {
+    // Prettier not available or failed, return unformatted
+    return content;
+  }
+}
+
+/**
  * Write reports to disk
  */
 export async function writeReports(
@@ -336,14 +353,16 @@ export async function writeReports(
   if (fullConfig.json) {
     const jsonPath = path.join(fullConfig.outputDir, "coverage.json");
     const jsonContent = generateJsonReport(report);
-    fs.writeFileSync(jsonPath, jsonContent);
+    const formatted = await formatWithPrettier(jsonContent, jsonPath);
+    fs.writeFileSync(jsonPath, formatted);
     result.json = jsonPath;
   }
 
   if (fullConfig.markdown) {
     const mdPath = path.join(fullConfig.outputDir, "COVERAGE.md");
     const mdContent = generateMarkdownReport(report);
-    fs.writeFileSync(mdPath, mdContent);
+    const formatted = await formatWithPrettier(mdContent, mdPath);
+    fs.writeFileSync(mdPath, formatted);
     result.markdown = mdPath;
   }
 

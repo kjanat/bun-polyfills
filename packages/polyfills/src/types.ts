@@ -243,4 +243,23 @@ export interface PolyfillBun {
     input: ArrayBuffer | ArrayBufferView | Uint8Array,
     options?: { level?: number; memLevel?: number; windowBits?: number },
   ) => Uint8Array;
+
+  // Utility functions
+  escapeHTML: (input: string | object | number | boolean) => string;
+  stripANSI: (input: string) => string;
+  stringWidth: (input: string) => number;
+  peek: {
+    <T>(promise: T | Promise<T>): Promise<T> | T;
+    status: <T>(promise: Promise<T>) => "pending" | "fulfilled" | "rejected";
+  };
+  deepEquals: (a: unknown, b: unknown, strict?: boolean) => boolean;
+  deepMatch: (subset: unknown, a: unknown) => boolean;
+  concatArrayBuffers: (
+    buffers: Array<ArrayBufferView | ArrayBufferLike>,
+    maxLength?: number,
+  ) => ArrayBuffer;
+  inspect: (
+    arg: unknown,
+    options?: { depth?: number; colors?: boolean },
+  ) => string;
 }

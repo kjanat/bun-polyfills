@@ -7,10 +7,10 @@
   "packageManager": "bun@1.3.4",
   "scripts": {
     "build": "bun run --filter '*' build",
-    "clean": "rm -rf packages/*/dist",
-    "coverage": "bun run --cwd packages/api-tracker report",
-    "coverage:badge": "bun run --cwd packages/api-tracker badge",
-    "coverage:check": "bun run --cwd packages/api-tracker check",
+    "clean": "bun run --filter '*' clean",
+    "coverage": "bun run --filter @kjanat/bun-api-tracker report",
+    "coverage:badge": "bun run --filter @kjanat/bun-api-tracker badge",
+    "coverage:check": "bun run --filter @kjanat/bun-api-tracker check",
     "fmt": "prettier . --write",
     "postinstall": "simple-git-hooks",
     "test": "bun run --filter '*' test",
@@ -31,11 +31,13 @@
     "simple-git-hooks": "^2.13.1"
   },
   "catalog": {
-    "@types/bun": "^1.3.4",
-    "@types/node": "^22.15.32",
+    "@types/bun": "~1.3",
+    "@types/node": "^22",
     "@typescript/native-preview": "latest",
-    "typescript": "^5.8.3",
-    "zx": "^8.6.0"
+    "typescript": "~5.8",
+    "zx": "~8.6",
+    "prettier": "latest",
+    "@kjanat/prettier-config": "latest"
   },
   "prettier": "@kjanat/prettier-config",
   "simple-git-hooks": {

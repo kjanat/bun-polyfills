@@ -73,7 +73,7 @@ interface CliOptions {
 
 function getOptions(): CliOptions {
   const { values, positionals } = parseArgs({
-    args: Bun.argv.slice(2),
+    args: Bun.argv,
     options: {
       polyfills: { type: "string", short: "p" },
       output: { type: "string", short: "o" },
@@ -90,7 +90,8 @@ function getOptions(): CliOptions {
     allowPositionals: true,
   });
 
-  const command = positionals[0] ?? "report";
+  // positionals[0] = bun path, positionals[1] = script path, positionals[2] = command
+  const command = positionals[2] ?? "report";
   const polyfills = values.polyfills as string | undefined;
   const output = values.output as string | undefined;
   const minCov = values["min-coverage"] as string | undefined;

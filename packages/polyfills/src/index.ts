@@ -30,6 +30,17 @@ export {
 } from "./compression.ts";
 export { initGlob, Glob } from "./glob.ts";
 export { initTOML, TOML } from "./toml.ts";
+export {
+  initUtils,
+  escapeHTML,
+  stripANSI,
+  stringWidth,
+  peek,
+  deepEquals,
+  deepMatch,
+  concatArrayBuffers,
+  inspect,
+} from "./utils.ts";
 
 import type { PolyfillBun } from "./types.ts";
 
@@ -74,6 +85,9 @@ export async function initBunShims(): Promise<void> {
 
   const { initTOML } = await import("./toml.ts");
   initTOML(bun);
+
+  const { initUtils } = await import("./utils.ts");
+  initUtils(bun);
 }
 
 export default initBunShims;

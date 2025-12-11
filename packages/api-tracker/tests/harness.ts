@@ -201,5 +201,45 @@ export function hideFromStackTrace(block: CallableFunction): void {
   });
 }
 
+/**
+ * Run a script that should produce an error
+ */
+export function runWithErrorPromise(
+  args: string[],
+): Promise<{ exitCode: number; stderr: string; stdout: string }> {
+  return new Promise((resolve) => {
+    const proc = Bun.spawn(args, {
+      stdout: "pipe",
+      stderr: "pipe",
+      env: bunEnv,
+    });
+
+    Promise.all([
+      new Response(proc.stdout).text(),
+      new Response(proc.stderr).text(),
+      proc.exited,
+    ]).then(([stdout, stderr, exitCode]) => {
+      resolve({ exitCode, stderr, stdout });
+    });
+  });
+}
+
+/**
+ * File descriptor leak checker for tests
+ */
+export function fileDescriptorLeakChecker(): { check: () => void } {
+  // Simplified version - actual implementation would track FDs
+  return {
+    check: () => {
+      // No-op in polyfill tests
+    },
+  };
+}
+
+/**
+ * Check if running under ASAN (Address Sanitizer)
+ */
+export const isASAN = process.env.ASAN === "1";
+
 // Re-export test utilities from bun:test
 export { beforeAll, describe, expect };

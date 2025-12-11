@@ -65,6 +65,7 @@
     "@types/bun": "catalog:"
   },
   "dependencies": {
+    "@kjanat/bun-polyfills": "workspace:*",
     "typescript": "catalog:"
   },
   "devDependencies": {

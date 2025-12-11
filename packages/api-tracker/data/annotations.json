@@ -55,6 +55,12 @@
     "notes": "Uses require.resolve"
   },
   {
+    "fullPath": "Bun.peek",
+    "maxCompleteness": 60,
+    "notes": "Simplified implementation - can't synchronously check promise state in userland JS",
+    "limitations": ["Cannot detect truly pending promises synchronously"]
+  },
+  {
     "fullPath": "Bun.serve",
     "requiresNativeBun": true,
     "nativeBunReason": "HTTP server with WebSocket support requires native implementation"
@@ -68,5 +74,63 @@
     "fullPath": "Bun.Transpiler",
     "requiresNativeBun": true,
     "nativeBunReason": "Transpiler requires native implementation"
+  },
+  {
+    "fullPath": "Bun.mmap",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Memory-mapped files require native OS bindings"
+  },
+  {
+    "fullPath": "Bun.generateHeapSnapshot",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Heap snapshots require native VM access"
+  },
+  {
+    "fullPath": "Bun.shrink",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Memory shrinking requires native VM control"
+  },
+  {
+    "fullPath": "Bun.openInEditor",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Editor integration requires native OS bindings"
+  },
+  {
+    "fullPath": "Bun.connect",
+    "requiresNativeBun": true,
+    "nativeBunReason": "TCP/Unix socket APIs require native implementation"
+  },
+  {
+    "fullPath": "Bun.listen",
+    "requiresNativeBun": true,
+    "nativeBunReason": "TCP/Unix socket APIs require native implementation"
+  },
+  {
+    "fullPath": "Bun.udpSocket",
+    "requiresNativeBun": true,
+    "nativeBunReason": "UDP socket APIs require native implementation"
+  },
+  {
+    "fullPath": "Bun.plugin",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Build plugins require native bundler integration"
+  },
+  {
+    "fullPath": "Bun.unsafe",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Unsafe memory operations require native implementation"
+  },
+  {
+    "fullPath": "Bun.color",
+    "notes": "Could be implemented with a color parsing library"
+  },
+  { "fullPath": "Bun.sha", "notes": "Could be implemented with node:crypto" },
+  {
+    "fullPath": "Bun.hash",
+    "notes": "Partial - some hash algorithms could be implemented"
+  },
+  {
+    "fullPath": "Bun.password",
+    "notes": "Could be implemented with node:crypto scrypt/argon2"
   }
 ]
