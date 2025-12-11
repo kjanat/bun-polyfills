@@ -42,17 +42,13 @@ describe("spawnSync", () => {
     });
   }
 
-  it.skipIf(process.platform !== "linux")(
-    "should use memfd when possible",
-    () => {
-      expect([join(import.meta.dir, "spawnSync-memfd-fixture.ts")]).toRun();
-    },
-  );
+  // NOTE: These tests use bun:internal-for-testing which cannot be polyfilled
+  // They verify Bun-native optimizations (memfd, spawnSync_blocking counters)
+  it.skip("should use memfd when possible (requires bun:internal-for-testing)", () => {
+    // Original: expect([join(import.meta.dir, "spawnSync-memfd-fixture.ts")]).toRun();
+  });
 
-  it.skipIf(!isPosix)(
-    "should use spawnSync optimizations when possible",
-    () => {
-      expect([join(import.meta.dir, "spawnSync-counters-fixture.ts")]).toRun();
-    },
-  );
+  it.skip("should use spawnSync optimizations when possible (requires bun:internal-for-testing)", () => {
+    // Original: expect([join(import.meta.dir, "spawnSync-counters-fixture.ts")]).toRun();
+  });
 });

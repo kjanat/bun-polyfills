@@ -21,25 +21,18 @@ describe("Zstandard compression", async () => {
     {
       name: "medium",
       data: await Bun.file(
-        path.join(__dirname, "..", "..", "..", "bun.lock"),
+        path.join(__dirname, "..", "..", "..", "..", "bun.lock"),
       ).bytes(),
     },
     {
       name: "large",
       data: Buffer.from(
+        // Use README.md instead of non-existent js_parser.zig
         (
           await Bun.file(
-            path.join(
-              __dirname,
-              "..",
-              "..",
-              "..",
-              "..",
-              "src",
-              "js_parser.zig",
-            ),
+            path.join(__dirname, "..", "..", "..", "..", "README.md"),
           ).text()
-        ).repeat(5),
+        ).repeat(50),
       ),
     },
   ] as const;
