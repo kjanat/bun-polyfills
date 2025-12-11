@@ -1,0 +1,20 @@
+{
+  "name": "bun-polyfills-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "bun run --filter '*' build",
+    "test": "bun run --filter '*' test",
+    "typecheck": "bun run --filter '*' typecheck",
+    "clean": "rm -rf packages/*/dist"
+  },
+  "catalog": {
+    "@types/bun": "^1.2.18",
+    "@types/node": "^22.15.32",
+    "typescript": "^5.8.3",
+    "zx": "^8.6.0"
+  },
+  "packageManager": "bun@1.3.4"
+}

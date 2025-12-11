@@ -1,0 +1,90 @@
+{
+  "name": "@kjanat/bun-polyfills",
+  "version": "0.1.0",
+  "description": "Polyfills for Bun APIs to run on Node.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "import": "./dist/env.js"
+    },
+    "./file": {
+      "types": "./dist/file.d.ts",
+      "import": "./dist/file.js"
+    },
+    "./shell": {
+      "types": "./dist/shell.d.ts",
+      "import": "./dist/shell.js"
+    },
+    "./spawn": {
+      "types": "./dist/spawn.d.ts",
+      "import": "./dist/spawn.js"
+    },
+    "./modules": {
+      "types": "./dist/modules.d.ts",
+      "import": "./dist/modules.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun build:bundle && bun build:types",
+    "build:bundle": "bun build ./src/index.ts ./src/env.ts ./src/file.ts ./src/shell.ts ./src/spawn.ts ./src/modules.ts ./src/types.ts --outdir dist --target node",
+    "build:types": "tsc --emitDeclarationOnly",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "zx": "catalog:"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/bun": ">=1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/bun": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "bun",
+    "polyfill",
+    "node",
+    "compatibility",
+    "shim"
+  ],
+  "author": "Kaj Kowalski",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kjanat/bun-polyfills.git",
+    "directory": "packages/polyfills"
+  },
+  "bugs": {
+    "url": "https://github.com/kjanat/bun-polyfills/issues"
+  },
+  "homepage": "https://github.com/kjanat/bun-polyfills#readme",
+  "packageManager": "bun@1.3.4"
+}
