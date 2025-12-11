@@ -1,6 +1,6 @@
 # Bun API Coverage Report
 
-Generated: 12/11/2025, 7:31:25 PM | @types/bun: 1.3.4
+Generated: 12/11/2025, 7:39:37 PM | @types/bun: 1.3.4
 
 ## Summary
 
@@ -51,7 +51,7 @@ Generated: 12/11/2025, 7:31:25 PM | @types/bun: 1.3.4
 | `Bun.zstdDecompressSync` | :x: Not Started         |                                                                                                                                                                                                                                                                                                                                                          |
 | `Bun.zstdDecompress`     | :x: Not Started         |                                                                                                                                                                                                                                                                                                                                                          |
 
-### Utility (7/63 - 18%)
+### Utility (7/64 - 18%)
 
 | API                                | Status                         | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -102,6 +102,7 @@ Generated: 12/11/2025, 7:31:25 PM | @types/bun: 1.3.4
 | `Bun.Cookie.httpOnly`              | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `Bun.Cookie.isExpired`             | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `Bun.Cookie.serialize`             | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `Bun.Cookie.toString`              | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `Bun.Cookie.toJSON`                | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `Bun.Cookie.parse`                 | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `Bun.Cookie.from`                  | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -202,7 +203,7 @@ Generated: 12/11/2025, 7:31:25 PM | @types/bun: 1.3.4
 | `Bun.udpSocket`         | :x: Not Started |       |
 | `fetch`                 | :x: Not Started |       |
 
-### Unknown (0/246 - 0%)
+### Unknown (0/248 - 0%)
 
 | API                                          | Status          | Notes |
 | -------------------------------------------- | --------------- | ----- |
@@ -285,6 +286,7 @@ Generated: 12/11/2025, 7:31:25 PM | @types/bun: 1.3.4
 | `Bun.Statement.declaredTypes`                | :x: Not Started |       |
 | `Bun.Statement.finalize`                     | :x: Not Started |       |
 | `Bun.Statement.[Symbol.dispose]`             | :x: Not Started |       |
+| `Bun.Statement.toString`                     | :x: Not Started |       |
 | `Bun.Statement.as`                           | :x: Not Started |       |
 | `Bun.Statement.native`                       | :x: Not Started |       |
 | `Bun.constants`                              | :x: Not Started |       |
@@ -415,6 +417,7 @@ Generated: 12/11/2025, 7:31:25 PM | @types/bun: 1.3.4
 | `ResolveMessage.specifier`                   | :x: Not Started |       |
 | `ResolveMessage.importKind`                  | :x: Not Started |       |
 | `ResolveMessage.level`                       | :x: Not Started |       |
+| `ResolveMessage.toString`                    | :x: Not Started |       |
 | `BuildMessage`                               | :x: Not Started |       |
 | `BuildMessage.name`                          | :x: Not Started |       |
 | `BuildMessage.position`                      | :x: Not Started |       |
@@ -476,15 +479,6 @@ Generated: 12/11/2025, 7:31:25 PM | @types/bun: 1.3.4
 | `Bun.Transpiler.scanImports`   | :x: Not Started |       |
 | `Bun.build`                    | :x: Not Started |       |
 | `Bun.plugin`                   | :x: Not Started |       |
-
-### Function toString() {
-
-    [native code]
-
-} (0/3 - 0%)
-
-| API | Status | Notes |
-| --- | ------ | ----- |
 
 ### Database (0/19 - 0%)
 

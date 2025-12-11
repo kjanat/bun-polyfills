@@ -87,7 +87,19 @@ export function calculateByCategory(
   const stats: Record<string, CategoryStats> = {};
 
   for (const impl of implementations.values()) {
-    const category = impl.api.category;
+    // Ensure category is a valid string, default to "unknown"
+    let category = impl.api.category || "unknown";
+
+    // Fix for APIs where category is somehow a function reference
+    if (typeof category !== "string") {
+      console.warn(
+        `Warning: API ${impl.api.fullPath} has non-string category:`,
+        typeof category,
+        category,
+      );
+      category = "unknown";
+    }
+
     if (!stats[category]) {
       stats[category] = {
         total: 0,
@@ -99,19 +111,19 @@ export function calculateByCategory(
       };
     }
 
-    stats[category].total++;
+    stats[category]!.total++;
     switch (impl.status) {
       case "implemented":
-        stats[category].implemented++;
+        stats[category]!.implemented++;
         break;
       case "partial":
-        stats[category].partial++;
+        stats[category]!.partial++;
         break;
       case "stub":
-        stats[category].stub++;
+        stats[category]!.stub++;
         break;
       case "not-started":
-        stats[category].notStarted++;
+        stats[category]!.notStarted++;
         break;
     }
   }

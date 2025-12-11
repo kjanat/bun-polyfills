@@ -1,6 +1,6 @@
 {
   "logo": "bun",
-  "generated": "2025-12-11T18:31:25.194Z",
+  "generated": "2025-12-11T18:39:37.005Z",
   "bunTypesVersion": "1.3.4",
   "summary": {
     "total": 452,
@@ -20,11 +20,11 @@
       "percentComplete": 64
     },
     "utility": {
-      "total": 63,
+      "total": 64,
       "implemented": 7,
       "partial": 9,
       "stub": 0,
-      "notStarted": 47,
+      "notStarted": 48,
       "percentComplete": 18
     },
     "parsing": {
@@ -60,11 +60,11 @@
       "percentComplete": 0
     },
     "unknown": {
-      "total": 246,
+      "total": 248,
       "implemented": 0,
       "partial": 0,
       "stub": 0,
-      "notStarted": 246,
+      "notStarted": 248,
       "percentComplete": 0
     },
     "security": {
@@ -98,14 +98,6 @@
       "stub": 0,
       "notStarted": 4,
       "percentComplete": 25
-    },
-    "function toString() {\n    [native code]\n}": {
-      "total": 3,
-      "implemented": 0,
-      "partial": 0,
-      "stub": 0,
-      "notStarted": 3,
-      "percentComplete": 0
     },
     "database": {
       "total": 19,
@@ -4757,6 +4749,7 @@
             "fullPath": "Bun.Cookie.toString",
             "module": "bun",
             "kind": "function",
+            "category": "utility",
             "sourceFile": "bun.d.ts",
             "lineNumber": 6668,
             "signature": "toString(): string;",
@@ -5023,6 +5016,7 @@
         "fullPath": "Bun.Cookie.toString",
         "module": "bun",
         "kind": "function",
+        "category": "utility",
         "sourceFile": "bun.d.ts",
         "lineNumber": 6668,
         "signature": "toString(): string;",
@@ -7364,6 +7358,7 @@
             "fullPath": "Bun.Statement.toString",
             "module": "bun:sqlite",
             "kind": "function",
+            "category": "unknown",
             "sourceFile": "sqlite.d.ts",
             "lineNumber": 898,
             "signature": "toString(): string;",
@@ -7636,6 +7631,7 @@
         "fullPath": "Bun.Statement.toString",
         "module": "bun:sqlite",
         "kind": "function",
+        "category": "unknown",
         "sourceFile": "sqlite.d.ts",
         "lineNumber": 898,
         "signature": "toString(): string;",
@@ -10864,6 +10860,7 @@
             "fullPath": "ResolveMessage.toString",
             "module": "global",
             "kind": "function",
+            "category": "unknown",
             "sourceFile": "globals.d.ts",
             "lineNumber": 1004,
             "signature": "toString(): string;",
@@ -11010,6 +11007,7 @@
         "fullPath": "ResolveMessage.toString",
         "module": "global",
         "kind": "function",
+        "category": "unknown",
         "sourceFile": "globals.d.ts",
         "lineNumber": 1004,
         "signature": "toString(): string;",
