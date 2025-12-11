@@ -1,13 +1,19 @@
 import { describe, expect, test } from "bun:test";
 
 import {
+  calculateCompleteness,
   DEFAULT_DETECTOR_CONFIG,
   filterByStatus,
+  findImplementingFile,
   getImplementationSummary,
   loadAnnotations,
   sortByCompleteness,
 } from "./detector";
-import type { ApiAnnotation, ApiImplementation } from "./types";
+import type {
+  ApiAnnotation,
+  ApiImplementation,
+  ComparisonStatus,
+} from "./types";
 
 describe("detector", () => {
   describe("DEFAULT_DETECTOR_CONFIG", () => {
@@ -185,6 +191,78 @@ describe("detector", () => {
 
       const sorted = sortByCompleteness(implementations, true);
       expect(sorted.map((i) => i.completeness)).toEqual([25, 50, 100]);
+    });
+  });
+
+  describe("calculateCompleteness", () => {
+    test("returns 100 when implemented with matching signature", () => {
+      const result = calculateCompleteness("implemented", true);
+      expect(result).toBe(100);
+    });
+
+    test("returns 90 when implemented with mismatched signature", () => {
+      const result = calculateCompleteness("implemented", false);
+      expect(result).toBe(90);
+    });
+
+    test("returns 50 when partial (ignores signature match)", () => {
+      expect(calculateCompleteness("partial", true)).toBe(50);
+      expect(calculateCompleteness("partial", false)).toBe(50);
+    });
+
+    test("returns 0 when missing", () => {
+      expect(calculateCompleteness("missing", true)).toBe(0);
+      expect(calculateCompleteness("missing", false)).toBe(0);
+    });
+
+    test("applies maxCompleteness cap downward", () => {
+      const annotation: ApiAnnotation = {
+        fullPath: "Bun.test",
+        maxCompleteness: 75,
+      };
+      // 100 capped to 75
+      expect(calculateCompleteness("implemented", true, annotation)).toBe(75);
+      // 90 capped to 75
+      expect(calculateCompleteness("implemented", false, annotation)).toBe(75);
+      // 50 already below 75, unchanged
+      expect(calculateCompleteness("partial", true, annotation)).toBe(50);
+    });
+
+    test("ignores annotation when maxCompleteness undefined", () => {
+      const annotation: ApiAnnotation = {
+        fullPath: "Bun.test",
+        notes: "Some notes without cap",
+      };
+      expect(calculateCompleteness("implemented", true, annotation)).toBe(100);
+    });
+
+    test("allows maxCompleteness cap of 0", () => {
+      const annotation: ApiAnnotation = {
+        fullPath: "Bun.test",
+        maxCompleteness: 0,
+      };
+      expect(calculateCompleteness("implemented", true, annotation)).toBe(0);
+      expect(calculateCompleteness("partial", true, annotation)).toBe(0);
+    });
+  });
+
+  describe("findImplementingFile", () => {
+    test("finds file for direct API match", () => {
+      expect(findImplementingFile("Bun.file")).toBe("file.ts");
+      expect(findImplementingFile("Bun.spawn")).toBe("spawn.ts");
+      expect(findImplementingFile("Bun.$")).toBe("shell.ts");
+    });
+
+    test("finds file for nested API path", () => {
+      // Bun.file.text should match "Bun.file" hint -> file.ts
+      expect(findImplementingFile("Bun.file.text")).toBe("file.ts");
+      expect(findImplementingFile("Bun.spawn.stdout")).toBe("spawn.ts");
+      expect(findImplementingFile("Bun.$.braces")).toBe("shell.ts");
+    });
+
+    test("returns undefined for non-existent API", () => {
+      expect(findImplementingFile("Bun.nonexistent")).toBeUndefined();
+      expect(findImplementingFile("SomeOther.api")).toBeUndefined();
     });
   });
 });

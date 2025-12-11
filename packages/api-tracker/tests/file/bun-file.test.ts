@@ -1,10 +1,10 @@
 import { expect, test } from "bun:test";
-import fsPromises from "fs/promises";
-import { tempDirWithFiles } from "../harness";
-import { join } from "path";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import fsPromises from "fs/promises";
+import { join } from "path";
+import { tempDirWithFiles } from "../harness";
+
 await initBunShims();
 test("delete() and stat() should work with unicode paths", async () => {
   const dir = tempDirWithFiles("delete-stat-unicode-path", {
@@ -41,7 +41,7 @@ test("writer.end() should not close the fd if it does not own the fd", async () 
     const fd = fileHandle.fd;
 
     await Bun.file(fd).writer().end();
-    // @ts-ignore
+    // @ts-expect-error
     await fsPromises.close(fd);
     expect(await Bun.file(filename).text()).toBe("");
   }

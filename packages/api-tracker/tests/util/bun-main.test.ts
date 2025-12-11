@@ -3,6 +3,7 @@ import { join } from "node:path";
 import "../harness";
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 // for expect().toRun()
 

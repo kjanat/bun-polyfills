@@ -4,7 +4,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-import { compareTypes, type ComparatorConfig } from "./comparator.ts";
+import { type ComparatorConfig, compareTypes } from "./comparator.ts";
 import type {
   ApiAnnotation,
   ApiImplementation,
@@ -101,8 +101,9 @@ function comparisonStatusToApiStatus(status: ComparisonStatus): ApiStatus {
 
 /**
  * Calculate completeness from comparison status and optional annotation cap
+ * @internal Exported for testing
  */
-function calculateCompleteness(
+export function calculateCompleteness(
   status: ComparisonStatus,
   signatureMatch: boolean,
   annotation?: ApiAnnotation,
@@ -131,8 +132,9 @@ function calculateCompleteness(
 
 /**
  * Find which file implements an API based on hints
+ * @internal Exported for testing
  */
-function findImplementingFile(apiPath: string): string | undefined {
+export function findImplementingFile(apiPath: string): string | undefined {
   for (const [file, apis] of Object.entries(FILE_TO_API_HINTS)) {
     if (apis.some((a) => apiPath === a || apiPath.startsWith(`${a}.`))) {
       return file;

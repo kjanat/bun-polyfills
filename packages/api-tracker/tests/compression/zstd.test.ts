@@ -1,17 +1,17 @@
 // NOTE: Some tests require native Bun and are skipped in polyfill testing
 // Source: js/bun/util/zstd.test.ts
 
+import { afterAll, beforeAll, describe, expect, it } from "bun:test";
+// Initialize polyfills for Node.js compatibility
+import { initBunShims } from "@kjanat/bun-polyfills";
 import {
   zstdCompress,
   zstdCompressSync,
   zstdDecompress,
   zstdDecompressSync,
 } from "bun";
-import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import path from "path";
 
-// Initialize polyfills for Node.js compatibility
-import { initBunShims } from "@kjanat/bun-polyfills";
 await initBunShims();
 describe("Zstandard compression", async () => {
   // Test data of various sizes

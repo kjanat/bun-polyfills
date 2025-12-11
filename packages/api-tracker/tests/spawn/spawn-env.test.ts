@@ -1,5 +1,5 @@
-import { spawn } from "bun";
 import { test } from "bun:test";
+import { spawn } from "bun";
 import { bunExe } from "../harness";
 
 // Helper to run Node.js with polyfills loaded
@@ -7,8 +7,10 @@ function nodeWithPolyfillsExe(): string {
   // In polyfill tests, we use Node.js with the polyfill preload
   return process.execPath;
 }
+
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 test("spawn env", async () => {
   const env = {};

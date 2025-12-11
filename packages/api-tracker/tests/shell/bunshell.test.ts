@@ -4,9 +4,11 @@
  *
  * This code is licensed under the MIT License: https://opensource.org/licenses/MIT
  */
-import { $ } from "bun";
+
 import { afterAll, beforeAll, describe, expect, it, test } from "bun:test";
+import { $ } from "bun";
 import { mkdir, rm, stat } from "fs/promises";
+import { join, sep } from "path";
 import {
   bunExe,
   isPosix,
@@ -15,7 +17,6 @@ import {
   tempDirWithFiles,
   tmpdirSync,
 } from "../harness";
-import { join, sep } from "path";
 import { createTestBuilder, sortedShellOutput } from "./util";
 
 // Helper to run Node.js with polyfills loaded
@@ -23,8 +24,10 @@ function nodeWithPolyfillsExe(): string {
   // In polyfill tests, we use Node.js with the polyfill preload
   return process.execPath;
 }
+
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 const TestBuilder = createTestBuilder(import.meta.path);
 
@@ -99,7 +102,7 @@ describe("bunshell", () => {
     ];
 
     failing_cmds.forEach((cmdstr) =>
-      !!cmdstr ?
+      cmdstr ?
         TestBuilder.command`${{ raw: cmdstr }}`
           .exitCode((c) => c !== 0)
           .stdout(() => {})

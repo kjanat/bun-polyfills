@@ -2,12 +2,12 @@
 // Source: js/bun/util/inspect.test.js
 
 import { describe, expect, it } from "bun:test";
-import { normalizeBunSnapshot, tmpdirSync } from "../harness";
-import { join } from "path";
-import util from "util";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { join } from "path";
+import util from "util";
+import { normalizeBunSnapshot, tmpdirSync } from "../harness";
+
 await initBunShims();
 it("prototype", () => {
   const prototypes = [
@@ -25,7 +25,7 @@ it("prototype", () => {
     WebSocket.prototype,
   ];
 
-  for (let prototype of prototypes) {
+  for (const prototype of prototypes) {
     for (let i = 0; i < 10; i++)
       expect(Bun.inspect(prototype).length > 0).toBeTrue();
   }
@@ -208,7 +208,7 @@ it("MessageEvent with deleted data", () => {
 
 // https://github.com/oven-sh/bun/issues/561
 it("TypedArray prints", () => {
-  for (let TypedArray of [
+  for (const TypedArray of [
     Uint8Array,
     Uint16Array,
     Uint32Array,
@@ -238,7 +238,7 @@ it("TypedArray prints", () => {
 });
 
 it("BigIntArray", () => {
-  for (let TypedArray of [BigInt64Array, BigUint64Array]) {
+  for (const TypedArray of [BigInt64Array, BigUint64Array]) {
     const buffer = new TypedArray([1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n, 9n, 10n]);
     const input = Bun.inspect(buffer);
 
@@ -259,7 +259,7 @@ it("BigIntArray", () => {
   }
 });
 
-for (let TypedArray of [Float32Array, Float64Array]) {
+for (const TypedArray of [Float32Array, Float64Array]) {
   it(TypedArray.name + " " + Math.fround(42.68), () => {
     const buffer = new TypedArray([Math.fround(42.68)]);
     const input = Bun.inspect(buffer);
@@ -432,8 +432,8 @@ describe("latin1 supplemental", () => {
     [["cäb cäb"], '[ "cäb cäb" ]'],
   ];
 
-  for (let [input, output] of fixture) {
-    it(`latin1 (input) \"${input}\" ${output}`, () => {
+  for (const [input, output] of fixture) {
+    it(`latin1 (input) "${input}" ${output}`, () => {
       expect(Bun.inspect(input)).toBe(output);
     });
   }
@@ -476,7 +476,7 @@ const fixture = [
 ];
 
 describe("crash testing", () => {
-  for (let input of fixture) {
+  for (const input of fixture) {
     it(`inspecting "${input.toString().slice(0, 20).replaceAll("\n", "\\n")}" doesn't crash`, async () => {
       try {
         console.log(
@@ -497,10 +497,12 @@ it("possibly formatted emojis log", () => {
 
 // TODO: Skip - Bun.inspect date formatting differs from polyfill (uses Node util.inspect)
 it.skip("new Date(..)", () => {
-  let s = Bun.inspect(new Date(1679911059000 - new Date().getTimezoneOffset()));
+  const s = Bun.inspect(
+    new Date(1679911059000 - new Date().getTimezoneOffset()),
+  );
   expect(s).toContain("2023-03-27T");
   expect(s).toHaveLength(24);
-  let offset = new Date().getTimezoneOffset() / 60;
+  const offset = new Date().getTimezoneOffset() / 60;
   let hour = (9 - offset).toString();
   if (hour.length === 1) {
     hour = "0" + hour;
@@ -531,18 +533,18 @@ describe("Functions with names", () => {
   const closures = [
     () => function f() {},
     () => {
-      var f = function () {};
+      var f = () => {};
       return f;
     },
     () => {
-      const f = function () {};
+      const f = () => {};
       // workaround transpiler inlining losing the display name
       // TODO: preserve the name on functions being inlined
       f.length;
       return f;
     },
     () => {
-      let f = function () {};
+      const f = () => {};
       // workaround transpiler inlining losing the display name
       // TODO: preserve the name on functions being inlined
       f.length;
@@ -563,7 +565,7 @@ describe("Functions with names", () => {
     },
   ];
 
-  for (let closure of closures) {
+  for (const closure of closures) {
     it(JSON.stringify(closure.toString()), () => {
       expect(Bun.inspect(closure())).toBe("[Function: f]");
     });
@@ -583,7 +585,7 @@ it("Bun.inspect array with non-indexed properties", () => {
 
 describe("console.logging function displays async and generator names", async () => {
   const cases = [
-    function () {},
+    () => {},
     function a() {},
     async function b() {},
     function* c() {},

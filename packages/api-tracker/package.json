@@ -55,6 +55,8 @@
     "check": "bun run src/cli.ts check",
     "clean": "rm -rf dist output tests/file tests/spawn tests/shell tests/util tests/glob",
     "compare": "bun run src/cli.ts compare",
+    "fmt": "cd ../../ && bun run prettier ./packages/api-tracker/ --write",
+    "lint": "biome check --write",
     "report": "bun run src/cli.ts report",
     "sync-tests": "bun run src/cli.ts sync-tests",
     "sync-tests:dry": "bun run src/cli.ts sync-tests --dry-run",
@@ -69,6 +71,7 @@
     "typescript": "catalog:"
   },
   "devDependencies": {
+    "@biomejs/biome": "catalog:lint",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:",

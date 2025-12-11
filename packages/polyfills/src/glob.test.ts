@@ -1,7 +1,7 @@
-import { describe, expect, test, beforeAll, afterAll } from "bun:test";
-import { Glob } from "./glob";
-import { mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { Glob } from "./glob";
 
 const TEST_DIR = join(import.meta.dirname, "__glob_test_fixtures__");
 

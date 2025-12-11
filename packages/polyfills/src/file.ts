@@ -12,8 +12,8 @@
 import * as fs from "node:fs";
 import * as fsPromises from "node:fs/promises";
 import * as path from "node:path";
-import { fileURLToPath } from "node:url";
 import { Readable } from "node:stream";
+import { fileURLToPath } from "node:url";
 
 import type {
   PolyfillBun,

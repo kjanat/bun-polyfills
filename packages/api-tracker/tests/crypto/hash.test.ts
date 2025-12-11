@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
   initBunShims,
-  hash as polyfillHash,
-  CryptoHasher as PolyfillCryptoHasher,
   MD4,
   MD5,
+  CryptoHasher as PolyfillCryptoHasher,
+  hash as polyfillHash,
   SHA1,
   SHA224,
   SHA256,
@@ -18,25 +18,25 @@ await initBunShims();
 
 // Force use of polyfills in Bun environment for testing
 if (typeof Bun !== "undefined") {
-  // @ts-ignore - Override native implementations
+  // @ts-expect-error - Override native implementations
   Bun.hash = polyfillHash;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.CryptoHasher = PolyfillCryptoHasher;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.MD4 = MD4;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.MD5 = MD5;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.SHA1 = SHA1;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.SHA224 = SHA224;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.SHA256 = SHA256;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.SHA384 = SHA384;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.SHA512 = SHA512;
-  // @ts-ignore
+  // @ts-expect-error
   Bun.SHA512_256 = SHA512_256;
 }
 

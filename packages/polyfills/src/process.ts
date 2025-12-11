@@ -1,10 +1,10 @@
 // Bun process utilities polyfill
 // Covers: argv, main, which, sleep, sleepSync, nanoseconds, isMainThread, gc
 
+import { spawnSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { isMainThread as nodeIsMainThread } from "node:worker_threads";
-import { spawnSync } from "node:child_process";
 
 import type { PolyfillBun } from "./types.ts";
 

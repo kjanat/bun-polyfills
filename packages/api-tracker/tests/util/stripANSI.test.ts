@@ -3,10 +3,10 @@
 
 import { heapStats } from "bun:jsc";
 import { describe, expect, test } from "bun:test";
-import stripAnsi from "strip-ansi";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import stripAnsi from "strip-ansi";
+
 await initBunShims();
 describe("Bun.stripANSI", () => {
   test("returns same string object when no ANSI sequences present", () => {

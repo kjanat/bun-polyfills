@@ -68,6 +68,8 @@
     "build:bun": "bun build ./src/index.ts ./src/env.ts ./src/file.ts ./src/shell.ts ./src/spawn.ts ./src/modules.ts ./src/types.ts --outdir dist --target node",
     "build:tsc": "tsc --emitDeclarationOnly",
     "clean": "rm -rf dist",
+    "fmt": "cd ../../ && bun run prettier ./packages/polyfills/ --write",
+    "lint": "biome check --write",
     "test": "bun test",
     "typecheck": "tsgo --noEmit"
   },
@@ -86,6 +88,7 @@
     "zx": "catalog:"
   },
   "devDependencies": {
+    "@biomejs/biome": "catalog:lint",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:",

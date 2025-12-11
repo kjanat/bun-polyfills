@@ -1,11 +1,11 @@
-import { write } from "bun";
 import { expect, test } from "bun:test";
+// Initialize polyfills for Node.js compatibility
+import { initBunShims } from "@kjanat/bun-polyfills";
+import { write } from "bun";
 import { unlinkSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 
-// Initialize polyfills for Node.js compatibility
-import { initBunShims } from "@kjanat/bun-polyfills";
 await initBunShims();
 test("bun-file-exists", async () => {
   expect(await Bun.file(import.meta.path).exists()).toBeTrue();

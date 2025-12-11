@@ -1,9 +1,9 @@
-import { fileURLToPath, pathToFileURL } from "bun";
 import { describe, expect, it } from "bun:test";
-import { isWindows } from "../harness";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { fileURLToPath, pathToFileURL } from "bun";
+import { isWindows } from "../harness";
+
 await initBunShims();
 describe("pathToFileURL", () => {
   it("should convert a path to a file url", () => {

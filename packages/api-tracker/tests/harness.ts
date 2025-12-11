@@ -6,13 +6,13 @@
  * the polyfill implementations.
  */
 
-import { gc as bunGC, which } from "bun";
 import { beforeAll, describe, expect } from "bun:test";
 import { execSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, realpathSync, writeFileSync } from "node:fs";
 import * as fs from "node:fs";
+import { mkdirSync, mkdtempSync, realpathSync, writeFileSync } from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
+import { gc as bunGC, which } from "bun";
 
 // Platform detection
 export const isMacOS = process.platform === "darwin";

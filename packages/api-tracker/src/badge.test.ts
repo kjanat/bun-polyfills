@@ -4,6 +4,7 @@ import {
   generateBadgeData,
   generateBadges,
   generateBadgeUrl,
+  generateEndpointBadgeData,
   generateEndpointJson,
 } from "./badge";
 import type { CoverageReport, CoverageSummary } from "./types";
@@ -36,6 +37,15 @@ describe("badge", () => {
         logoColor: "white",
       });
       expect(url).toContain("logoColor=white");
+    });
+
+    test("includes labelColor and logoSize parameters", () => {
+      const url = generateBadgeUrl("Test", "value", "blue", {
+        labelColor: "black",
+        logoSize: "auto",
+      });
+      expect(url).toContain("labelColor=black");
+      expect(url).toContain("logoSize=auto");
     });
 
     test("URL encodes special characters", () => {
@@ -218,6 +228,38 @@ describe("badge", () => {
     });
   });
 
+  describe("generateEndpointBadgeData", () => {
+    const summary: CoverageSummary = {
+      total: 100,
+      implemented: 80,
+      partial: 0,
+      stub: 0,
+      notStarted: 20,
+      percentComplete: 80,
+    };
+
+    test("respects overrides and defaults namedLogo to bun", () => {
+      const data = generateEndpointBadgeData(summary, {
+        label: "Custom",
+        color: "pink",
+        labelColor: "111111",
+        isError: true,
+        logoColor: "ffffff",
+        logoSize: "auto",
+        style: "social",
+      });
+
+      expect(data.label).toBe("Custom");
+      expect(data.color).toBe("pink");
+      expect(data.labelColor).toBe("111111");
+      expect(data.isError).toBe(true);
+      expect(data.namedLogo).toBe("bun");
+      expect(data.logoColor).toBe("ffffff");
+      expect(data.logoSize).toBe("auto");
+      expect(data.style).toBe("social");
+    });
+  });
+
   describe("generateEndpointJson", () => {
     test("produces valid JSON", () => {
       const report: CoverageReport = {
@@ -266,6 +308,36 @@ describe("badge", () => {
       const json = generateEndpointJson(report);
       expect(json).toContain("\n");
       expect(json).toContain("  ");
+    });
+
+    test("passes options through to endpoint data", () => {
+      const report: CoverageReport = {
+        logo: "bun",
+        generated: new Date().toISOString(),
+        bunTypesVersion: "1.0.0",
+        summary: {
+          total: 10,
+          implemented: 5,
+          partial: 0,
+          stub: 0,
+          notStarted: 5,
+          percentComplete: 50,
+        },
+        byCategory: {} as CoverageReport["byCategory"],
+        byModule: {} as CoverageReport["byModule"],
+        apis: [],
+      };
+
+      const json = generateEndpointJson(report, {
+        label: "Custom",
+        color: "pink",
+        labelColor: "222222",
+      });
+
+      const parsed = JSON.parse(json);
+      expect(parsed.label).toBe("Custom");
+      expect(parsed.color).toBe("pink");
+      expect(parsed.labelColor).toBe("222222");
     });
   });
 });

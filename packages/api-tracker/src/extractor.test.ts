@@ -200,6 +200,65 @@ describe("extractor", () => {
       const flattened = flattenApis(apis);
       expect(flattened).toHaveLength(1);
     });
+
+    test("flattens deeply nested APIs (3+ levels)", () => {
+      const deepApis: BunApi[] = [
+        {
+          name: "root",
+          fullPath: "Bun.root",
+          module: "bun",
+          kind: "namespace",
+          category: "utility",
+          sourceFile: "test.d.ts",
+          isRuntime: true,
+          children: [
+            {
+              name: "level1",
+              fullPath: "Bun.root.level1",
+              module: "bun",
+              kind: "namespace",
+              category: "utility",
+              sourceFile: "test.d.ts",
+              isRuntime: true,
+              parent: "Bun.root",
+              children: [
+                {
+                  name: "level2",
+                  fullPath: "Bun.root.level1.level2",
+                  module: "bun",
+                  kind: "namespace",
+                  category: "utility",
+                  sourceFile: "test.d.ts",
+                  isRuntime: true,
+                  parent: "Bun.root.level1",
+                  children: [
+                    {
+                      name: "level3",
+                      fullPath: "Bun.root.level1.level2.level3",
+                      module: "bun",
+                      kind: "function",
+                      category: "utility",
+                      sourceFile: "test.d.ts",
+                      isRuntime: true,
+                      parent: "Bun.root.level1.level2",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      const flattened = flattenApis(deepApis);
+      expect(flattened).toHaveLength(4);
+      expect(flattened.map((a) => a.fullPath)).toEqual([
+        "Bun.root",
+        "Bun.root.level1",
+        "Bun.root.level1.level2",
+        "Bun.root.level1.level2.level3",
+      ]);
+    });
   });
 
   describe("getTopLevelApis", () => {

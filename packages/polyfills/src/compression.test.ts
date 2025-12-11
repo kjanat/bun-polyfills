@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { gzipSync, gunzipSync, deflateSync, inflateSync } from "./compression";
+import { deflateSync, gunzipSync, gzipSync, inflateSync } from "./compression";
 
 describe("Compression", () => {
   const testString = "Hello, World! This is a test string for compression.";

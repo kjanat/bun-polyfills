@@ -1,17 +1,17 @@
-import { $, which } from "bun";
 import { expect, test } from "bun:test";
+import { chmodSync, mkdirSync, realpathSync, rmdirSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { basename, join } from "node:path";
+// Initialize polyfills for Node.js compatibility
+import { initBunShims } from "@kjanat/bun-polyfills";
+import { $, which } from "bun";
 import {
   isIntelMacOS,
   isWindows,
   tempDirWithFiles,
   tmpdirSync,
 } from "../harness";
-import { chmodSync, mkdirSync, realpathSync, rmdirSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { basename, join } from "node:path";
 
-// Initialize polyfills for Node.js compatibility
-import { initBunShims } from "@kjanat/bun-polyfills";
 await initBunShims();
 $.nothrow();
 
@@ -61,7 +61,7 @@ if (isWindows) {
 } else {
   test("which", () => {
     {
-      let existing = which("myscript.sh");
+      const existing = which("myscript.sh");
       if (existing !== null) {
         rmSync(existing!, { recursive: true, force: true });
       }

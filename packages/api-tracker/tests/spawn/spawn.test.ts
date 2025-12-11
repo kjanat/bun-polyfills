@@ -1,8 +1,17 @@
 // NOTE: Some tests require native Bun and are skipped in polyfill testing
 // Source: js/bun/spawn/spawn.test.ts
 
-import { ArrayBufferSink, readableStreamToText, spawn, spawnSync } from "bun";
 import { beforeAll, describe, expect, it } from "bun:test";
+import {
+  closeSync,
+  fstatSync,
+  openSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { ArrayBufferSink, readableStreamToText, spawn, spawnSync } from "bun";
+import path, { join } from "path";
 import {
   gcTick as _gcTick,
   bunEnv,
@@ -16,23 +25,16 @@ import {
   tmpdirSync,
   withoutAggressiveGC,
 } from "../harness";
-import {
-  closeSync,
-  fstatSync,
-  openSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
-import path, { join } from "path";
 
 // Helper to run Node.js with polyfills loaded
 function nodeWithPolyfillsExe(): string {
   // In polyfill tests, we use Node.js with the polyfill preload
   return process.execPath;
 }
+
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 let tmp: string;
 
@@ -47,7 +49,7 @@ function createHugeString() {
   return buf.toString();
 }
 
-for (let [gcTick, label] of [
+for (const [gcTick, label] of [
   [_gcTick, "gcTick"],
   // [() => {}, "no gc tick"],
 ] as const) {
@@ -506,7 +508,7 @@ for (let [gcTick, label] of [
                 var any = false;
                 var { resolve, promise } = Promise.withResolvers();
 
-                (async function () {
+                (async () => {
                   var reader = process.stdout?.getReader();
 
                   var done = false,
@@ -695,7 +697,7 @@ async function runTest(
       stderr: "ignore",
       stdin: "ignore",
     });
-    for (let action of order) {
+    for (const action of order) {
       switch (action) {
         case "sleep": {
           await Bun.sleep(1);
@@ -727,7 +729,7 @@ async function runTest(
 }
 
 describe("should not hang", () => {
-  for (let sleep of ["0", "0.1"]) {
+  for (const sleep of ["0", "0.1"]) {
     it(
       "sleep " + sleep,
       async () => {
@@ -800,15 +802,20 @@ it("#3480", async () => {
 
 describe("close handling", () => {
   var testNumber = 0;
-  for (let stdin_ of [
+  for (const stdin_ of [
     () => openSync(import.meta.path, "r"),
     "ignore",
     Bun.stdin,
     undefined as any,
   ] as const) {
     const stdinFn = typeof stdin_ === "function" ? stdin_ : () => stdin_;
-    for (let stdout of [1, "ignore", Bun.stdout, undefined as any] as const) {
-      for (let stderr of [2, "ignore", Bun.stderr, undefined as any] as const) {
+    for (const stdout of [1, "ignore", Bun.stdout, undefined as any] as const) {
+      for (const stderr of [
+        2,
+        "ignore",
+        Bun.stderr,
+        undefined as any,
+      ] as const) {
         const thisTest = testNumber++;
         it(`#${thisTest} [ ${typeof stdin_ === "function" ? "fd" : stdin_}, ${stdout}, ${stderr} ]`, async () => {
           const stdin = stdinFn();
@@ -840,8 +847,8 @@ describe("close handling", () => {
           }
 
           // We do this to try to force the GC to finalize the Subprocess objects.
-          await (async function () {
-            let exitPromise = getExitPromise();
+          await (async () => {
+            const exitPromise = getExitPromise();
 
             if (typeof stdin === "number") {
               expect(() => fstatSync(stdin)).not.toThrow();

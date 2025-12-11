@@ -1,8 +1,8 @@
-import { peek } from "bun";
 import { expect, test } from "bun:test";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { peek } from "bun";
+
 await initBunShims();
 test("peek", () => {
   const promise = Promise.resolve(true);

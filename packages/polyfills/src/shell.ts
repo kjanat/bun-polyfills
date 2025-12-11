@@ -1,6 +1,6 @@
 // Bun.$ shell polyfill - wrapper around zx
 
-import { $, type ProcessPromise, type ProcessOutput } from "zx";
+import { $, type ProcessOutput, type ProcessPromise } from "zx";
 
 import type { PolyfillBun, ShellFunction } from "./types.ts";
 

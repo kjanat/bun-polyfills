@@ -43,6 +43,11 @@ const STATUS_LABELS: Record<string, string> = {
   "not-started": "Not Started",
 };
 
+/** Safe percentage calculation (guards against division by zero) */
+function pct(value: number, total: number): number {
+  return total > 0 ? Math.round((value / total) * 100) : 0;
+}
+
 /**
  * Calculate summary statistics
  */
@@ -237,16 +242,16 @@ export function generateMarkdownReport(report: CoverageReport): string {
   lines.push("| Status | Count | % |");
   lines.push("|--------|-------|---|");
   lines.push(
-    `| ${STATUS_EMOJI["implemented"]} Implemented | ${report.summary.implemented} | ${Math.round((report.summary.implemented / report.summary.total) * 100)}% |`,
+    `| ${STATUS_EMOJI["implemented"]} Implemented | ${report.summary.implemented} | ${pct(report.summary.implemented, report.summary.total)}% |`,
   );
   lines.push(
-    `| ${STATUS_EMOJI["partial"]} Partial | ${report.summary.partial} | ${Math.round((report.summary.partial / report.summary.total) * 100)}% |`,
+    `| ${STATUS_EMOJI["partial"]} Partial | ${report.summary.partial} | ${pct(report.summary.partial, report.summary.total)}% |`,
   );
   lines.push(
-    `| ${STATUS_EMOJI["stub"]} Stub | ${report.summary.stub} | ${Math.round((report.summary.stub / report.summary.total) * 100)}% |`,
+    `| ${STATUS_EMOJI["stub"]} Stub | ${report.summary.stub} | ${pct(report.summary.stub, report.summary.total)}% |`,
   );
   lines.push(
-    `| ${STATUS_EMOJI["not-started"]} Not Started | ${report.summary.notStarted} | ${Math.round((report.summary.notStarted / report.summary.total) * 100)}% |`,
+    `| ${STATUS_EMOJI["not-started"]} Not Started | ${report.summary.notStarted} | ${pct(report.summary.notStarted, report.summary.total)}% |`,
   );
   lines.push(`| **Total** | **${report.summary.total}** | - |`);
   lines.push("");
@@ -637,15 +642,9 @@ export function generateThreeTierMarkdown(
   lines.push("| Metric | Value |");
   lines.push("|--------|-------|");
   lines.push(`| Total APIs | ${total} |`);
-  lines.push(
-    `| Implemented | ${implemented} (${Math.round((implemented / total) * 100)}%) |`,
-  );
-  lines.push(
-    `| Partial | ${partial} (${Math.round((partial / total) * 100)}%) |`,
-  );
-  lines.push(
-    `| Not Started | ${notStarted} (${Math.round((notStarted / total) * 100)}%) |`,
-  );
+  lines.push(`| Implemented | ${implemented} (${pct(implemented, total)}%) |`);
+  lines.push(`| Partial | ${partial} (${pct(partial, total)}%) |`);
+  lines.push(`| Not Started | ${notStarted} (${pct(notStarted, total)}%) |`);
   lines.push("");
 
   // By Interface

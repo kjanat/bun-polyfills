@@ -1,12 +1,12 @@
 import { describe, expect, test } from "bun:test";
-import npmStringWidth from "string-width";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims, stringWidth } from "@kjanat/bun-polyfills";
+import npmStringWidth from "string-width";
+
 await initBunShims();
 
 // Force override Bun.stringWidth with our polyfill for testing purposes
-// @ts-ignore
+// @ts-expect-error
 Bun.stringWidth = stringWidth;
 
 expect.extend({
@@ -46,7 +46,7 @@ test("stringWidth", () => {
   expect("😀😀😀😀😀😀😀😀😀😀").toMatchNPMStringWidth();
 });
 
-for (let matcher of [
+for (const matcher of [
   "toMatchNPMStringWidth",
   "toMatchNPMStringWidthExcludeANSI",
 ]) {
@@ -95,7 +95,7 @@ for (let matcher of [
   });
 }
 
-for (let matcher of [
+for (const matcher of [
   "toMatchNPMStringWidth",
   "toMatchNPMStringWidthExcludeANSI",
 ]) {
@@ -106,7 +106,7 @@ for (let matcher of [
   });
 }
 
-for (let matcher of [
+for (const matcher of [
   "toMatchNPMStringWidth",
   "toMatchNPMStringWidthExcludeANSI",
 ]) {
@@ -135,8 +135,8 @@ for (let matcher of [
 
 // TODO: Skip - string-width npm differs from Bun's native SIMD implementation for ambiguous width chars
 test.skip("ambiguousIsNarrow=false", () => {
-  for (let countAnsiEscapeCodes of [false, true]) {
-    for (let string of ["⛣", "あいう★", "“"]) {
+  for (const countAnsiEscapeCodes of [false, true]) {
+    for (const string of ["⛣", "あいう★", "“"]) {
       const actual = Bun.stringWidth(string, {
         countAnsiEscapeCodes,
         ambiguousIsNarrow: false,
@@ -151,7 +151,7 @@ test.skip("ambiguousIsNarrow=false", () => {
   }
 });
 
-for (let matcher of [
+for (const matcher of [
   "toMatchNPMStringWidth",
   "toMatchNPMStringWidthExcludeANSI",
 ]) {
@@ -165,7 +165,7 @@ for (let matcher of [
   });
 }
 
-for (let matcher of [
+for (const matcher of [
   "toMatchNPMStringWidth",
   "toMatchNPMStringWidthExcludeANSI",
 ]) {
@@ -174,7 +174,7 @@ for (let matcher of [
   });
 }
 
-for (let matcher of [
+for (const matcher of [
   "toMatchNPMStringWidth",
   "toMatchNPMStringWidthExcludeANSI",
 ]) {

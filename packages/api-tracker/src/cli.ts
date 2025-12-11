@@ -3,26 +3,27 @@
 
 import * as path from "node:path";
 import { parseArgs } from "node:util";
-
-import { extractApis, flattenApis } from "./extractor.ts";
-import { detectImplementations } from "./detector.ts";
-import { compareTypes, getComparisonSummary } from "./comparator.ts";
-import {
-  generateReport,
-  writeReports,
-  checkCoverage,
-  generateConsoleSummary,
-  combineThreeTiers,
-  generateThreeTierSummary,
-} from "./reporter.ts";
 import { generateBadges, generateEndpointJson } from "./badge.ts";
-import { runTests, getTestSummary, saveTestResults } from "./test-runner.ts";
+import { compareTypes, getComparisonSummary } from "./comparator.ts";
+import { detectImplementations } from "./detector.ts";
+import { extractApis, flattenApis } from "./extractor.ts";
+import {
+  checkCoverage,
+  combineThreeTiers,
+  generateConsoleSummary,
+  generateReport,
+  generateThreeTierSummary,
+  writeReports,
+} from "./reporter.ts";
+import { getTestSummary, runTests, saveTestResults } from "./test-runner.ts";
+
+const FILENAME = import.meta.file;
 
 const HELP = `
 Bun API Tracker - Track Bun API coverage in polyfills
 
 USAGE:
-  bun run cli.ts <command> [options]
+  bun run ${FILENAME} <command> [options]
 
 COMMANDS:
   report      Generate full coverage report (default)
@@ -48,13 +49,13 @@ OPTIONS:
   --filter <pattern>    For run-tests: filter tests by pattern
 
 EXAMPLES:
-  bun run cli.ts report
-  bun run cli.ts compare
-  bun run cli.ts combined
-  bun run cli.ts run-tests --filter spawn
-  bun run cli.ts sync-tests --dry-run
-  bun run cli.ts check --min-coverage 10
-  bun run cli.ts list --category filesystem
+  bun run ${FILENAME} report
+  bun run ${FILENAME} compare
+  bun run ${FILENAME} combined
+  bun run ${FILENAME} run-tests --filter spawn
+  bun run ${FILENAME} sync-tests --dry-run
+  bun run ${FILENAME} check --min-coverage 10
+  bun run ${FILENAME} list --category filesystem
 `;
 
 interface CliOptions {
@@ -78,11 +79,11 @@ function getOptions(): CliOptions {
       polyfills: { type: "string", short: "p" },
       output: { type: "string", short: "o" },
       "min-coverage": { type: "string", short: "m" },
-      json: { type: "boolean" },
+      json: { type: "boolean", short: "j" },
       markdown: { type: "boolean" },
       category: { type: "string", short: "c" },
       module: { type: "string" },
-      "dry-run": { type: "boolean" },
+      "dry-run": { type: "boolean", short: "d" },
       filter: { type: "string", short: "f" },
       help: { type: "boolean", short: "h" },
     },
@@ -292,7 +293,7 @@ async function runCombined(options: CliOptions): Promise<void> {
 
   const polyfillTypesPath = path.join(options.polyfillsPath, "types.ts");
   const annotationsPath = path.join(process.cwd(), "data", "annotations.json");
-  const testsDir = path.resolve(options.outputDir, "..", "tests");
+  const _testsDir = path.resolve(options.outputDir, "..", "tests");
 
   // Tier 1: Type comparison
   console.log("Tier 1: Running type comparison...");

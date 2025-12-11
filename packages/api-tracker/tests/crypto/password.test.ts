@@ -1,15 +1,14 @@
 import { describe, expect, test } from "bun:test";
-
-import { password } from "bun";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { password } from "bun";
+
 await initBunShims();
 const placeholder = "hey";
 
 describe("hash", () => {
   describe("arguments parsing", () => {
-    for (let hash of [password.hash, password.hashSync]) {
+    for (const hash of [password.hash, password.hashSync]) {
       test("no blank password allowed", () => {
         expect(() => hash("")).toThrow("password must not be empty");
       });
@@ -71,7 +70,7 @@ describe("hash", () => {
         ).toThrow();
       });
 
-      for (let ArrayBufferView of [
+      for (const ArrayBufferView of [
         Uint8Array,
         Uint16Array,
         Uint32Array,
@@ -95,7 +94,7 @@ describe("hash", () => {
 
 describe("verify", () => {
   describe("arguments parsing", () => {
-    for (let verify of [password.verify, password.verifySync]) {
+    for (const verify of [password.verify, password.verifySync]) {
       test("minimum args", () => {
         // @ts-expect-error
         expect(() => verify()).toThrow();
@@ -147,7 +146,7 @@ describe("verify", () => {
         ).toThrow();
       });
 
-      for (let ArrayBufferView of [
+      for (const ArrayBufferView of [
         Uint8Array,
         Uint16Array,
         Uint32Array,
@@ -191,7 +190,7 @@ const defaultAlgorithm = "argon2id";
 const algorithms = [undefined, "argon2id", "bcrypt"];
 const argons = ["argon2i", "argon2id", "argon2d"];
 
-for (let algorithmValue of algorithms) {
+for (const algorithmValue of algorithms) {
   const prefix =
     algorithmValue === "bcrypt" ? "$2" : (
       "$" + (algorithmValue || defaultAlgorithm)
@@ -225,7 +224,7 @@ for (let algorithmValue of algorithms) {
         : password.verifySync(pw, value);
     };
 
-    for (let input of [placeholder, Buffer.from(placeholder)]) {
+    for (const input of [placeholder, Buffer.from(placeholder)]) {
       describe(typeof input === "string" ? "string" : "buffer", () => {
         test("password sync", () => {
           const hashed = hashSync(input);

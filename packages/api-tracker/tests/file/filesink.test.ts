@@ -2,12 +2,12 @@
 // Source: js/bun/util/filesink.test.ts
 
 import { describe, expect, it } from "bun:test";
-import { fileDescriptorLeakChecker, isWindows, tmpdirSync } from "../harness";
-import { mkfifo } from "../mkfifo";
 import { join } from "node:path";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { fileDescriptorLeakChecker, isWindows, tmpdirSync } from "../harness";
+import { mkfifo } from "../mkfifo";
+
 await initBunShims();
 describe("FileSink", () => {
   const fixturesInput = [
@@ -81,10 +81,10 @@ describe("FileSink", () => {
       require("fs").unlinkSync(path);
     } catch (e) {}
     mkfifo(path, 0o666);
-    activeFIFO = (async function (
+    activeFIFO = (async (
       stream: ReadableStream<Uint8Array>,
       byteLength = 0,
-    ) {
+    ) => {
       var chunks: Uint8Array[] = [];
       const original = byteLength;
       var got = 0;
@@ -100,7 +100,7 @@ describe("FileSink", () => {
     return path;
   }
 
-  for (let isPipe of [true, false] as const) {
+  for (const isPipe of [true, false] as const) {
     // TODO: fix the `mkfifo` function for windows. They do have an API but calling it from bun:ffi didn't get great results.
     // once #8166 is merged, this can be written using it's 'bun:iternals-for-testing' feature
     describe.skipIf(isPipe && isWindows)(isPipe ? "pipe" : "file", () => {

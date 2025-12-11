@@ -6,8 +6,10 @@ function nodeWithPolyfillsExe() {
   // In polyfill tests, we use Node.js with the polyfill preload
   return process.execPath;
 }
+
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 test("Bun.isMainThread", () => {
   expect(Bun.isMainThread).toBeTrue();

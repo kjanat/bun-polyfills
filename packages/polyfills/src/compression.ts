@@ -2,9 +2,9 @@
 // Uses node:zlib which is available in Node.js
 
 import {
-  gzipSync as nodeGzipSync,
-  gunzipSync as nodeGunzipSync,
   deflateSync as nodeDeflateSync,
+  gunzipSync as nodeGunzipSync,
+  gzipSync as nodeGzipSync,
   inflateSync as nodeInflateSync,
   type ZlibOptions,
 } from "node:zlib";

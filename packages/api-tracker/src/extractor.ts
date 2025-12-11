@@ -266,17 +266,14 @@ export function getBunTypesVersion(bunTypesPath: string): string {
  */
 function inferCategory(name: string, parent?: string): ApiCategory {
   // Check direct mapping (use hasOwnProperty to avoid prototype chain pollution)
-  if (Object.prototype.hasOwnProperty.call(API_CATEGORIES, name)) {
+  if (Object.hasOwn(API_CATEGORIES, name)) {
     return API_CATEGORIES[name]!;
   }
 
   // Check parent category
   if (parent) {
     const parentName = parent.split(".").pop();
-    if (
-      parentName &&
-      Object.prototype.hasOwnProperty.call(API_CATEGORIES, parentName)
-    ) {
+    if (parentName && Object.hasOwn(API_CATEGORIES, parentName)) {
       return API_CATEGORIES[parentName]!;
     }
   }

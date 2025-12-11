@@ -1,8 +1,8 @@
-import { escapeHTML } from "bun";
 import { describe, expect, it } from "bun:test";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { escapeHTML } from "bun";
+
 await initBunShims();
 describe("escapeHTML", () => {
   // The matrix of cases we need to test for:

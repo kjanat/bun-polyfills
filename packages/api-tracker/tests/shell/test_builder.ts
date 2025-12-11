@@ -1,8 +1,8 @@
-import { ShellError, ShellExpression } from "bun";
 // import { tempDirWithFiles } from "harness";
 import * as fs from "node:fs";
 import * as os from "node:os";
 import { join } from "node:path";
+import { ShellError, type ShellExpression } from "bun";
 // import { bunExe } from "harness";
 
 export function createTestBuilder(path: string) {
@@ -405,7 +405,7 @@ export function createTestBuilder(path: string) {
     }
 
     joinTemplate(): string {
-      let buf = [];
+      const buf = [];
       for (let i = 0; i < this._scriptStr.length; i++) {
         buf.push(this._scriptStr[i]);
         if (this._expresssions[i] !== undefined) {

@@ -10,12 +10,12 @@
 
 import type { IOType, Serializable, StdioOptions } from "node:child_process";
 import {
+  type ChildProcess,
   spawn as nodeSpawn,
   spawnSync as nodeSpawnSync,
-  type ChildProcess,
   type SpawnSyncReturns,
 } from "node:child_process";
-import {
+import type {
   Readable as NodeReadable,
   Writable as NodeWritable,
 } from "node:stream";

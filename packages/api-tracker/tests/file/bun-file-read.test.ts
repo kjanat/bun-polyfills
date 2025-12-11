@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 it("offset should work in Bun.file() #4963", async () => {
   const filename = tmpdir() + "/bun.test.offset.txt";

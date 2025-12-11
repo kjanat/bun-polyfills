@@ -1,5 +1,9 @@
 {
   "name": "bun-polyfills-monorepo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kjanat/bun-polyfills.git"
+  },
   "private": true,
   "workspaces": [
     "packages/*"
@@ -12,6 +16,7 @@
     "coverage:badge": "bun run --filter @kjanat/bun-api-tracker badge",
     "coverage:check": "bun run --filter @kjanat/bun-api-tracker check",
     "fmt": "prettier . --write",
+    "lint": "bun run --filter '*' lint",
     "postinstall": "simple-git-hooks",
     "test": "AGENT=1 bun run --filter '*' test",
     "typecheck": "bun run --filter '*' typecheck"
@@ -43,6 +48,9 @@
     "test": {
       "string-width": "^8.1.0",
       "strip-ansi": "^7.1.2"
+    },
+    "lint": {
+      "@biomejs/biome": "2.3.8"
     }
   },
   "prettier": "@kjanat/prettier-config",

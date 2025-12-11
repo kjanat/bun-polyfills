@@ -7,71 +7,68 @@
 //   const detection = await detectImplementations(extraction.apis, { polyfillsPath: "./src" });
 //   const report = generateReport(detection.implementations, extraction.version);
 
-// Re-export all types
-export * from "./types.ts";
-
-// Extractor
+// Badge
 export {
-  extractApis,
-  flattenApis,
-  getTopLevelApis,
-  filterByCategory,
-  filterByModule,
-  resolveBunTypesPath,
-  getBunTypesVersion,
-  getApiKind,
-  DEFAULT_EXTRACTOR_CONFIG,
-} from "./extractor.ts";
+  type BadgeOptions,
+  type BadgeUrls,
+  generateBadgeData,
+  generateBadges,
+  generateBadgeUrl,
+  generateEndpointJson,
+} from "./badge.ts";
+// Comparator (new automated type comparison)
+export {
+  type ComparatorConfig,
+  compareTypes,
+  getComparisonSummary,
+} from "./comparator.ts";
 
 // Detector
 export {
+  DEFAULT_DETECTOR_CONFIG,
   detectImplementations,
+  filterByStatus,
+  getImplementationSummary,
   getTypeComparison,
   loadAnnotations,
   loadManualOverrides, // deprecated alias for loadAnnotations
-  getImplementationSummary,
-  filterByStatus,
   sortByCompleteness,
-  DEFAULT_DETECTOR_CONFIG,
 } from "./detector.ts";
-
-// Comparator (new automated type comparison)
+// Extractor
 export {
-  compareTypes,
-  getComparisonSummary,
-  type ComparatorConfig,
-} from "./comparator.ts";
+  DEFAULT_EXTRACTOR_CONFIG,
+  extractApis,
+  filterByCategory,
+  filterByModule,
+  flattenApis,
+  getApiKind,
+  getBunTypesVersion,
+  getTopLevelApis,
+  resolveBunTypesPath,
+} from "./extractor.ts";
 
 // Interface mapping
 export { INTERFACE_MAP, SPECIAL_APIS } from "./interface-map.ts";
 
 // Reporter
 export {
-  generateReport,
-  generateJsonReport,
-  generateMarkdownReport,
-  writeReports,
-  checkCoverage,
-  calculateSummary,
   calculateByCategory,
   calculateByModule,
-  generateConsoleSummary,
+  calculateSummary,
+  checkCoverage,
   DEFAULT_REPORTER_CONFIG,
+  generateConsoleSummary,
+  generateJsonReport,
+  generateMarkdownReport,
+  generateReport,
+  writeReports,
 } from "./reporter.ts";
+// Re-export all types
+export * from "./types.ts";
 
-// Badge
-export {
-  generateBadges,
-  generateBadgeUrl,
-  generateBadgeData,
-  generateEndpointJson,
-  type BadgeOptions,
-  type BadgeUrls,
-} from "./badge.ts";
-
+import { detectImplementations } from "./detector.ts";
 // Convenience function for full pipeline
 import { extractApis, flattenApis } from "./extractor.ts";
-import { detectImplementations } from "./detector.ts";
 import { generateReport, writeReports } from "./reporter.ts";
 import type { CoverageReport, TrackerConfig } from "./types.ts";
 

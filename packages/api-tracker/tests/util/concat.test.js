@@ -1,8 +1,8 @@
-import { concatArrayBuffers } from "bun";
 import { describe, expect, it } from "bun:test";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { concatArrayBuffers } from "bun";
+
 await initBunShims();
 describe("concat", () => {
   function polyfill(chunks) {

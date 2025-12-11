@@ -4,9 +4,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import ts from "typescript";
-
-import { INTERFACE_MAP, SPECIAL_APIS } from "./interface-map.ts";
 import { resolveBunTypesPath } from "./extractor.ts";
+import { INTERFACE_MAP, SPECIAL_APIS } from "./interface-map.ts";
 import type {
   ComparisonResult,
   InterfaceComparison,

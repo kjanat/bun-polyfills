@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 describe("util file tests", () => {
   test("custom set mime-type respected (#6507)", () => {

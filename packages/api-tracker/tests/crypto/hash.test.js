@@ -1,8 +1,8 @@
 import { expect, it } from "bun:test";
-import { gcTick } from "../harness";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { gcTick } from "../harness";
+
 await initBunShims();
 it(`Bun.hash()`, () => {
   gcTick();

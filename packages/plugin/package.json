@@ -43,6 +43,8 @@
     "build:bun": "bun build ./src/index.ts --outdir dist --target bun",
     "build:tsc": "tsc --emitDeclarationOnly",
     "clean": "rm -rf dist",
+    "fmt": "cd ../../ && bun run prettier ./packages/plugin/ --write",
+    "lint": "biome check --write",
     "typecheck": "tsgo --noEmit"
   },
   "peerDependencies": {
@@ -52,6 +54,7 @@
     "@kjanat/bun-polyfills": "workspace:*"
   },
   "devDependencies": {
+    "@biomejs/biome": "catalog:lint",
     "@types/bun": "catalog:",
     "@typescript/native-preview": "catalog:",
     "typescript": "catalog:"

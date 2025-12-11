@@ -1,11 +1,12 @@
 // Crypto polyfills for Bun APIs
+
+import type { BinaryLike } from "node:crypto";
 import {
   createHash,
+  randomBytes,
   scryptSync,
   timingSafeEqual,
-  randomBytes,
 } from "node:crypto";
-import type { BinaryLike } from "node:crypto";
 import type { PolyfillBun } from "./types.ts";
 
 /**

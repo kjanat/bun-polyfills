@@ -2,15 +2,26 @@
 
 import type { CoverageReport, CoverageSummary } from "./types.ts";
 
+export type BadgeStyle =
+  | "flat"
+  | "flat-square"
+  | "plastic"
+  | "for-the-badge"
+  | "social";
+
 export interface BadgeOptions {
   /** Badge label (left side) */
   label?: string;
-  /** Badge style: flat, flat-square, plastic, for-the-badge */
-  style?: "flat" | "flat-square" | "plastic" | "for-the-badge";
-  /** Custom logo */
+  /** shields.io badge style */
+  style?: BadgeStyle;
+  /** Custom logo slug (simple-icons) */
   logo?: string;
   /** Logo color */
   logoColor?: string;
+  /** Background color for the label (left) */
+  labelColor?: string;
+  /** Adaptive logo sizing ("auto") or pixel size */
+  logoSize?: string;
 }
 
 export interface BadgeUrls {
@@ -50,6 +61,8 @@ export function generateBadgeUrl(
   params.set("style", style);
   if (logo) params.set("logo", logo);
   if (logoColor) params.set("logoColor", logoColor);
+  if (options.labelColor) params.set("labelColor", options.labelColor);
+  if (options.logoSize) params.set("logoSize", options.logoSize);
 
   const encodedLabel = encodeURIComponent(label);
   const encodedMessage = encodeURIComponent(message);
@@ -99,28 +112,85 @@ export function generateBadges(
  * Generate badge data for embedding in JSON
  * Uses shields.io endpoint badge schema: https://shields.io/badges/endpoint-badge
  */
-export function generateBadgeData(summary: CoverageSummary): {
+export type EndpointBadgeData = {
   schemaVersion: 1;
   label: string;
   message: string;
   color: string;
+} & Partial<{
+  labelColor: string;
+  isError: boolean;
   namedLogo: string;
-} {
-  const percent = Math.round(summary.percentComplete);
-  return {
-    schemaVersion: 1,
-    label: "Bun API Coverage",
-    message: `${percent}%`,
-    color: getColor(percent),
-    namedLogo: "bun",
-  };
+  logoSvg: string;
+  logoColor: string;
+  logoSize: string;
+  style: BadgeStyle;
+}>;
+
+export interface EndpointBadgeOptions {
+  /** Override left-hand text (default: Bun API Coverage) */
+  label?: string;
+  /** Override computed color */
+  color?: string;
+  /** Label background color */
+  labelColor?: string;
+  /** Treat as error badge (locks color) */
+  isError?: boolean;
+  /** Simple-icons slug */
+  namedLogo?: string;
+  /** Inline SVG logo */
+  logoSvg?: string;
+  /** Logo color */
+  logoColor?: string;
+  /** Adaptive logo sizing ("auto") or pixel size */
+  logoSize?: string;
+  /** Badge style */
+  style?: BadgeStyle;
 }
+
+/**
+ * Generate badge data following the shields.io endpoint schema
+ */
+export function generateEndpointBadgeData(
+  summary: CoverageSummary,
+  options: EndpointBadgeOptions = {},
+): EndpointBadgeData {
+  const percent = Math.round(summary.percentComplete);
+  const data: EndpointBadgeData = {
+    schemaVersion: 1,
+    label: options.label ?? "Bun API Coverage",
+    message: `${percent}%`,
+    color: options.color ?? getColor(percent),
+  };
+
+  if (options.labelColor) data.labelColor = options.labelColor;
+  if (options.isError !== undefined) data.isError = options.isError;
+  data.namedLogo = options.namedLogo ?? "bun";
+  if (options.logoSvg) data.logoSvg = options.logoSvg;
+  if (options.logoColor) data.logoColor = options.logoColor;
+  if (options.logoSize) data.logoSize = options.logoSize;
+  if (options.style) data.style = options.style;
+
+  return data;
+}
+
+/**
+ * Backwards-compatible alias for generating endpoint badge data
+ */
+export const generateBadgeData = generateEndpointBadgeData;
 
 /**
  * Generate endpoint JSON for shields.io dynamic badge
  */
-export function generateEndpointJson(report: CoverageReport): string {
-  return JSON.stringify(generateBadgeData(report.summary), null, 2);
+export function generateEndpointJson(
+  report: CoverageReport,
+  options: EndpointBadgeOptions = {},
+): string {
+  return JSON.stringify(
+    generateEndpointBadgeData(report.summary, options),
+    null,
+    2,
+  );
 }
 
 export default generateBadges;

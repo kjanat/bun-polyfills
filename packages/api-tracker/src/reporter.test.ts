@@ -128,6 +128,11 @@ describe("reporter", () => {
       // 1 implemented + 0.5 * 1 partial = 1.5 out of 2 = 75%
       expect(byCategory.filesystem?.percentComplete).toBe(75);
     });
+
+    test("handles empty implementations map", () => {
+      const byCategory = calculateByCategory(new Map());
+      expect(Object.keys(byCategory)).toHaveLength(0);
+    });
   });
 
   describe("calculateByModule", () => {
@@ -154,6 +159,11 @@ describe("reporter", () => {
       expect(byModule["bun:sqlite"]?.partial).toBe(1);
       expect(byModule["bun:ffi"]?.total).toBe(1);
       expect(byModule["bun:ffi"]?.notStarted).toBe(1);
+    });
+
+    test("handles empty implementations map", () => {
+      const byModule = calculateByModule(new Map());
+      expect(Object.keys(byModule)).toHaveLength(0);
     });
   });
 
@@ -219,6 +229,32 @@ describe("reporter", () => {
       const md = generateMarkdownReport(report);
 
       expect(md).toContain(":white_check_mark:");
+    });
+
+    test("handles zero-total report without NaN", () => {
+      const emptyReport: CoverageReport = {
+        logo: "bun",
+        generated: new Date().toISOString(),
+        bunTypesVersion: "0.0.0",
+        summary: {
+          total: 0,
+          implemented: 0,
+          partial: 0,
+          stub: 0,
+          notStarted: 0,
+          percentComplete: 0,
+        },
+        byCategory: {} as CoverageReport["byCategory"],
+        byModule: {} as CoverageReport["byModule"],
+        apis: [],
+      };
+
+      const md = generateMarkdownReport(emptyReport);
+
+      // Should not contain NaN (the bug this test prevents)
+      expect(md).not.toContain("NaN");
+      // Should show 0% for all statuses
+      expect(md).toContain("| 0 | 0% |");
     });
   });
 

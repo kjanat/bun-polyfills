@@ -1,8 +1,8 @@
-import { sleepSync } from "bun";
 import { expect, it } from "bun:test";
-
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+import { sleepSync } from "bun";
+
 await initBunShims();
 it("sleepSync uses milliseconds", async () => {
   const start = performance.now();

@@ -520,7 +520,7 @@ export function deepEquals(a: unknown, b: unknown, strict = false): boolean {
   if (aKeys.length !== bKeys.length) return false;
 
   for (const key of aKeys) {
-    if (!Object.prototype.hasOwnProperty.call(bObj, key)) return false;
+    if (!Object.hasOwn(bObj, key)) return false;
     if (!deepEquals(aObj[key], bObj[key], strict)) return false;
   }
 
@@ -557,7 +557,7 @@ export function deepMatch(subset: unknown, a: unknown): boolean {
   const aObj = a as Record<string, unknown>;
 
   for (const key of Object.keys(subObj)) {
-    if (!Object.prototype.hasOwnProperty.call(aObj, key)) return false;
+    if (!Object.hasOwn(aObj, key)) return false;
     if (!deepMatch(subObj[key], aObj[key])) return false;
   }
 

@@ -1,14 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { bunEnv, bunExe, isPosix } from "../harness";
 import { join } from "path";
+import { bunEnv, bunExe, isPosix } from "../harness";
 
 // Helper to run Node.js with polyfills loaded
 function nodeWithPolyfillsExe(): string {
   // In polyfill tests, we use Node.js with the polyfill preload
   return process.execPath;
 }
+
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
+
 await initBunShims();
 describe("spawnSync", () => {
   it("should throw a RangeError if timeout is less than 0", () => {
