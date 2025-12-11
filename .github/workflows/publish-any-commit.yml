@@ -6,6 +6,9 @@ permissions: {}
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     strategy:
       fail-fast: false
       matrix:
@@ -14,10 +17,6 @@ jobs:
           - packages/plugin
           - packages/polyfills
 
-    defaults:
-      run:
-        working-directory: ${{ matrix.package }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -25,10 +24,12 @@ jobs:
       - uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: bun install
+        run: bun ci
 
       - name: Build
         run: bun run build
+        working-directory: ${{ matrix.package }}
 
       - name: Publish
-        run: bunx pkg-pr-new publish .
+        run: bunx pkg-pr-new publish
+        working-directory: ${{ matrix.package }}
