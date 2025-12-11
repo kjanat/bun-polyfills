@@ -265,5 +265,17 @@ export function fileDescriptorLeakChecker(): Disposable {
  */
 export const isASAN = process.env.ASAN === "1";
 
+/**
+ * Normalize Bun.inspect() output for snapshot comparisons
+ * Replaces platform-specific paths and memory addresses
+ */
+export function normalizeBunSnapshot(str: string): string {
+  return str
+    .replace(/0x[0-9a-fA-F]+/g, "0xPTR") // Memory addresses
+    .replace(/\d{4,}/g, (match) => (match.length > 6 ? "NNNNNN" : match)) // Large numbers
+    .replace(/at <anonymous> \([^)]+:\d+:\d+\)/g, "at <anonymous> (file:NN:NN)") // Stack traces
+    .replace(/\/[^\s)]+\.(js|ts|mjs|cjs):\d+:\d+/g, "file:NN:NN"); // File paths with line numbers
+}
+
 // Re-export test utilities from bun:test
 export { beforeAll, describe, expect };

@@ -3,9 +3,8 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "./dist",
-    "emitDeclarationOnly": false,
-    "paths": { "mkfifo": ["./tests/mkfifo.ts"] }
+    "emitDeclarationOnly": false
   },
-  // "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -3,7 +3,7 @@
 
 import { describe, expect, it } from "bun:test";
 import { fileDescriptorLeakChecker, isWindows, tmpdirSync } from "../harness";
-import { mkfifo } from "mkfifo";
+import { mkfifo } from "../mkfifo";
 import { join } from "node:path";
 
 // Initialize polyfills for Node.js compatibility
