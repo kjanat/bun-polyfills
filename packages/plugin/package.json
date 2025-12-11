@@ -5,7 +5,7 @@
   "description": "Bun build plugin for conditional polyfill inclusion",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kjanat/bun-polyfills.git",
+    "url": "git+https://github.com/kjanat/bun-polyfills.git",
     "directory": "packages/plugin"
   },
   "homepage": "https://github.com/kjanat/bun-polyfills#readme",
@@ -39,7 +39,9 @@
     "build"
   ],
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir dist --target bun && tsc --emitDeclarationOnly",
+    "build": "bun run build:bun && bun run build:tsc",
+    "build:bun": "bun build ./src/index.ts --outdir dist --target bun",
+    "build:tsc": "tsc --emitDeclarationOnly",
     "clean": "rm -rf dist",
     "typecheck": "tsgo --noEmit"
   },

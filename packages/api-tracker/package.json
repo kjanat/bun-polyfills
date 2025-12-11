@@ -5,7 +5,7 @@
   "description": "Automated Bun API detection and coverage tracking for bun-polyfills",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kjanat/bun-polyfills.git",
+    "url": "git+https://github.com/kjanat/bun-polyfills.git",
     "directory": "packages/api-tracker"
   },
   "homepage": "https://github.com/kjanat/bun-polyfills#readme",
@@ -49,9 +49,9 @@
   ],
   "scripts": {
     "badge": "bun run src/cli.ts badge",
-    "build": "bun build:bundle && bun build:types",
-    "build:bundle": "bun build ./src/index.ts ./src/cli.ts ./src/types.ts --outdir dist --target node",
-    "build:types": "tsc --emitDeclarationOnly",
+    "build": "bun build:bun && bun build:tsc",
+    "build:bun": "bun build ./src/index.ts ./src/cli.ts ./src/types.ts --outdir dist --target node",
+    "build:tsc": "tsc --emitDeclarationOnly",
     "check": "bun run src/cli.ts check",
     "clean": "rm -rf dist output tests/file tests/spawn tests/shell tests/util tests/glob",
     "compare": "bun run src/cli.ts compare",
@@ -73,7 +73,7 @@
     "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:",
     "react": "^19.2.1",
-    "string-width": "^8.1.0",
-    "strip-ansi": "^7.1.2"
+    "string-width": "catalog:test",
+    "strip-ansi": "catalog:test"
   }
 }

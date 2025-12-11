@@ -1,6 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": { "outDir": "dist", "rootDir": "src" },
-  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "./dist",
+    "emitDeclarationOnly": false,
+    "paths": { "mkfifo": ["./tests/mkfifo.ts"] }
+  },
+  // "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

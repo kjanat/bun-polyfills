@@ -4,10 +4,6 @@
   "workspaces": {
     "": {
       "name": "bun-polyfills-monorepo",
-      "dependencies": {
-        "string-width": "^8.1.0",
-        "strip-ansi": "^7.1.2",
-      },
       "devDependencies": {
         "@kjanat/prettier-config": "^1.1.0",
         "@prettier/plugin-xml": "^3.4.2",
@@ -38,8 +34,8 @@
         "@types/node": "catalog:",
         "@typescript/native-preview": "catalog:",
         "react": "^19.2.1",
-        "string-width": "^8.1.0",
-        "strip-ansi": "^7.1.2",
+        "string-width": "catalog:test",
+        "strip-ansi": "catalog:test",
       },
       "peerDependencies": {
         "@types/bun": "catalog:",
@@ -91,6 +87,12 @@
     "prettier": "latest",
     "typescript": "~5.8",
     "zx": "~8.6",
+  },
+  "catalogs": {
+    "test": {
+      "string-width": "^8.1.0",
+      "strip-ansi": "^7.1.2",
+    },
   },
   "packages": {
     "@isaacs/balanced-match": ["@isaacs/balanced-match@4.0.1", "", {}, "sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ=="],

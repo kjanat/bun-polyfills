@@ -170,12 +170,29 @@ export function bunRun(
 
 /**
  * Get the maximum file descriptor number (Unix only)
+ * Reads /proc/self/fd (Linux) or /dev/fd (macOS) to find highest open FD
  */
 export function getMaxFD(): number {
   if (isWindows) return -1;
+
+  const fdDir = isMacOS ? "/dev/fd" : "/proc/self/fd";
   try {
-    const result = execSync("ulimit -n", { encoding: "utf8" });
-    return parseInt(result.trim(), 10);
+    let max = -1;
+    for (const entry of fs.readdirSync(fdDir)) {
+      const fd = parseInt(entry.trim(), 10);
+      if (Number.isSafeInteger(fd) && fd >= 0) {
+        max = Math.max(max, fd);
+      }
+    }
+    if (max >= 0) return max;
+  } catch {
+    // Fallback: open /dev/null and use its FD
+  }
+
+  try {
+    const fd = fs.openSync("/dev/null", "r");
+    fs.closeSync(fd);
+    return fd;
   } catch {
     return -1;
   }
@@ -226,12 +243,19 @@ export function runWithErrorPromise(
 
 /**
  * File descriptor leak checker for tests
+ * Captures initial FD count and checks for leaks on dispose
  */
-export function fileDescriptorLeakChecker(): { check: () => void } {
-  // Simplified version - actual implementation would track FDs
+export function fileDescriptorLeakChecker(): Disposable {
+  const initial = getMaxFD();
   return {
-    check: () => {
-      // No-op in polyfill tests
+    [Symbol.dispose]() {
+      if (initial < 0) return; // Skip on Windows or if FD detection unavailable
+      const current = getMaxFD();
+      if (current > initial) {
+        throw new Error(
+          `File descriptor leak detected: ${current} (current) > ${initial} (initial)`,
+        );
+      }
     },
   };
 }

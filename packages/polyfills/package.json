@@ -5,7 +5,7 @@
   "description": "Polyfills for Bun APIs to run on Node.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kjanat/bun-polyfills.git",
+    "url": "git+https://github.com/kjanat/bun-polyfills.git",
     "directory": "packages/polyfills"
   },
   "homepage": "https://github.com/kjanat/bun-polyfills#readme",
@@ -64,9 +64,9 @@
     "shim"
   ],
   "scripts": {
-    "build": "bun build:bundle && bun build:types",
-    "build:bundle": "bun build ./src/index.ts ./src/env.ts ./src/file.ts ./src/shell.ts ./src/spawn.ts ./src/modules.ts ./src/types.ts --outdir dist --target node",
-    "build:types": "tsc --emitDeclarationOnly",
+    "build": "bun run build:bun && bun run build:tsc",
+    "build:bun": "bun build ./src/index.ts ./src/env.ts ./src/file.ts ./src/shell.ts ./src/spawn.ts ./src/modules.ts ./src/types.ts --outdir dist --target node",
+    "build:tsc": "tsc --emitDeclarationOnly",
     "clean": "rm -rf dist",
     "test": "bun test",
     "typecheck": "tsgo --noEmit"

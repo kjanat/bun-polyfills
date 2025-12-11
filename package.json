@@ -16,10 +16,6 @@
     "test": "AGENT=1 bun run --filter '*' test",
     "typecheck": "bun run --filter '*' typecheck"
   },
-  "dependencies": {
-    "string-width": "^8.1.0",
-    "strip-ansi": "^7.1.2"
-  },
   "devDependencies": {
     "@kjanat/prettier-config": "^1.1.0",
     "@prettier/plugin-xml": "^3.4.2",
@@ -42,6 +38,12 @@
     "zx": "~8.6",
     "prettier": "latest",
     "@kjanat/prettier-config": "latest"
+  },
+  "catalogs": {
+    "test": {
+      "string-width": "^8.1.0",
+      "strip-ansi": "^7.1.2"
+    }
   },
   "prettier": "@kjanat/prettier-config",
   "simple-git-hooks": {
