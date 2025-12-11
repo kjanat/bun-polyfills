@@ -225,6 +225,7 @@ describe("reporter", () => {
   describe("checkCoverage", () => {
     test("passes when coverage meets threshold", () => {
       const report: CoverageReport = {
+        logo: "bun",
         generated: new Date().toISOString(),
         bunTypesVersion: "1.0.0",
         summary: {
@@ -248,6 +249,7 @@ describe("reporter", () => {
 
     test("fails when coverage below threshold", () => {
       const report: CoverageReport = {
+        logo: "bun",
         generated: new Date().toISOString(),
         bunTypesVersion: "1.0.0",
         summary: {
@@ -273,6 +275,7 @@ describe("reporter", () => {
   describe("generateConsoleSummary", () => {
     test("produces readable console output", () => {
       const report: CoverageReport = {
+        logo: "bun",
         generated: new Date().toISOString(),
         bunTypesVersion: "1.0.0",
         summary: {

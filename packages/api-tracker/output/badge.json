@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "label": "Bun API Coverage",
-  "message": "5%",
-  "color": "red"
+  "message": "7%",
+  "color": "red",
+  "namedLogo": "bun"
 }

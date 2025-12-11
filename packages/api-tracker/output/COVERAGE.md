@@ -1,18 +1,18 @@
 # Bun API Coverage Report
 
-Generated: 12/11/2025, 4:54:03 PM | @types/bun: 1.3.4
+Generated: 12/11/2025, 4:59:17 PM | @types/bun: 1.3.4
 
 ## Summary
 
 | Status                         | Count   | %   |
 | ------------------------------ | ------- | --- |
 | :white_check_mark: Implemented | 11      | 2%  |
-| :yellow_circle: Partial        | 27      | 6%  |
+| :yellow_circle: Partial        | 37      | 8%  |
 | :construction: Stub            | 0       | 0%  |
-| :x: Not Started                | 414     | 92% |
+| :x: Not Started                | 404     | 89% |
 | **Total**                      | **452** | -   |
 
-**Overall Progress: 5%**
+**Overall Progress: 7%**
 
 ## Progress by Category
 
@@ -119,6 +119,43 @@ Generated: 12/11/2025, 4:54:03 PM | @types/bun: 1.3.4
 | `Bun.CookieMap.forEach`            | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `Bun.CookieMap.[Symbol.iterator]`  | :x: Not Started                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
+### Crypto (0/32 - 17%)
+
+| API                            | Status                  | Notes                                                           |
+| ------------------------------ | ----------------------- | --------------------------------------------------------------- |
+| `Bun.hash`                     | :yellow_circle: Partial | Partial - some hash algorithms could be implemented             |
+| `Bun.password`                 | :yellow_circle: Partial | Could be implemented with node:crypto scrypt/argon2             |
+| `Bun.CryptoHasher`             | :yellow_circle: Partial | Signature mismatch: Bun="typeof CryptoHasher" vs Polyfill="any" |
+| `Bun.SHA1`                     | :yellow_circle: Partial | Signature mismatch: Bun="typeof SHA1" vs Polyfill="any"         |
+| `Bun.MD5`                      | :yellow_circle: Partial | Signature mismatch: Bun="typeof MD5" vs Polyfill="any"          |
+| `Bun.MD4`                      | :yellow_circle: Partial | Signature mismatch: Bun="typeof MD4" vs Polyfill="any"          |
+| `Bun.SHA224`                   | :yellow_circle: Partial | Signature mismatch: Bun="typeof SHA224" vs Polyfill="any"       |
+| `Bun.SHA512`                   | :yellow_circle: Partial | Signature mismatch: Bun="typeof SHA512" vs Polyfill="any"       |
+| `Bun.SHA384`                   | :yellow_circle: Partial | Signature mismatch: Bun="typeof SHA384" vs Polyfill="any"       |
+| `Bun.SHA256`                   | :yellow_circle: Partial | Signature mismatch: Bun="typeof SHA256" vs Polyfill="any"       |
+| `Bun.SHA512_256`               | :yellow_circle: Partial | Signature mismatch: Bun="typeof SHA512_256" vs Polyfill="any"   |
+| `Bun.password.verify`          | :x: Not Started         |                                                                 |
+| `Bun.password.hash`            | :x: Not Started         |                                                                 |
+| `Bun.password.verifySync`      | :x: Not Started         |                                                                 |
+| `Bun.password.hashSync`        | :x: Not Started         |                                                                 |
+| `Bun.CryptoHashInterface.hash` | :x: Not Started         |                                                                 |
+| `Bun.CryptoHasher.algorithm`   | :x: Not Started         |                                                                 |
+| `Bun.CryptoHasher.byteLength`  | :x: Not Started         |                                                                 |
+| `Bun.CryptoHasher.update`      | :x: Not Started         |                                                                 |
+| `Bun.CryptoHasher.copy`        | :x: Not Started         |                                                                 |
+| `Bun.CryptoHasher.digest`      | :x: Not Started         |                                                                 |
+| `Bun.CryptoHasher.hash`        | :x: Not Started         |                                                                 |
+| `Bun.CryptoHasher.algorithms`  | :x: Not Started         |                                                                 |
+| `Bun.sha`                      | :x: Not Started         | Could be implemented with node:crypto                           |
+| `Bun.SHA1.byteLength`          | :x: Not Started         |                                                                 |
+| `Bun.MD5.byteLength`           | :x: Not Started         |                                                                 |
+| `Bun.MD4.byteLength`           | :x: Not Started         |                                                                 |
+| `Bun.SHA224.byteLength`        | :x: Not Started         |                                                                 |
+| `Bun.SHA512.byteLength`        | :x: Not Started         |                                                                 |
+| `Bun.SHA384.byteLength`        | :x: Not Started         |                                                                 |
+| `Bun.SHA256.byteLength`        | :x: Not Started         |                                                                 |
+| `Bun.SHA512_256.byteLength`    | :x: Not Started         |                                                                 |
+
 ### Filesystem (0/17 - 15%)
 
 | API                         | Status                  | Notes                                                                    |
@@ -150,43 +187,6 @@ Generated: 12/11/2025, 4:54:03 PM | @types/bun: 1.3.4
 | `Bun.YAML`           | :x: Not Started         |                                                         |
 | `Bun.YAML.parse`     | :x: Not Started         |                                                         |
 | `Bun.YAML.stringify` | :x: Not Started         |                                                         |
-
-### Crypto (0/32 - 2%)
-
-| API                            | Status                  | Notes                                               |
-| ------------------------------ | ----------------------- | --------------------------------------------------- |
-| `Bun.hash`                     | :yellow_circle: Partial | Partial - some hash algorithms could be implemented |
-| `Bun.password`                 | :x: Not Started         | Could be implemented with node:crypto scrypt/argon2 |
-| `Bun.password.verify`          | :x: Not Started         |                                                     |
-| `Bun.password.hash`            | :x: Not Started         |                                                     |
-| `Bun.password.verifySync`      | :x: Not Started         |                                                     |
-| `Bun.password.hashSync`        | :x: Not Started         |                                                     |
-| `Bun.CryptoHashInterface.hash` | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher`             | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher.algorithm`   | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher.byteLength`  | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher.update`      | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher.copy`        | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher.digest`      | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher.hash`        | :x: Not Started         |                                                     |
-| `Bun.CryptoHasher.algorithms`  | :x: Not Started         |                                                     |
-| `Bun.sha`                      | :x: Not Started         | Could be implemented with node:crypto               |
-| `Bun.SHA1`                     | :x: Not Started         |                                                     |
-| `Bun.SHA1.byteLength`          | :x: Not Started         |                                                     |
-| `Bun.MD5`                      | :x: Not Started         |                                                     |
-| `Bun.MD5.byteLength`           | :x: Not Started         |                                                     |
-| `Bun.MD4`                      | :x: Not Started         |                                                     |
-| `Bun.MD4.byteLength`           | :x: Not Started         |                                                     |
-| `Bun.SHA224`                   | :x: Not Started         |                                                     |
-| `Bun.SHA224.byteLength`        | :x: Not Started         |                                                     |
-| `Bun.SHA512`                   | :x: Not Started         |                                                     |
-| `Bun.SHA512.byteLength`        | :x: Not Started         |                                                     |
-| `Bun.SHA384`                   | :x: Not Started         |                                                     |
-| `Bun.SHA384.byteLength`        | :x: Not Started         |                                                     |
-| `Bun.SHA256`                   | :x: Not Started         |                                                     |
-| `Bun.SHA256.byteLength`        | :x: Not Started         |                                                     |
-| `Bun.SHA512_256`               | :x: Not Started         |                                                     |
-| `Bun.SHA512_256.byteLength`    | :x: Not Started         |                                                     |
 
 ### Network (0/9 - 0%)
 
@@ -553,7 +553,7 @@ Generated: 12/11/2025, 4:54:03 PM | @types/bun: 1.3.4
 
 | Module       | Total | Implemented | Partial | Progress |
 | ------------ | ----- | ----------- | ------- | -------- |
-| `bun`        | 240   | 11          | 27      | 10%      |
+| `bun`        | 240   | 11          | 37      | 12%      |
 | `bun:sqlite` | 40    | 0           | 0       | 0%       |
 | `bun:ffi`    | 31    | 0           | 0       | 0%       |
 | `global`     | 141   | 0           | 0       | 0%       |

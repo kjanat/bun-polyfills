@@ -97,12 +97,14 @@ export function generateBadges(
 
 /**
  * Generate badge data for embedding in JSON
+ * Uses shields.io endpoint badge schema: https://shields.io/badges/endpoint-badge
  */
 export function generateBadgeData(summary: CoverageSummary): {
   schemaVersion: 1;
   label: string;
   message: string;
   color: string;
+  namedLogo: string;
 } {
   const percent = Math.round(summary.percentComplete);
   return {
@@ -110,6 +112,7 @@ export function generateBadgeData(summary: CoverageSummary): {
     label: "Bun API Coverage",
     message: `${percent}%`,
     color: getColor(percent),
+    namedLogo: "bun",
   };
 }
 

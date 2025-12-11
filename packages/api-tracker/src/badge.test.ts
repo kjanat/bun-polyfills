@@ -47,6 +47,7 @@ describe("badge", () => {
 
   describe("generateBadges", () => {
     const mockReport: CoverageReport = {
+      logo: "bun",
       generated: new Date().toISOString(),
       bunTypesVersion: "1.0.0",
       summary: {
@@ -220,6 +221,7 @@ describe("badge", () => {
   describe("generateEndpointJson", () => {
     test("produces valid JSON", () => {
       const report: CoverageReport = {
+        logo: "bun",
         generated: new Date().toISOString(),
         bunTypesVersion: "1.0.0",
         summary: {
@@ -245,6 +247,7 @@ describe("badge", () => {
 
     test("is formatted with indentation", () => {
       const report: CoverageReport = {
+        logo: "bun",
         generated: new Date().toISOString(),
         bunTypesVersion: "1.0.0",
         summary: {

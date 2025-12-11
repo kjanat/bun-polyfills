@@ -1,14 +1,14 @@
 {
   "logo": "bun",
-  "generated": "2025-12-11T15:54:03.950Z",
+  "generated": "2025-12-11T15:59:17.019Z",
   "bunTypesVersion": "1.3.4",
   "summary": {
     "total": 452,
     "implemented": 11,
-    "partial": 27,
+    "partial": 37,
     "stub": 0,
-    "notStarted": 414,
-    "percentComplete": 5
+    "notStarted": 404,
+    "percentComplete": 7
   },
   "byCategory": {
     "process": {
@@ -78,10 +78,10 @@
     "crypto": {
       "total": 32,
       "implemented": 0,
-      "partial": 1,
+      "partial": 11,
       "stub": 0,
-      "notStarted": 31,
-      "percentComplete": 2
+      "notStarted": 21,
+      "percentComplete": 17
     },
     "bundler": {
       "total": 7,
@@ -144,10 +144,10 @@
     "bun": {
       "total": 240,
       "implemented": 11,
-      "partial": 27,
+      "partial": 37,
       "stub": 0,
-      "notStarted": 202,
-      "percentComplete": 10
+      "notStarted": 192,
+      "percentComplete": 12
     },
     "bun:sqlite": {
       "total": 40,
@@ -1607,8 +1607,8 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0,
+      "status": "partial",
+      "completeness": 50,
       "notes": "Could be implemented with node:crypto scrypt/argon2"
     },
     {
@@ -2500,8 +2500,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof CryptoHasher\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -2711,8 +2712,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof SHA1\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -2759,8 +2761,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof MD5\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -2807,8 +2810,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof MD4\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -2855,8 +2859,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof SHA224\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -2903,8 +2908,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof SHA512\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -2951,8 +2957,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof SHA384\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -2999,8 +3006,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof SHA256\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -3047,8 +3055,9 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Signature mismatch: Bun=\"typeof SHA512_256\" vs Polyfill=\"any\""
     },
     {
       "api": {
