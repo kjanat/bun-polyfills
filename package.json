@@ -38,7 +38,7 @@
   },
   "prettier": "@kjanat/prettier-config",
   "simple-git-hooks": {
-    "pre-commit": "bun run pretty-quick --staged && bun run coverage:badge && git add packages/api-tracker/output/badge.json",
+    "pre-commit": "bun run pretty-quick --staged && bun run coverage && git add packages/api-tracker/output/",
     "pre-push": "bun run test && bun run typecheck"
   }
 }

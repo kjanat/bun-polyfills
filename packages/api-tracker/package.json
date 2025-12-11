@@ -55,7 +55,7 @@
     "check": "bun run src/cli.ts check",
     "clean": "rm -rf dist output",
     "report": "bun run src/cli.ts report",
-    "test": "echo 'No tests'",
+    "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {

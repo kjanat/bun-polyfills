@@ -1,13 +1,13 @@
 {
-  "generated": "2025-12-11T10:40:49.311Z",
+  "generated": "2025-12-11T11:51:34.496Z",
   "bunTypesVersion": "1.3.4",
   "summary": {
     "total": 452,
-    "implemented": 23,
-    "partial": 0,
+    "implemented": 29,
+    "partial": 4,
     "stub": 0,
-    "notStarted": 429,
-    "percentComplete": 5
+    "notStarted": 419,
+    "percentComplete": 7
   },
   "byCategory": {
     "process": {
@@ -20,19 +20,19 @@
     },
     "utility": {
       "total": 63,
-      "implemented": 7,
-      "partial": 0,
+      "implemented": 8,
+      "partial": 3,
       "stub": 0,
-      "notStarted": 56,
-      "percentComplete": 11
+      "notStarted": 52,
+      "percentComplete": 15
     },
     "parsing": {
       "total": 5,
-      "implemented": 0,
-      "partial": 0,
+      "implemented": 1,
+      "partial": 1,
       "stub": 0,
-      "notStarted": 5,
-      "percentComplete": 0
+      "notStarted": 3,
+      "percentComplete": 30
     },
     "module": {
       "total": 5,
@@ -92,11 +92,11 @@
     },
     "compression": {
       "total": 8,
-      "implemented": 0,
+      "implemented": 4,
       "partial": 0,
       "stub": 0,
-      "notStarted": 8,
-      "percentComplete": 0
+      "notStarted": 4,
+      "percentComplete": 50
     },
     "function toString() {\n    [native code]\n}": {
       "total": 3,
@@ -142,11 +142,11 @@
   "byModule": {
     "bun": {
       "total": 240,
-      "implemented": 23,
-      "partial": 0,
+      "implemented": 29,
+      "partial": 4,
       "stub": 0,
-      "notStarted": 217,
-      "percentComplete": 10
+      "notStarted": 207,
+      "percentComplete": 13
     },
     "bun:sqlite": {
       "total": 40,
@@ -293,8 +293,8 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -311,8 +311,9 @@
         "isDeprecated": false,
         "parent": "Bun.TOML"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Parent API implemented"
     },
     {
       "api": {
@@ -3051,8 +3052,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -3069,8 +3070,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -3087,8 +3088,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -3105,8 +3106,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -4432,8 +4433,8 @@
           }
         ]
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -4450,8 +4451,9 @@
         "isDeprecated": false,
         "parent": "Bun.Glob"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Parent API implemented"
     },
     {
       "api": {
@@ -4468,8 +4470,9 @@
         "isDeprecated": false,
         "parent": "Bun.Glob"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Parent API implemented"
     },
     {
       "api": {
@@ -4486,8 +4489,9 @@
         "isDeprecated": false,
         "parent": "Bun.Glob"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "partial",
+      "completeness": 50,
+      "notes": "Parent API implemented"
     },
     {
       "api": {
