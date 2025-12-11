@@ -1,7 +1,11 @@
 // Glob polyfill: Bun.Glob
-// Uses fast-glob as backend
+// Uses tinyglobby as backend (lighter alternative to fast-glob)
 
-import fg from "fast-glob";
+import {
+  glob as tinyGlob,
+  globSync as tinyGlobSync,
+  type GlobOptions,
+} from "tinyglobby";
 import { minimatch } from "minimatch";
 import type { PolyfillBun } from "./types.ts";
 
@@ -51,11 +55,9 @@ export class Glob {
   }
 
   /**
-   * Convert Bun GlobScanOptions to fast-glob options
+   * Convert Bun GlobScanOptions to tinyglobby options
    */
-  private toFastGlobOptions(
-    optionsOrCwd?: string | GlobScanOptions,
-  ): fg.Options {
+  private toGlobOptions(optionsOrCwd?: string | GlobScanOptions): GlobOptions {
     const opts: GlobScanOptions =
       typeof optionsOrCwd === "string" ?
         { cwd: optionsOrCwd }
@@ -66,11 +68,9 @@ export class Glob {
       dot: opts.dot ?? false,
       absolute: opts.absolute ?? false,
       followSymbolicLinks: opts.followSymlinks ?? false,
-      throwErrorOnBrokenSymbolicLink: opts.throwErrorOnBrokenSymlink ?? false,
       onlyFiles: opts.onlyFiles ?? true,
-      // fast-glob specific defaults
-      unique: true,
-      markDirectories: false,
+      // Disable expandDirectories for fast-glob compatibility
+      expandDirectories: false,
     };
   }
 
@@ -81,11 +81,11 @@ export class Glob {
   async *scan(
     optionsOrCwd?: string | GlobScanOptions,
   ): AsyncIterableIterator<string> {
-    const options = this.toFastGlobOptions(optionsOrCwd);
-    const stream = fg.stream(this.pattern, options);
+    const options = this.toGlobOptions(optionsOrCwd);
+    const entries = await tinyGlob(this.pattern, options);
 
-    for await (const entry of stream) {
-      yield entry.toString();
+    for (const entry of entries) {
+      yield entry;
     }
   }
 
@@ -94,8 +94,8 @@ export class Glob {
    * Returns an iterator.
    */
   *scanSync(optionsOrCwd?: string | GlobScanOptions): IterableIterator<string> {
-    const options = this.toFastGlobOptions(optionsOrCwd);
-    const entries = fg.sync(this.pattern, options);
+    const options = this.toGlobOptions(optionsOrCwd);
+    const entries = tinyGlobSync(this.pattern, options);
 
     for (const entry of entries) {
       yield entry;

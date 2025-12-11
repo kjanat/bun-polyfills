@@ -70,6 +70,7 @@
     "clean": "rm -rf dist",
     "fmt": "cd ../../ && bun run prettier ./packages/polyfills/ --write",
     "lint": "biome check --write",
+    "lint:package": "bunx publint",
     "test": "bun test",
     "typecheck": "tsgo --noEmit"
   },
@@ -82,9 +83,9 @@
     }
   },
   "dependencies": {
-    "fast-glob": "^3.3.3",
     "minimatch": "^10.1.1",
     "smol-toml": "^1.5.2",
+    "tinyglobby": "^0.2.15",
     "zx": "catalog:"
   },
   "devDependencies": {

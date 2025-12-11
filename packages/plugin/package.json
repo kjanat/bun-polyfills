@@ -45,6 +45,7 @@
     "clean": "rm -rf dist",
     "fmt": "cd ../../ && bun run prettier ./packages/plugin/ --write",
     "lint": "biome check --write",
+    "lint:package": "bunx publint",
     "typecheck": "tsgo --noEmit"
   },
   "peerDependencies": {

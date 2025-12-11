@@ -57,6 +57,7 @@
     "compare": "bun run src/cli.ts compare",
     "fmt": "cd ../../ && bun run prettier ./packages/api-tracker/ --write",
     "lint": "biome check --write",
+    "lint:package": "bunx publint",
     "report": "bun run src/cli.ts report",
     "sync-tests": "bun run src/cli.ts sync-tests",
     "sync-tests:dry": "bun run src/cli.ts sync-tests --dry-run",
