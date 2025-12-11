@@ -44,6 +44,18 @@ export {
 
 import type { PolyfillBun } from "./types.ts";
 
+// Import directly to ensure they are bundled
+import { initUtils } from "./utils.ts";
+import { initEnv } from "./env.ts";
+import { initFile } from "./file.ts";
+import { initShell } from "./shell.ts";
+import { initSpawn } from "./spawn.ts";
+import { initModules } from "./modules.ts";
+import { initProcess } from "./process.ts";
+import { initCompression } from "./compression.ts";
+import { initGlob } from "./glob.ts";
+import { initTOML } from "./toml.ts";
+
 /**
  * Initialize all Bun polyfills on globalThis.Bun
  * No-op if running in native Bun runtime.
@@ -58,35 +70,16 @@ export async function initBunShims(): Promise<void> {
   // Cast to unknown first since we're shimming with a partial implementation
   (globalThis as { Bun?: unknown }).Bun = bun;
 
-  // Initialize all polyfills
-  const { initEnv } = await import("./env.ts");
+  // Initialize all polyfills directly without dynamic import to ensure code is included
   initEnv(bun);
-
-  const { initFile } = await import("./file.ts");
   initFile(bun);
-
-  const { initShell } = await import("./shell.ts");
   initShell(bun);
-
-  const { initSpawn } = await import("./spawn.ts");
   initSpawn(bun);
-
-  const { initModules } = await import("./modules.ts");
   initModules(bun);
-
-  const { initProcess } = await import("./process.ts");
   initProcess(bun);
-
-  const { initCompression } = await import("./compression.ts");
   initCompression(bun);
-
-  const { initGlob } = await import("./glob.ts");
   initGlob(bun);
-
-  const { initTOML } = await import("./toml.ts");
   initTOML(bun);
-
-  const { initUtils } = await import("./utils.ts");
   initUtils(bun);
 }
 

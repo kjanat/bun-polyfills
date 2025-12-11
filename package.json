@@ -13,8 +13,12 @@
     "coverage:check": "bun run --filter @kjanat/bun-api-tracker check",
     "fmt": "prettier . --write",
     "postinstall": "simple-git-hooks",
-    "test": "bun run --filter '*' test",
+    "test": "AGENT=1 bun run --filter '*' test",
     "typecheck": "bun run --filter '*' typecheck"
+  },
+  "dependencies": {
+    "string-width": "^8.1.0",
+    "strip-ansi": "^7.1.2"
   },
   "devDependencies": {
     "@kjanat/prettier-config": "^1.1.0",

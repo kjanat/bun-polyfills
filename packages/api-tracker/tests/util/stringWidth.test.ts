@@ -2,8 +2,13 @@ import { describe, expect, test } from "bun:test";
 import npmStringWidth from "string-width";
 
 // Initialize polyfills for Node.js compatibility
-import { initBunShims } from "@kjanat/bun-polyfills";
+import { initBunShims, stringWidth } from "@kjanat/bun-polyfills";
 await initBunShims();
+
+// Force override Bun.stringWidth with our polyfill for testing purposes
+// @ts-ignore
+Bun.stringWidth = stringWidth;
+
 expect.extend({
   toMatchNPMStringWidth(received: string) {
     const width = npmStringWidth(received, { countAnsiEscapeCodes: true });
