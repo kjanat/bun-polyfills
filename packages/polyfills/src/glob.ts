@@ -1,12 +1,12 @@
 // Glob polyfill: Bun.Glob
 // Uses tinyglobby as backend (lighter alternative to fast-glob)
 
+import { minimatch } from "minimatch";
 import {
+  type GlobOptions,
   glob as tinyGlob,
   globSync as tinyGlobSync,
-  type GlobOptions,
 } from "tinyglobby";
-import { minimatch } from "minimatch";
 import type { PolyfillBun } from "./types.ts";
 
 export interface GlobScanOptions {

@@ -3,10 +3,10 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "types": ["@types/bun"]
+    "types": ["bun"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]

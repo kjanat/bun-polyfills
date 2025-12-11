@@ -6,14 +6,13 @@
  */
 
 import { afterAll, beforeAll, describe, expect, it, test } from "bun:test";
+import { mkdir, rm, stat } from "node:fs/promises";
+import { join, sep } from "node:path";
 import { $ } from "bun";
-import { mkdir, rm, stat } from "fs/promises";
-import { join, sep } from "path";
 import {
   bunExe,
   isPosix,
   isWindows,
-  runWithErrorPromise,
   tempDirWithFiles,
   tmpdirSync,
 } from "../harness";
@@ -38,7 +37,7 @@ beforeAll(() =>
   console.error("Before all RSS", process.memoryUsage.rss() / 1024 / 1024),
 );
 
-export const bunEnv: NodeJS.ProcessEnv = {
+const bunEnv = {
   ...process.env,
   GITHUB_ACTIONS: "false",
   BUN_DEBUG_QUIET_LOGS: "1",
@@ -51,7 +50,7 @@ export const bunEnv: NodeJS.ProcessEnv = {
   BUN_GARBAGE_COLLECTOR_LEVEL: process.env.BUN_GARBAGE_COLLECTOR_LEVEL || "0",
   // windows doesn't set this, but we do to match posix compatibility
   PWD: (process.env.PWD || process.cwd()).replaceAll("\\", "/"),
-};
+} as Record<string, string | undefined>;
 
 $.env(bunEnv);
 $.cwd(process.cwd().replaceAll("\\", "/"));
@@ -101,15 +100,15 @@ describe("bunshell", () => {
       "cp ksdjflksjdfks lkjsdflksjdfl",
     ];
 
-    failing_cmds.forEach((cmdstr) =>
-      cmdstr ?
+    failing_cmds.forEach((cmdstr) => {
+      if (cmdstr) {
         TestBuilder.command`${{ raw: cmdstr }}`
           .exitCode((c) => c !== 0)
           .stdout(() => {})
           .stderr(() => {})
-          .runAsTest(cmdstr)
-      : "",
-    );
+          .runAsTest(cmdstr);
+      }
+    });
   });
 
   describe("concurrency", () => {
@@ -122,7 +121,10 @@ describe("bunshell", () => {
     });
   });
   describe("js_obj_test", async () => {
-    function runTest(name: string, builder: TestBuilder) {
+    function runTest(
+      name: string,
+      builder: ReturnType<typeof TestBuilder.command>,
+    ) {
       test(`js_obj_test_name_${name}`, async () => {
         await builder.run();
       });
@@ -244,6 +246,7 @@ describe("bunshell", () => {
         [
           BUN,
           "-e",
+          // biome-ignore lint/suspicious/noTemplateCurlyInString: intentional shell code
           "await Bun.$`BUN_DEBUG_QUIET_LOGS=1 ${process.argv0} -e \"console.log('hi'); console.error('lol')\"`.quiet()",
         ],
         { env: { BUN_DEBUG_QUIET_LOGS: "1" } },
@@ -285,10 +288,9 @@ describe("bunshell", () => {
   });
 
   test("failing stmt edgecase", async () => {
-    const { stdout } =
-      await $`mkdir foo; touch ./foo/lol ./foo/nice ./foo/lmao; mkdir foo/bar; touch ./foo/bar/great; touch ./foo/bar/wow; ls foo -R`.cwd(
-        temp_dir,
-      );
+    await $`mkdir foo; touch ./foo/lol ./foo/nice ./foo/lmao; mkdir foo/bar; touch ./foo/bar/great; touch ./foo/bar/wow; ls foo -R`.cwd(
+      temp_dir,
+    );
   });
 
   // test("invalid js obj", async () => {
@@ -353,7 +355,7 @@ describe("bunshell", () => {
       const whatsupbro = "元気かい、兄弟";
       const { stdout } = await $`echo ${whatsupbro}`;
 
-      expect(stdout.toString("utf8")).toEqual(whatsupbro + "\n");
+      expect(stdout.toString("utf8")).toEqual(`${whatsupbro}\n`);
     });
 
     test("escape unicode", async () => {
@@ -380,12 +382,9 @@ describe("bunshell", () => {
 
     // TODO: Skip - zx polyfill has unicode variable handling differences
     test.skip("var value", async () => {
-      const error = await runWithErrorPromise(async () => {
-        const whatsupbro = "元気かい、兄弟";
-        const { stdout } = await $`FOO=${whatsupbro}; echo $FOO`;
-        expect(stdout.toString("utf-8")).toEqual(whatsupbro + "\n");
-      });
-      expect(error).toBeUndefined();
+      const whatsupbro = "元気かい、兄弟";
+      const { stdout } = await $`FOO=${whatsupbro}; echo $FOO`;
+      expect(stdout.toString("utf-8")).toEqual(`${whatsupbro}\n`);
     });
 
     test("in compound word", async () => {
@@ -449,7 +448,7 @@ describe("bunshell", () => {
 
   test("redirect Uint8Array", async () => {
     const buffer = new Uint8Array(1 << 20);
-    const result = await $`cat ${import.meta.path} > ${buffer}`;
+    const _result = await $`cat ${import.meta.path} > ${buffer}`;
 
     const sentinel = sentinelByte(buffer);
     const thisFile = Bun.file(import.meta.path);
@@ -461,7 +460,7 @@ describe("bunshell", () => {
 
   test("redirect Buffer", async () => {
     const buffer = Buffer.alloc(1 << 20);
-    const result = await $`cat ${import.meta.path} > ${buffer}`;
+    const _result = await $`cat ${import.meta.path} > ${buffer}`;
 
     const thisFile = Bun.file(import.meta.path);
 
@@ -474,7 +473,7 @@ describe("bunshell", () => {
     const filepath = join(temp_dir, "lmao.txt");
     const file = Bun.file(filepath);
     const thisFileText = await Bun.file(import.meta.path).text();
-    const result = await $`cat ${import.meta.path} > ${file}`;
+    const _result = await $`cat ${import.meta.path} > ${file}`;
 
     expect(await file.text()).toEqual(thisFileText);
   });
@@ -516,7 +515,7 @@ describe("bunshell", () => {
   });
 
   test("cmd subst", async () => {
-    const haha = "noice";
+    const _haha = "noice";
     const { stdout } = await $`echo $(echo noice)`;
     expect(stdout.toString()).toEqual(`noice\n`);
   });
@@ -892,7 +891,7 @@ booga"
 
     test("syntax edgecase", async () => {
       const buffer = new Uint8Array(1 << 20);
-      const shellProc =
+      const _shellProc =
         await $`FOO=bar BUN_TEST_VAR=1 ${BUN} -e "console.log(JSON.stringify(process.env))"> ${buffer}`;
 
       const str = stringifyBuffer(buffer);
@@ -1038,6 +1037,7 @@ ${temp_dir}`
 
     // Edge cases with mixed quotes
     TestBuilder.command`echo "'\${"$"}'"`
+      // biome-ignore lint/suspicious/noTemplateCurlyInString: expected shell output
       .stdout("'${$}'\n")
       .runAsTest("mixed_quotes_dollar");
     TestBuilder.command`echo '"${"`"}"'`
@@ -1095,6 +1095,7 @@ describe("deno_task", () => {
     TestBuilder.command`VAR=1 VAR2=2 BUN_TEST_VAR=1 ${BUN} -e 'console.log(process.env.VAR + process.env.VAR2)'`
       .stdout("12\n")
       .runAsTest("shell var in command 2");
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: intentional JS code in string
     TestBuilder.command`EMPTY= BUN_TEST_VAR=1 ${BUN} -e ${"console.log(`EMPTY: ${process.env.EMPTY}`)"}`
       .stdout("EMPTY: \n")
       .runAsTest("empty shell var");
@@ -1226,7 +1227,8 @@ describe("deno_task", () => {
         .exitCode(0)
         .stdout("hi\n")
         .runAsTest("broken pipe builtin");
-      TestBuilder.command`grep export packages/polyfills/src/index.ts | echo hi`
+      TestBuilder.command`grep foo file.txt | echo hi`
+        .file("file.txt", "foo bar\n")
         .exitCode(0)
         .stdout("hi\n")
         .stderr("")
@@ -1761,21 +1763,21 @@ fi
     .stdout("okay\nmakes sense!\n")
     .runAsTest("multi statement in all branches");
 
-  ["if", "else", "elif", "then", "fi"].map((tok) => {
+  ["if", "else", "elif", "then", "fi"].forEach((tok) => {
     TestBuilder.command`"${{ raw: tok }}"`
       .stderr(`bun: command not found: ${tok}\n`)
       .exitCode(1)
       .runAsTest(`quoted ${tok} doesn't break`);
 
-    TestBuilder.command`echo ${{ raw: "lksdfjklsdjf" + tok }}`
+    TestBuilder.command`echo ${{ raw: `lksdfjklsdjf${tok}` }}`
       .stdout(`lksdfjklsdjf${tok}\n`)
       .runAsTest(`${tok} in script does not break parsing 1`);
 
-    TestBuilder.command`echo ${{ raw: "hi " + tok }}`
+    TestBuilder.command`echo ${{ raw: `hi ${tok}` }}`
       .stdout(`hi ${tok}\n`)
       .runAsTest(`${tok} in script does not break parsing 2`);
 
-    TestBuilder.command`echo ${{ raw: tok + " hi" }}`
+    TestBuilder.command`echo ${{ raw: `${tok} hi` }}`
       .stdout(`${tok} hi\n`)
       .runAsTest(`${tok} in script does not break parsing 3`);
   });
@@ -2559,7 +2561,11 @@ describe("subshell", () => {
     .stdout((out) => expect(out).toInclude("+ sharp@0.33.3"))
     .stderr(() => {})
     .exitCode(0)
-    .env(bunEnv)
+    .env(
+      Object.fromEntries(
+        Object.entries(bunEnv).filter(([, v]) => v !== undefined),
+      ) as Record<string, string>,
+    )
     .runAsTest("sharp");
 
   TestBuilder.command /* sh */ `( ( ( ( echo HI! ) ) ) )`
@@ -2847,7 +2853,7 @@ function stringifyBuffer(buffer: Uint8Array): string {
 
 function sentinelByte(buf: Uint8Array): number {
   for (let i = 0; i < buf.byteLength; i++) {
-    if (buf[i] == 0) return i;
+    if (buf[i] === 0) return i;
   }
   throw new Error("No sentinel byte");
 }
