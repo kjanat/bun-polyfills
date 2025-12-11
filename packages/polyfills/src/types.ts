@@ -203,4 +203,14 @@ export interface PolyfillBun {
   };
   version: string;
   revision: string;
+
+  // Process utilities
+  argv: string[];
+  main: string;
+  which: (cmd: string, options?: { PATH?: string }) => string | null;
+  sleep: (ms: number) => Promise<void>;
+  sleepSync: (ms: number) => void;
+  nanoseconds: () => bigint;
+  isMainThread: boolean;
+  gc: (full?: boolean) => void;
 }

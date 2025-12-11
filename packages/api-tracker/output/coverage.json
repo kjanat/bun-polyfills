@@ -1,30 +1,30 @@
 {
-  "generated": "2025-12-11T10:07:11.974Z",
+  "generated": "2025-12-11T10:40:49.311Z",
   "bunTypesVersion": "1.3.4",
   "summary": {
     "total": 452,
-    "implemented": 15,
+    "implemented": 23,
     "partial": 0,
     "stub": 0,
-    "notStarted": 437,
-    "percentComplete": 3
+    "notStarted": 429,
+    "percentComplete": 5
   },
   "byCategory": {
     "process": {
       "total": 7,
-      "implemented": 4,
+      "implemented": 7,
       "partial": 0,
       "stub": 0,
-      "notStarted": 3,
-      "percentComplete": 57
+      "notStarted": 0,
+      "percentComplete": 100
     },
     "utility": {
       "total": 63,
-      "implemented": 2,
+      "implemented": 7,
       "partial": 0,
       "stub": 0,
-      "notStarted": 61,
-      "percentComplete": 3
+      "notStarted": 56,
+      "percentComplete": 11
     },
     "parsing": {
       "total": 5,
@@ -142,11 +142,11 @@
   "byModule": {
     "bun": {
       "total": 240,
-      "implemented": 15,
+      "implemented": 23,
       "partial": 0,
       "stub": 0,
-      "notStarted": 225,
-      "percentComplete": 6
+      "notStarted": 217,
+      "percentComplete": 10
     },
     "bun:sqlite": {
       "total": 40,
@@ -206,8 +206,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -224,8 +224,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -2072,8 +2072,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -2090,8 +2090,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -2108,8 +2108,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -2613,8 +2613,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -2631,8 +2631,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {
@@ -3210,8 +3210,8 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "not-started",
-      "completeness": 0
+      "status": "implemented",
+      "completeness": 100
     },
     {
       "api": {

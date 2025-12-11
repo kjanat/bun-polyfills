@@ -12,6 +12,15 @@ export { initFile } from "./file.ts";
 export { initShell } from "./shell.ts";
 export { initSpawn } from "./spawn.ts";
 export { initModules } from "./modules.ts";
+export {
+  initProcess,
+  which,
+  sleep,
+  sleepSync,
+  nanoseconds,
+  isMainThread,
+  gc,
+} from "./process.ts";
 
 import type { PolyfillBun } from "./types.ts";
 
@@ -44,6 +53,9 @@ export async function initBunShims(): Promise<void> {
 
   const { initModules } = await import("./modules.ts");
   initModules(bun);
+
+  const { initProcess } = await import("./process.ts");
+  initProcess(bun);
 }
 
 export default initBunShims;

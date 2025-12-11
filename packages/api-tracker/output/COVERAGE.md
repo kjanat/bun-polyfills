@@ -1,20 +1,32 @@
 # Bun API Coverage Report
 
-Generated: 12/11/2025, 11:07:11 AM | bun-types: 1.3.4
+Generated: 12/11/2025, 11:40:49 AM | @types/bun: 1.3.4
 
 ## Summary
 
 | Status                         | Count   | %   |
 | ------------------------------ | ------- | --- |
-| :white_check_mark: Implemented | 15      | 3%  |
+| :white_check_mark: Implemented | 23      | 5%  |
 | :yellow_circle: Partial        | 0       | 0%  |
 | :construction: Stub            | 0       | 0%  |
-| :x: Not Started                | 437     | 97% |
+| :x: Not Started                | 429     | 95% |
 | **Total**                      | **452** | -   |
 
-**Overall Progress: 3%**
+**Overall Progress: 5%**
 
 ## Progress by Category
+
+### Process (7/7 - 100%)
+
+| API             | Status                         | Notes |
+| --------------- | ------------------------------ | ----- |
+| `Bun.env`       | :white_check_mark: Implemented |       |
+| `Bun.argv`      | :white_check_mark: Implemented |       |
+| `Bun.which`     | :white_check_mark: Implemented |       |
+| `Bun.main`      | :white_check_mark: Implemented |       |
+| `Bun.spawn`     | :white_check_mark: Implemented |       |
+| `Bun.spawnSync` | :white_check_mark: Implemented |       |
+| `Bun.$`         | :white_check_mark: Implemented |       |
 
 ### Module (4/5 - 80%)
 
@@ -25,18 +37,6 @@ Generated: 12/11/2025, 11:07:11 AM | bun-types: 1.3.4
 | `Bun.pathToFileURL` | :white_check_mark: Implemented |       |
 | `Bun.fileURLToPath` | :white_check_mark: Implemented |       |
 | `Loader.resolve`    | :x: Not Started                |       |
-
-### Process (4/7 - 57%)
-
-| API             | Status                         | Notes |
-| --------------- | ------------------------------ | ----- |
-| `Bun.env`       | :white_check_mark: Implemented |       |
-| `Bun.spawn`     | :white_check_mark: Implemented |       |
-| `Bun.spawnSync` | :white_check_mark: Implemented |       |
-| `Bun.$`         | :white_check_mark: Implemented |       |
-| `Bun.argv`      | :x: Not Started                |       |
-| `Bun.which`     | :x: Not Started                |       |
-| `Bun.main`      | :x: Not Started                |       |
 
 ### Filesystem (5/17 - 29%)
 
@@ -60,10 +60,15 @@ Generated: 12/11/2025, 11:07:11 AM | bun-types: 1.3.4
 | `Bun.S3Client.file`         | :x: Not Started                |       |
 | `Bun.S3Client.write`        | :x: Not Started                |       |
 
-### Utility (2/63 - 3%)
+### Utility (7/63 - 11%)
 
 | API                                | Status                         | Notes |
 | ---------------------------------- | ------------------------------ | ----- |
+| `Bun.gc`                           | :white_check_mark: Implemented |       |
+| `Bun.nanoseconds`                  | :white_check_mark: Implemented |       |
+| `Bun.sleep`                        | :white_check_mark: Implemented |       |
+| `Bun.sleepSync`                    | :white_check_mark: Implemented |       |
+| `Bun.isMainThread`                 | :white_check_mark: Implemented |       |
 | `Bun.version`                      | :white_check_mark: Implemented |       |
 | `Bun.revision`                     | :white_check_mark: Implemented |       |
 | `Bun.stringWidth`                  | :x: Not Started                |       |
@@ -87,13 +92,8 @@ Generated: 12/11/2025, 11:07:11 AM | bun-types: 1.3.4
 | `Bun.semver.satisfies`             | :x: Not Started                |       |
 | `Bun.semver.order`                 | :x: Not Started                |       |
 | `Bun.enableANSIColors`             | :x: Not Started                |       |
-| `Bun.gc`                           | :x: Not Started                |       |
-| `Bun.nanoseconds`                  | :x: Not Started                |       |
 | `Bun.generateHeapSnapshot`         | :x: Not Started                |       |
 | `Bun.openInEditor`                 | :x: Not Started                |       |
-| `Bun.sleep`                        | :x: Not Started                |       |
-| `Bun.sleepSync`                    | :x: Not Started                |       |
-| `Bun.isMainThread`                 | :x: Not Started                |       |
 | `Bun.Glob`                         | :x: Not Started                |       |
 | `Bun.Glob.scan`                    | :x: Not Started                |       |
 | `Bun.Glob.scanSync`                | :x: Not Started                |       |
@@ -553,7 +553,7 @@ Generated: 12/11/2025, 11:07:11 AM | bun-types: 1.3.4
 
 | Module       | Total | Implemented | Partial | Progress |
 | ------------ | ----- | ----------- | ------- | -------- |
-| `bun`        | 240   | 15          | 0       | 6%       |
+| `bun`        | 240   | 23          | 0       | 10%      |
 | `bun:sqlite` | 40    | 0           | 0       | 0%       |
 | `bun:ffi`    | 31    | 0           | 0       | 0%       |
 | `global`     | 141   | 0           | 0       | 0%       |
