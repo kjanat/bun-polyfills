@@ -10,12 +10,17 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
-import { ArrayBufferSink, readableStreamToText, spawn, spawnSync } from "bun";
-import path, { join } from "path";
+import path, { join } from "node:path";
+import {
+  ArrayBufferSink,
+  readableStreamToText,
+  type Subprocess,
+  spawn,
+  spawnSync,
+} from "bun";
 import {
   gcTick as _gcTick,
   bunEnv,
-  bunExe,
   getMaxFD,
   isBroken,
   isMacOS,
@@ -189,15 +194,16 @@ for (const [gcTick, label] of [
         const count = isWindows ? 100 : 1000;
 
         for (let i = 0; i < count; i++) {
-          var exitCode1, exitCode2;
+          let exitCode1: number | null;
+          let exitCode2: number | null;
           await new Promise<void>((resolve) => {
-            var counter = 0;
+            let counter = 0;
             spawn({
               cmd: [nodeWithPolyfillsExe(), "-e", "process.exit(0)"],
               stdin: "ignore",
               stdout: "ignore",
               stderr: "ignore",
-              onExit(subprocess, code) {
+              onExit(_subprocess, code) {
                 exitCode1 = code;
                 counter++;
                 if (counter === 2) {
@@ -211,7 +217,7 @@ for (const [gcTick, label] of [
               stdin: "ignore",
               stdout: "ignore",
               stderr: "ignore",
-              onExit(subprocess, code) {
+              onExit(_subprocess, code) {
                 exitCode2 = code;
                 counter++;
 
@@ -306,16 +312,16 @@ for (const [gcTick, label] of [
       });
 
       it("Bun.file() works as stdout", async () => {
-        rmSync(tmp + "out.123.txt", { force: true });
+        rmSync(`${tmp}out.123.txt`, { force: true });
         gcTick();
         const { exited } = spawn({
           cmd: ["node", "-e", "console.log('hello')"],
-          stdout: Bun.file(tmp + "out.123.txt"),
+          stdout: Bun.file(`${tmp}out.123.txt`),
         });
 
         await exited;
         gcTick();
-        expect(await Bun.file(tmp + "out.123.txt").text()).toBe("hello\n");
+        expect(await Bun.file(`${tmp}out.123.txt`).text()).toBe("hello\n");
       });
 
       it("Bun.file() works as stdin", async () => {
@@ -435,15 +441,15 @@ for (const [gcTick, label] of [
           stderr: "inherit",
         });
 
-        var stdout = proc.stdout;
-        var reader = stdout.getReader();
+        const stdout = proc.stdout;
+        let reader = stdout.getReader();
         proc.stdin!.write("hey\n");
         await proc.stdin!.end();
-        var text = "";
+        let text = "";
 
         reader;
-        var done = false,
-          value;
+        let done = false;
+        let value: Uint8Array | undefined;
 
         while (!done) {
           ({ value, done } = await reader.read());
@@ -470,7 +476,7 @@ for (const [gcTick, label] of [
               "process.stdin.pipe(process.stdout)",
             ],
             stdout: "pipe",
-            stdin: new Blob([hugeString + "\n"]),
+            stdin: new Blob([`${hugeString}\n`]),
             stderr: "inherit",
             lazy: true,
           });
@@ -496,7 +502,7 @@ for (const [gcTick, label] of [
                 const process = callback();
                 const output = await process.stdout.text();
                 await process.exited;
-                const expected = fixture + "\n";
+                const expected = `${fixture}\n`;
 
                 expect(output.length).toBe(expected.length);
                 expect(output).toBe(expected);
@@ -504,15 +510,15 @@ for (const [gcTick, label] of [
 
               it("before exit (chunked)", async () => {
                 const process = callback();
-                var sink = new ArrayBufferSink();
-                var any = false;
-                var { resolve, promise } = Promise.withResolvers();
+                const sink = new ArrayBufferSink();
+                let any = false;
+                let { resolve, promise } = Promise.withResolvers();
 
                 (async () => {
-                  var reader = process.stdout?.getReader();
+                  const reader = process.stdout?.getReader();
 
-                  var done = false,
-                    value;
+                  let done = false;
+                  let value: Uint8Array | undefined;
                   while (!done && resolve) {
                     ({ value, done } = await reader!.read());
 
@@ -522,14 +528,14 @@ for (const [gcTick, label] of [
                     }
                   }
 
-                  resolve && resolve();
+                  resolve?.();
                   // @ts-expect-error
                   resolve = undefined;
                 })();
                 await promise;
                 expect(any).toBe(true);
 
-                const expected = fixture + "\n";
+                const expected = `${fixture}\n`;
 
                 const output = await new Response(sink.end()).text();
                 expect(output.length).toBe(expected.length);
@@ -541,7 +547,7 @@ for (const [gcTick, label] of [
                 const process = callback();
                 await process.exited;
                 const output = await process.stdout.text();
-                const expected = fixture + "\n";
+                const expected = `${fixture}\n`;
                 expect(output.length).toBe(expected.length);
                 expect(output).toBe(expected);
               });
@@ -730,55 +736,51 @@ async function runTest(
 
 describe("should not hang", () => {
   for (const sleep of ["0", "0.1"]) {
-    it(
-      "sleep " + sleep,
-      async () => {
-        const runs: Promise<void>[] = [];
+    it(`sleep ${sleep}`, async () => {
+      const runs: Promise<void>[] = [];
 
-        let initialMaxFD = -1;
-        for (const order of [
-          ["sleep", "kill", "unref", "exited"],
-          ["sleep", "unref", "kill", "exited"],
-          ["kill", "sleep", "unref", "exited"],
-          ["kill", "unref", "sleep", "exited"],
-          ["unref", "sleep", "kill", "exited"],
-          ["unref", "kill", "sleep", "exited"],
-          ["exited", "sleep", "kill", "unref"],
-          ["exited", "sleep", "unref", "kill"],
-          ["exited", "kill", "sleep", "unref"],
-          ["exited", "kill", "unref", "sleep"],
-          ["exited", "unref", "sleep", "kill"],
-          ["exited", "unref", "kill", "sleep"],
-          ["unref", "exited"],
-          ["exited", "unref"],
-          ["kill", "exited"],
-          ["exited"],
-        ]) {
-          runs.push(
-            runTest(sleep, order)
-              .then((a) => {
-                if (initialMaxFD === -1) {
-                  initialMaxFD = getMaxFD();
-                }
+      let initialMaxFD = -1;
+      for (const order of [
+        ["sleep", "kill", "unref", "exited"],
+        ["sleep", "unref", "kill", "exited"],
+        ["kill", "sleep", "unref", "exited"],
+        ["kill", "unref", "sleep", "exited"],
+        ["unref", "sleep", "kill", "exited"],
+        ["unref", "kill", "sleep", "exited"],
+        ["exited", "sleep", "kill", "unref"],
+        ["exited", "sleep", "unref", "kill"],
+        ["exited", "kill", "sleep", "unref"],
+        ["exited", "kill", "unref", "sleep"],
+        ["exited", "unref", "sleep", "kill"],
+        ["exited", "unref", "kill", "sleep"],
+        ["unref", "exited"],
+        ["exited", "unref"],
+        ["kill", "exited"],
+        ["exited"],
+      ]) {
+        runs.push(
+          runTest(sleep, order)
+            .then((a) => {
+              if (initialMaxFD === -1) {
+                initialMaxFD = getMaxFD();
+              }
 
-                return a;
-              })
-              .catch((err) => {
-                console.error("For order", JSON.stringify(order, null, 2));
-                throw err;
-              }),
-          );
-        }
+              return a;
+            })
+            .catch((err) => {
+              console.error("For order", JSON.stringify(order, null, 2));
+              throw err;
+            }),
+        );
+      }
 
-        return await Promise.all(runs).then((ret) => {
-          // assert we didn't leak any file descriptors
-          // add buffer room for flakiness
-          expect(initialMaxFD).toBeLessThanOrEqual(getMaxFD() + 50);
-          return ret;
-        });
-      },
-      128_000,
-    );
+      return await Promise.all(runs).then((ret) => {
+        // assert we didn't leak any file descriptors
+        // add buffer room for flakiness
+        expect(initialMaxFD).toBeLessThanOrEqual(getMaxFD() + 50);
+        return ret;
+      });
+    }, 128_000);
   }
 });
 
@@ -786,15 +788,13 @@ it("#3480", async () => {
   {
     using server = Bun.serve({
       port: 0,
-      fetch: (req, res) => {
+      fetch: (_req, _res) => {
         Bun.spawnSync(["node", "-e", "console.log('1')"], {});
         return new Response("Hello world!");
       },
     });
 
-    const response = await fetch(
-      "http://" + server.hostname + ":" + server.port,
-    );
+    const response = await fetch(`http://${server.hostname}:${server.port}`);
     expect(await response.text()).toBe("Hello world!");
     expect(response.ok);
   }
@@ -806,14 +806,17 @@ describe("close handling", () => {
     () => openSync(import.meta.path, "r"),
     "ignore",
     Bun.stdin,
+    // biome-ignore lint/suspicious/noExplicitAny: testing undefined stdin
     undefined as any,
   ] as const) {
     const stdinFn = typeof stdin_ === "function" ? stdin_ : () => stdin_;
+    // biome-ignore lint/suspicious/noExplicitAny: testing undefined stdout
     for (const stdout of [1, "ignore", Bun.stdout, undefined as any] as const) {
       for (const stderr of [
         2,
         "ignore",
         Bun.stderr,
+        // biome-ignore lint/suspicious/noExplicitAny: testing undefined stderr
         undefined as any,
       ] as const) {
         const thisTest = testNumber++;
@@ -822,22 +825,14 @@ describe("close handling", () => {
 
           function getExitPromise() {
             const { exited: proc1Exited } = spawn({
-              cmd: [
-                "node",
-                "-e",
-                "console.log('" + "Executing test " + thisTest + "')",
-              ],
+              cmd: ["node", "-e", `console.log('Executing test ${thisTest}')`],
               stdin,
               stdout,
               stderr,
             });
 
             const { exited: proc2Exited } = spawn({
-              cmd: [
-                "node",
-                "-e",
-                "console.log('" + "Executing test " + thisTest + "')",
-              ],
+              cmd: ["node", "-e", `console.log('Executing test ${thisTest}')`],
               stdin,
               stdout,
               stderr,
@@ -890,7 +885,7 @@ describe("close handling", () => {
 });
 
 it("dispose keyword works", async () => {
-  let captured;
+  let captured: Subprocess;
   {
     await using proc = spawn({
       cmd: [nodeWithPolyfillsExe(), "-e", "await Bun.sleep(100000)"],

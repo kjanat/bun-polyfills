@@ -85,12 +85,12 @@ describe("escapeHTML", () => {
       "&lt;script&gt;alert(1)&lt;/script&gt;lal😊ala",
     );
     expect(
-      escapeHTML("<script>alert(1)</script>" + "lal😊ala".repeat(10)),
-    ).toBe("&lt;script&gt;alert(1)&lt;/script&gt;" + "lal😊ala".repeat(10));
+      escapeHTML(`<script>alert(1)</script>${"lal😊ala".repeat(10)}`),
+    ).toBe(`&lt;script&gt;alert(1)&lt;/script&gt;${"lal😊ala".repeat(10)}`);
 
     for (let i = 1; i < 10; i++)
-      expect(escapeHTML("<script>alert(1)</script>" + "la😊".repeat(i))).toBe(
-        "&lt;script&gt;alert(1)&lt;/script&gt;" + "la😊".repeat(i),
+      expect(escapeHTML(`<script>alert(1)</script>${"la😊".repeat(i)}`)).toBe(
+        `&lt;script&gt;alert(1)&lt;/script&gt;${"la😊".repeat(i)}`,
       );
 
     expect(escapeHTML("la😊" + "<script>alert(1)</script>")).toBe(
@@ -108,21 +108,21 @@ describe("escapeHTML", () => {
     expect(escapeHTML("😊lo")).toBe("😊lo");
     expect(escapeHTML("lo😊")).toBe("lo😊");
 
-    expect(escapeHTML(" ".repeat(32) + "😊")).toBe(" ".repeat(32) + "😊");
-    expect(escapeHTML(" ".repeat(32) + "😊😊")).toBe(" ".repeat(32) + "😊😊");
-    expect(escapeHTML(" ".repeat(32) + "😊lo")).toBe(" ".repeat(32) + "😊lo");
-    expect(escapeHTML(" ".repeat(32) + "lo😊")).toBe(" ".repeat(32) + "lo😊");
+    expect(escapeHTML(`${" ".repeat(32)}😊`)).toBe(`${" ".repeat(32)}😊`);
+    expect(escapeHTML(`${" ".repeat(32)}😊😊`)).toBe(`${" ".repeat(32)}😊😊`);
+    expect(escapeHTML(`${" ".repeat(32)}😊lo`)).toBe(`${" ".repeat(32)}😊lo`);
+    expect(escapeHTML(`${" ".repeat(32)}lo😊`)).toBe(`${" ".repeat(32)}lo😊`);
   });
 
   it("bad input doesn't crash", () => {
     escapeHTML("a".repeat(512) + String.fromCodePoint(0xd800));
 
     for (let i = 0; i < 768; i++) {
-      escapeHTML("\xff" + "a".repeat(i));
+      escapeHTML(`\xff${"a".repeat(i)}`);
       escapeHTML(String.fromCodePoint(0xd800) + "a".repeat(i));
       escapeHTML("a".repeat(i) + String.fromCodePoint(0xd800));
       escapeHTML(String.fromCodePoint(0xd800).repeat(i));
-      escapeHTML("\xff" + String.fromCodePoint(0xd800).repeat(i));
+      escapeHTML(`\xff${String.fromCodePoint(0xd800).repeat(i)}`);
       escapeHTML("\xff".repeat(i) + String.fromCodePoint(0xd800));
       escapeHTML(String.fromCodePoint(0xd800) + "\xff".repeat(i));
     }

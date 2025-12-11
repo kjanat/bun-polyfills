@@ -1,6 +1,5 @@
 import { test } from "bun:test";
 import { spawn } from "bun";
-import { bunExe } from "../harness";
 
 // Helper to run Node.js with polyfills loaded
 function nodeWithPolyfillsExe(): string {
@@ -25,10 +24,10 @@ test("spawn env", async () => {
   // This was the minimum to reliably cause a crash in Bun < v1.1.42
   for (let i = 0; i < 1024 * 10; i++) {
     try {
-      const result = spawn({
+      const _result = spawn({
         env,
         cmd: [nodeWithPolyfillsExe(), "-e", "console.log(process.env.LOL)"],
       });
-    } catch (e) {}
+    } catch (_e) {}
   }
 });

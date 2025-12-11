@@ -2,6 +2,7 @@
 // Source: js/bun/util/zstd.test.ts
 
 import { afterAll, beforeAll, describe, expect, it } from "bun:test";
+import path from "node:path";
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
 import {
@@ -10,7 +11,6 @@ import {
   zstdDecompress,
   zstdDecompressSync,
 } from "bun";
-import path from "path";
 
 await initBunShims();
 describe("Zstandard compression", async () => {
@@ -69,7 +69,7 @@ describe("Zstandard compression", async () => {
           "base64",
         ),
         original: Buffer.from(
-          JSON.stringify(
+          `${JSON.stringify(
             {
               private: true,
               name: "bun",
@@ -182,7 +182,7 @@ describe("Zstandard compression", async () => {
             },
             null,
             2,
-          ) + "\n",
+          )}\n`,
         ),
       },
     ] as const) {
@@ -199,9 +199,9 @@ describe("Zstandard compression", async () => {
   });
 
   for (const { data: input, name } of testCases) {
-    describe(name + " (" + input.length + " bytes)", () => {
+    describe(`${name} (${input.length} bytes)`, () => {
       for (let level = 1; level <= 22; level++) {
-        it("level " + level, async () => {
+        it(`level ${level}`, async () => {
           // Sync compression
           const syncCompressed = zstdCompressSync(input, { level });
 
@@ -245,8 +245,8 @@ describe("Zstandard HTTP compression", () => {
     ),
   };
 
-  let server;
-  let serverBaseUrl;
+  let server: ReturnType<typeof Bun.serve>;
+  let serverBaseUrl: string;
 
   // Start HTTP server that can serve zstd-compressed content
   beforeAll(async () => {

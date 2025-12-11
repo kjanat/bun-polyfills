@@ -1,5 +1,4 @@
 import { describe, expect, test } from "bun:test";
-import { join } from "node:path";
 import "../harness";
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
@@ -13,7 +12,9 @@ describe("Bun.main", () => {
     const override = { foo: "bar" };
     // types say Bun.main is a readonly string, but we want to write it
     // and check it can be set to a non-string
+    // biome-ignore lint/suspicious/noExplicitAny: testing property override
     (Bun as any).main = override;
+    // biome-ignore lint/suspicious/noExplicitAny: testing non-string property
     expect(Bun.main as any).toBe(override);
   });
 

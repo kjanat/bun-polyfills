@@ -9,13 +9,7 @@ import { afterAll, beforeAll, describe, expect, it, test } from "bun:test";
 import { mkdir, rm, stat } from "node:fs/promises";
 import { join, sep } from "node:path";
 import { $ } from "bun";
-import {
-  bunExe,
-  isPosix,
-  isWindows,
-  tempDirWithFiles,
-  tmpdirSync,
-} from "../harness";
+import { isPosix, isWindows, tempDirWithFiles, tmpdirSync } from "../harness";
 import { createTestBuilder, sortedShellOutput } from "./util";
 
 // Helper to run Node.js with polyfills loaded
@@ -293,14 +287,16 @@ describe("bunshell", () => {
     );
   });
 
-  // test("invalid js obj", async () => {
-  //   const lol = {
-  //     hi: "lmao",
-  //   };
-  //   await TestBuilder.command`echo foo > ${lol}`.error("Invalid JS object used in shell: [object Object]").run();
-  //   const r = new RegExp("hi");
-  //   await TestBuilder.command`echo foo > ${r}`.error("Invalid JS object used in shell: /hi/").run();
-  // });
+  test.skip("invalid js obj", async () => {
+    const lol = { hi: "lmao" };
+    await TestBuilder.command`echo foo > ${lol}`
+      .error("Invalid JS object used in shell: [object Object]")
+      .run();
+    const r = /hi/;
+    await TestBuilder.command`echo foo > ${r}`
+      .error("Invalid JS object used in shell: /hi/")
+      .run();
+  });
 
   test("empty_input", async () => {
     await TestBuilder.command``.run();
@@ -409,24 +405,28 @@ describe("bunshell", () => {
       .stdout("false\n")
       .runAsTest("long varname");
 
-    // test("invalid lone surrogate fails", async () => {
-    //   const err = await runWithErrorPromise(async () => {
-    //     const loneSurrogate = randomLoneSurrogate();
-    //     const buffer = new Uint8Array(8192);
-    //     const result = await $`echo ${loneSurrogate} > ${buffer}`;
-    //   });
-    //   console.log("ERR", err)
-    //   expect(err?.message).toEqual("Shell script string contains invalid UTF-16");
-    // });
+    test.skip("invalid lone surrogate fails", async () => {
+      const err = await runWithErrorPromise(async () => {
+        const loneSurrogate = randomLoneSurrogate();
+        const buffer = new Uint8Array(8192);
+        const _result = await $`echo ${loneSurrogate} > ${buffer}`;
+      });
+      console.log("ERR", err);
+      expect(err?.message).toEqual(
+        "Shell script string contains invalid UTF-16",
+      );
+    });
 
-    // test("invalid surrogate pair fails", async () => {
-    //   const err = await runWithErrorPromise(async () => {
-    //     const loneSurrogate = randomInvalidSurrogatePair();
-    //     const buffer = new Uint8Array(8192);
-    //     const result = $`echo ${loneSurrogate} > ${buffer}`;
-    //   });
-    //   expect(err?.message).toEqual("Shell script string contains invalid UTF-16");
-    // });
+    test.skip("invalid surrogate pair fails", async () => {
+      const err = await runWithErrorPromise(async () => {
+        const loneSurrogate = randomInvalidSurrogatePair();
+        const buffer = new Uint8Array(8192);
+        const _result = $`echo ${loneSurrogate} > ${buffer}`;
+      });
+      expect(err?.message).toEqual(
+        "Shell script string contains invalid UTF-16",
+      );
+    });
   });
 
   describe("latin-1", async () => {
@@ -1406,7 +1406,7 @@ describe("deno_task", () => {
       .runAsTest("appending");
 
     // &> and &>> redirect
-    await TestBuilder.command`BUN_TEST_VAR=1 ${BUN} -e 'console.log(1); setTimeout(() => console.error(23), 10)' &> file.txt && BUN_TEST_VAR=1 ${BUN} -e 'console.log(456); setTimeout(() => console.error(789), 10)' &>> file.txt`
+    TestBuilder.command`BUN_TEST_VAR=1 ${BUN} -e 'console.log(1); setTimeout(() => console.error(23), 10)' &> file.txt && BUN_TEST_VAR=1 ${BUN} -e 'console.log(456); setTimeout(() => console.error(789), 10)' &>> file.txt`
       .fileEquals("file.txt", "1\n23\n456\n789\n")
       .runAsTest("&> and &>> redirect");
 

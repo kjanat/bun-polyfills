@@ -99,7 +99,7 @@ const FIXTURE_TRANSFORMS: Record<
   (content: string) => { content: string; note?: string }
 > = {
   // does-not-hang.js uses shellExe() from harness and long sleep - modify for polyfills
-  "spawn/does-not-hang.js": (content) => ({
+  "spawn/does-not-hang.js": (_content) => ({
     content: `// Synced from: bun/test/js/bun/spawn/does-not-hang.js
 // Modified: uses /bin/sh instead of shellExe() from harness
 // Modified: use shorter sleep to avoid hanging in polyfill tests
@@ -113,7 +113,7 @@ s.unref();
   }),
 
   // spawnSync fixtures use bun:internal-for-testing - provide stubs
-  "spawn/spawnSync-memfd-fixture.ts": (content) => ({
+  "spawn/spawnSync-memfd-fixture.ts": (_content) => ({
     content: `// Synced from: bun/test/js/bun/spawn/spawnSync-memfd-fixture.ts
 // NOTE: This fixture tests Bun-native internals (bun:internal-for-testing)
 // which cannot be polyfilled. The test using this is skipped.
@@ -136,7 +136,7 @@ if (result.exitCode !== 0) {
     note: "Stubbed - original uses bun:internal-for-testing",
   }),
 
-  "spawn/spawnSync-counters-fixture.ts": (content) => ({
+  "spawn/spawnSync-counters-fixture.ts": (_content) => ({
     content: `// Synced from: bun/test/js/bun/spawn/spawnSync-counters-fixture.ts
 // NOTE: This fixture tests Bun-native internals (bun:internal-for-testing)
 // which cannot be polyfilled. The test using this is skipped.

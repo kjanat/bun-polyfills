@@ -7,9 +7,8 @@
  */
 
 import { beforeAll, describe, expect } from "bun:test";
-import { execSync } from "node:child_process";
 import * as fs from "node:fs";
-import { mkdirSync, mkdtempSync, realpathSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
 import { gc as bunGC, which } from "bun";
@@ -159,7 +158,7 @@ export function bunRun(
   });
 
   if (!result.success) {
-    throw new Error(String(result.stderr) + "\n" + String(result.stdout));
+    throw new Error(`${String(result.stderr)}\n${String(result.stdout)}`);
   }
 
   return {

@@ -9,11 +9,7 @@ import {
   loadAnnotations,
   sortByCompleteness,
 } from "./detector";
-import type {
-  ApiAnnotation,
-  ApiImplementation,
-  ComparisonStatus,
-} from "./types";
+import type { ApiAnnotation, ApiImplementation } from "./types";
 
 describe("detector", () => {
   describe("DEFAULT_DETECTOR_CONFIG", () => {

@@ -236,7 +236,7 @@ describe("Bun.stripANSI", () => {
 
     // Very long parameter sequences
     "\x1b[1;2;3;4;5;6;7;8;9;10;11;12mtext\x1b[0m",
-    "\x1b[" + "1;".repeat(100) + "mtext",
+    `\x1b[${"1;".repeat(100)}mtext`,
 
     // Nested-looking sequences (not actually nested)
     ["\x1b[31m\x1b in text\x1b[39m", "n text"], // ESC SP <x> is a two-byte sequence
@@ -443,7 +443,7 @@ describe("Bun.stripANSI", () => {
       "b".repeat(50) +
       "\x1b[32m" +
       "c".repeat(100),
-    "\x1b[31m" + "x".repeat(200) + "\x1b[32m" + "y".repeat(200) + "\x1b[0m",
+    `\x1b[31m${"x".repeat(200)}\x1b[32m${"y".repeat(200)}\x1b[0m`,
 
     // Complex mixed sequences with varying parameter lengths
     "\x1b[1m\x1b[38;5;196m\x1b[48;2;255;255;255m\x1b[4;9;53mcomplex\x1b[22;24;29;49;39mtext",
@@ -458,9 +458,9 @@ describe("Bun.stripANSI", () => {
   ];
 
   for (const testCase of testCases) {
-    let input;
-    let expected;
-    if (testCase instanceof Array) {
+    let input: string;
+    let expected: string;
+    if (Array.isArray(testCase)) {
       [input, expected] = testCase;
     } else {
       input = testCase;
@@ -482,7 +482,7 @@ describe("Bun.stripANSI", () => {
   });
 
   test("multiple sequences in long string", () => {
-    const parts = [];
+    const parts: string[] = [];
     for (let i = 0; i < 1000; i++) {
       parts.push(`\x1b[${30 + (i % 8)}mword${i}\x1b[39m`);
     }
@@ -491,10 +491,15 @@ describe("Bun.stripANSI", () => {
   });
 
   test("non-string input", () => {
+    // biome-ignore lint/suspicious/noExplicitAny: testing non-string input handling
     expect(Bun.stripANSI(123 as any)).toBe("123");
+    // biome-ignore lint/suspicious/noExplicitAny: testing non-string input handling
     expect(Bun.stripANSI(true as any)).toBe("true");
+    // biome-ignore lint/suspicious/noExplicitAny: testing non-string input handling
     expect(Bun.stripANSI(false as any)).toBe("false");
+    // biome-ignore lint/suspicious/noExplicitAny: testing non-string input handling
     expect(Bun.stripANSI(null as any)).toBe("null");
+    // biome-ignore lint/suspicious/noExplicitAny: testing non-string input handling
     expect(Bun.stripANSI(undefined as any)).toBe("undefined");
   });
 });

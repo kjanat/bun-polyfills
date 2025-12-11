@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { bunEnv, bunExe, isASAN } from "../harness";
+import { bunEnv, isASAN } from "../harness";
 
 // Helper to run Node.js with polyfills loaded
 function nodeWithPolyfillsExe(): string {
@@ -65,7 +65,9 @@ test("sleep should saturate timeout values", async () => {
   }
 
   const allExited = Promise.all(toKill.map((proc) => proc.exited));
-  toKill.forEach((proc) => proc.kill());
+  for (const proc of toKill) {
+    proc.kill();
+  }
 
   await allExited;
 });

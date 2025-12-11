@@ -53,11 +53,12 @@ describe("FileSink", () => {
   ] as const;
 
   const fixtures = fixturesInput.map(([input, label]) => {
-    let expected;
+    let expected: Buffer;
 
     if (Array.isArray(input)) {
       expected = Buffer.concat(input.map((str) => Buffer.from(str)));
     } else {
+      // biome-ignore lint/suspicious/noExplicitAny: test fixture input types
       expected = Buffer.from(input as any);
     }
 
@@ -67,8 +68,8 @@ describe("FileSink", () => {
   function getPath(label: string) {
     const path = join(tmpdirSync(), `${Bun.hash(label).toString(10)}.txt`);
     try {
-      require("fs").unlinkSync(path);
-    } catch (e) {}
+      require("node:fs").unlinkSync(path);
+    } catch (_e) {}
     return path;
   }
 
@@ -78,8 +79,8 @@ describe("FileSink", () => {
   function getFd(label: string, byteLength = 0) {
     const path = join(tmpdirSync(), `${Bun.hash(label).toString(10)}.txt`);
     try {
-      require("fs").unlinkSync(path);
-    } catch (e) {}
+      require("node:fs").unlinkSync(path);
+    } catch (_e) {}
     mkfifo(path, 0o666);
     activeFIFO = (async (
       stream: ReadableStream<Uint8Array>,

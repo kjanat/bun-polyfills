@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
+import fsPromises from "node:fs/promises";
+import { join } from "node:path";
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
-import fsPromises from "fs/promises";
-import { join } from "path";
 import { tempDirWithFiles } from "../harness";
 
 await initBunShims();

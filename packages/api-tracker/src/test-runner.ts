@@ -190,7 +190,7 @@ async function runTestFile(
     const exitCode = await proc.exited;
 
     // Parse test results from output
-    const results = parseBunTestOutput(stdout + "\n" + stderr);
+    const results = parseBunTestOutput(`${stdout}\n${stderr}`);
 
     // Add file path to all results
     for (const result of results) {
@@ -434,7 +434,7 @@ OPTIONS:
   }
 
   const result = await runTests(config);
-  console.log("\n" + getTestSummary(result));
+  console.log(`\n${getTestSummary(result)}`);
 
   // Save if output specified
   const outputIdx = args.indexOf("--output");

@@ -18,6 +18,7 @@ it("sleepSync with no arguments throws", async () => {
 });
 
 it("sleepSync with non-numbers throws", async () => {
+  // biome-ignore lint/suspicious/noExplicitAny: testing invalid input types
   const invalidValues = [true, false, "hi", {}, [], undefined, null] as any[];
   for (const v of invalidValues) {
     expect(() => sleepSync(v)).toThrow();

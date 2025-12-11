@@ -2,10 +2,10 @@
 // Source: js/bun/util/inspect.test.js
 
 import { describe, expect, it } from "bun:test";
+import { join } from "node:path";
+import util from "node:util";
 // Initialize polyfills for Node.js compatibility
 import { initBunShims } from "@kjanat/bun-polyfills";
-import { join } from "path";
-import util from "util";
 import { normalizeBunSnapshot, tmpdirSync } from "../harness";
 
 await initBunShims();
@@ -46,7 +46,7 @@ it("getters", () => {
       called = true;
       throw new Error("Test failed!");
     },
-    set foo(v) {
+    set foo(_v) {
       called = true;
       throw new Error("Test failed!");
     },
@@ -59,7 +59,7 @@ it("getters", () => {
 });
 
 it("setters", () => {
-  const obj = { set foo(x) {} };
+  const obj = { set foo(_x) {} };
 
   expect(Bun.inspect(obj)).toBe("{\n" + "  foo: [Setter]," + "\n" + "}");
   var called = false;
@@ -68,7 +68,7 @@ it("setters", () => {
       called = true;
       throw new Error("Test failed!");
     },
-    set foo(v) {
+    set foo(_v) {
       called = true;
       throw new Error("Test failed!");
     },
@@ -86,7 +86,7 @@ it("getter/setters", () => {
       return 42;
     },
 
-    set foo(x) {},
+    set foo(_x) {},
   };
 
   expect(Bun.inspect(obj)).toBe("{\n" + "  foo: [Getter/Setter]," + "\n" + "}");
@@ -251,7 +251,7 @@ it("BigIntArray", () => {
           `${TypedArray.name}(${buffer.length - i}) []`
         : `${TypedArray.name}(${buffer.length - i}) [ ` +
             [...buffer.subarray(i)]
-              .map((a) => a.toString(10) + "n")
+              .map((a) => `${a.toString(10)}n`)
               .join(", ") +
             " ]",
       );
@@ -260,7 +260,7 @@ it("BigIntArray", () => {
 });
 
 for (const TypedArray of [Float32Array, Float64Array]) {
-  it(TypedArray.name + " " + Math.fround(42.68), () => {
+  it(`${TypedArray.name} ${Math.fround(42.68)}`, () => {
     const buffer = new TypedArray([Math.fround(42.68)]);
     const input = Bun.inspect(buffer);
 
@@ -278,7 +278,7 @@ for (const TypedArray of [Float32Array, Float64Array]) {
     }
   });
 
-  it(TypedArray.name + " " + 42.68, () => {
+  it(`${TypedArray.name} ${42.68}`, () => {
     const buffer = new TypedArray([42.68]);
     const input = Bun.inspect(buffer);
 
@@ -356,7 +356,7 @@ it("inspect", () => {
   while (str.length < 4096) {
     str += "123";
   }
-  expect(Bun.inspect(str)).toBe('"' + str + '"');
+  expect(Bun.inspect(str)).toBe(`"${str}"`);
   // expect(Bun.inspect(new Headers())).toBe("Headers (0 KB) {}");
   expect(Bun.inspect(new Response()).length > 0).toBe(true);
   // expect(
@@ -449,8 +449,8 @@ const fixture = [
   () => Bun.file(join(tmpdir, "log.txt")).stream(),
   () => Bun.file(join(tmpdir, "log.1.txt")).stream().getReader(),
   () => Bun.file(join(tmpdir, "log.2.txt")).writer(),
-  () => new WritableStream({ write(chunk) {} }),
-  () => require("events"),
+  () => new WritableStream({ write(_chunk) {} }),
+  () => require("node:events"),
   () => {
     return new (import.meta.require("events").EventEmitter)();
   },
@@ -462,10 +462,10 @@ const fixture = [
     new Proxy(
       { yolo: 1 },
       {
-        get(target, prop) {
-          return prop + "!";
+        get(_target, prop) {
+          return `${prop}!`;
         },
-        has(target, prop) {
+        has(_target, _prop) {
           return true;
         },
         ownKeys() {
@@ -480,11 +480,11 @@ describe("crash testing", () => {
     it(`inspecting "${input.toString().slice(0, 20).replaceAll("\n", "\\n")}" doesn't crash`, async () => {
       try {
         console.log(
-          "asked" + input.toString().slice(0, 20).replaceAll("\n", "\\n"),
+          `asked${input.toString().slice(0, 20).replaceAll("\n", "\\n")}`,
         );
         Bun.inspect(await input());
         console.log("who");
-      } catch (e) {
+      } catch (_e) {
         // this can throw its fine
       }
     });
@@ -505,12 +505,12 @@ it.skip("new Date(..)", () => {
   const offset = new Date().getTimezoneOffset() / 60;
   let hour = (9 - offset).toString();
   if (hour.length === 1) {
-    hour = "0" + hour;
+    hour = `0${hour}`;
   }
-  expect(Bun.inspect(new Date("March 27, 2023 " + hour + ":54:00"))).toBe(
+  expect(Bun.inspect(new Date(`March 27, 2023 ${hour}:54:00`))).toBe(
     "2023-03-27T09:54:00.000Z",
   );
-  expect(Bun.inspect(new Date("2023-03-27T" + hour + ":54:00"))).toBe(
+  expect(Bun.inspect(new Date(`2023-03-27T${hour}:54:00`))).toBe(
     "2023-03-27T09:54:00.000Z",
   );
   expect(Bun.inspect(new Date(2023, 2, 27, -offset))).toBe(
@@ -656,6 +656,7 @@ it("console.log on a Blob shows name", () => {
 
 it("console.log on a arguments shows list", () => {
   function fn() {
+    // biome-ignore lint/complexity/noArguments: testing arguments inspection
     expect(Bun.inspect(arguments)).toBe(`[ 1, [ 1 ], [Function: fn] ]`);
   }
   fn(1, [1], fn);

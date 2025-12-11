@@ -403,8 +403,8 @@ describe("stringWidth extended", () => {
     test("unterminated OSC in UTF-16 string", () => {
       // Force UTF-16 by including non-Latin1 char, then unterminated OSC
       // The OSC content should NOT contribute to width
-      expect(Bun.stringWidth("中\x1b]8;;" + "x".repeat(100))).toBe(2); // Just 中
-      expect(Bun.stringWidth("hello中\x1b]8;;url" + "y".repeat(50))).toBe(7); // hello + 中
+      expect(Bun.stringWidth(`中\x1b]8;;${"x".repeat(100)}`)).toBe(2); // Just 中
+      expect(Bun.stringWidth(`hello中\x1b]8;;url${"y".repeat(50)}`)).toBe(7); // hello + 中
       expect(Bun.stringWidth("🎉\x1b]0;title")).toBe(2); // Just 🎉
     });
 
@@ -617,7 +617,7 @@ describe("stringWidth extended", () => {
 
     test("CSI without final byte (unterminated)", () => {
       // CSI sequence that never gets a final byte
-      const input = "a\x1b[" + "9".repeat(10000) + "b";
+      const input = `a\x1b[${"9".repeat(10000)}b`;
       // Should consume the whole CSI as escape sequence, leaving just 'a'
       // The 'b' at the end is outside the CSI if we hit end of params
       expect(Bun.stringWidth(input)).toBeGreaterThanOrEqual(1);
@@ -625,7 +625,7 @@ describe("stringWidth extended", () => {
 
     test("OSC without terminator (unterminated)", () => {
       // OSC sequence that never terminates
-      const input = "a\x1b]8;;" + "x".repeat(10000);
+      const input = `a\x1b]8;;${"x".repeat(10000)}`;
       // Should consume the OSC, leaving just 'a'
       expect(Bun.stringWidth(input)).toBe(1);
     });
@@ -656,19 +656,19 @@ describe("stringWidth extended", () => {
 
     test("deeply nested combining marks", () => {
       // Base character with many combining marks (zalgo-like)
-      const input = "a" + "\u0300\u0301\u0302\u0303\u0304".repeat(2000);
+      const input = `a${"\u0300\u0301\u0302\u0303\u0304".repeat(2000)}`;
       expect(Bun.stringWidth(input)).toBe(1); // All combining marks are zero-width
     });
 
     test("many ZWJ characters in sequence", () => {
       // Many ZWJ without proper emoji structure
-      const input = "👨" + "\u200D".repeat(10000);
+      const input = `👨${"\u200D".repeat(10000)}`;
       expect(Bun.stringWidth(input)).toBe(2); // Just the base emoji
     });
 
     test("many variation selectors", () => {
       // Character followed by many variation selectors
-      const input = "A" + "\uFE0F".repeat(10000);
+      const input = `A${"\uFE0F".repeat(10000)}`;
       expect(Bun.stringWidth(input)).toBe(1);
     });
 
@@ -818,7 +818,7 @@ describe("stringWidth extended", () => {
       // C1 controls: 0x80-0x9F
       let input = "";
       for (let i = 0x80; i <= 0x9f; i++) {
-        input += "a" + String.fromCharCode(i);
+        input += `a${String.fromCharCode(i)}`;
       }
       input = input.repeat(300);
       expect(Bun.stringWidth(input)).toBe(9600); // 32 'a' chars per pattern * 300

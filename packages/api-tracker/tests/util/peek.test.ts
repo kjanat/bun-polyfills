@@ -35,6 +35,7 @@ test("peek", () => {
   );
   rejected.catch(() => {});
 
+  // biome-ignore lint/suspicious/noExplicitAny: testing Promise extension
   expect(peek(new (class extends Promise<any> {})(() => {}))).toBeInstanceOf(
     Promise,
   );

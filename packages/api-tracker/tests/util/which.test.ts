@@ -25,10 +25,10 @@ $.nothrow();
 }
 
 function writeFixture(path: string) {
-  var fs = require("fs");
+  var fs = require("node:fs");
   try {
     fs.unlinkSync(path);
-  } catch (e) {}
+  } catch (_e) {}
 
   var script_name = path;
   var script_content = "echo Hello world!";
@@ -50,10 +50,10 @@ if (isWindows) {
     const exe = basename(process.execPath);
     const dir = join(process.execPath, "../");
     expect(which(exe, { PATH: "C:\\Windows\\system32" })).toBe(null);
-    expect(which(exe, { PATH: "C:\\Windows\\system32;" + dir })).toBe(
+    expect(which(exe, { PATH: `C:\\Windows\\system32;${dir}` })).toBe(
       process.execPath,
     );
-    expect(which(exe, { PATH: dir + ";C:\\Windows\\system32" })).toBe(
+    expect(which(exe, { PATH: `${dir};C:\\Windows\\system32` })).toBe(
       process.execPath,
     );
     expect(which(exe, { PATH: dir })).toBe(process.execPath);
@@ -95,7 +95,7 @@ if (isWindows) {
 
       expect(
         // PATH works like the $PATH environment variable, respecting colons
-        which("myscript.sh", { PATH: "/not-tmp:" + basedir }),
+        which("myscript.sh", { PATH: `/not-tmp:${basedir}` }),
       ).toBe(abs);
 
       // TODO: only fails on x64 macos
@@ -103,7 +103,7 @@ if (isWindows) {
         try {
           mkdirSync("myscript.sh");
           chmodSync("myscript.sh", "755");
-        } catch (e) {}
+        } catch (_e) {}
 
         // directories should not be returned
         expect(which("myscript.sh")).toBe(null);
@@ -158,19 +158,19 @@ test.skip("Bun.which does look in the current directory when given a path with a
     const suffix = isWindows ? ".cmd" : "";
 
     expect(which("./some_program_name")).toBe(
-      join(dir, "some_program_name" + suffix),
+      join(dir, `some_program_name${suffix}`),
     );
     expect((await $`./some_program_name`.text()).trim()).toBe(
       isWindows ? "win32" : "posix",
     );
     expect(which("./folder/other_app")).toBe(
-      join(dir, "folder/other_app" + suffix),
+      join(dir, `folder/other_app${suffix}`),
     );
     expect((await $`./folder/other_app`.text()).trim()).toBe(
       isWindows ? "win32" : "posix",
     );
     expect(which("folder/other_app")).toBe(
-      join(dir, "folder/other_app" + suffix),
+      join(dir, `folder/other_app${suffix}`),
     );
     expect((await $`folder/other_app`.text()).trim()).toBe(
       isWindows ? "win32" : "posix",
@@ -196,7 +196,7 @@ test.skip("Bun.which can find executables in a non-ascii directory", async () =>
 
     const suffix = isWindows ? ".cmd" : "";
     expect(which("./some_program_name")).toBe(
-      join(dir, "some_program_name" + suffix),
+      join(dir, `some_program_name${suffix}`),
     );
     expect((await $`./some_program_name`.text()).trim()).toBe(
       isWindows ? "win32" : "posix",

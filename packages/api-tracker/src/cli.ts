@@ -280,7 +280,7 @@ async function runTestsCommand(options: CliOptions): Promise<void> {
     filter: options.filter,
   });
 
-  console.log("\n" + getTestSummary(result));
+  console.log(`\n${getTestSummary(result)}`);
 
   // Save results to JSON
   const testResultsPath = path.join(options.outputDir, "test-results.json");
@@ -318,7 +318,7 @@ async function runCombined(options: CliOptions): Promise<void> {
   console.log("Tier 3: Applying annotations...");
   const combined = combineThreeTiers(comparison, testResults, annotationsPath);
 
-  console.log("\n" + generateThreeTierSummary(combined));
+  console.log(`\n${generateThreeTierSummary(combined)}`);
 
   // Save combined results
   const combinedPath = path.join(options.outputDir, "combined-coverage.json");

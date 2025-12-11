@@ -2,12 +2,19 @@
 import * as fs from "node:fs";
 import * as os from "node:os";
 import { join } from "node:path";
-import { ShellError, type ShellExpression } from "bun";
+import type { ShellExpression } from "bun";
+
 // import { bunExe } from "harness";
 
+// ShellError is Bun.$.ShellError at runtime
+type ShellError = InstanceType<(typeof Bun.$)["ShellError"]>;
+const ShellError = Bun.$.ShellError;
+
 export function createTestBuilder(path: string) {
-  var { describe, test, afterAll, beforeAll, expect, beforeEach, afterEach } =
-    Bun.jest(path);
+  // biome-ignore lint/correctness/noUnusedVariables: destructured for future use
+  const { describe, test, afterAll, beforeAll, expect, beforeEach, afterEach } =
+    // biome-ignore lint/suspicious/noExplicitAny: Bun.jest returns dynamic test utilities
+    (Bun as any).jest(path);
 
   var insideTestScope = false;
   beforeEach(() => {
@@ -50,6 +57,7 @@ export function createTestBuilder(path: string) {
 
     __todo: boolean | string = false;
 
+    // biome-ignore lint/suspicious/noExplicitAny: shell expressions can be any type
     constructor(_scriptStr: TemplateStringsArray, _expressions: any[]) {
       this._scriptStr = _scriptStr;
       this._expresssions = _expressions;
@@ -70,6 +78,7 @@ export function createTestBuilder(path: string) {
    */
     static command(
       strings: TemplateStringsArray,
+      // biome-ignore lint/suspicious/noExplicitAny: shell expressions can be any type
       ...expressions: any[]
     ): TestBuilder {
       return new TestBuilder(strings, expressions);
@@ -223,7 +232,6 @@ export function createTestBuilder(path: string) {
     getTempDir(): string {
       if (this.tempdir === undefined) {
         this.tempdir = TestBuilder.tmpdir();
-        return this.tempdir!;
       }
       return this.tempdir;
     }
@@ -269,12 +277,14 @@ export function createTestBuilder(path: string) {
           typeof expected_raw === "string" ? expected_raw : (
             await expected_raw()
           );
-        const actual = await Bun.file(join(this.tempdir!, filename)).text();
+        const actual = await Bun.file(
+          join(this.tempdir ?? "", filename),
+        ).text();
         expect(actual).toEqual(expected);
       }
 
       for (const fsname of this._doesNotExist) {
-        expect(fs.existsSync(join(this.tempdir!, fsname))).toBeFalsy();
+        expect(fs.existsSync(join(this.tempdir ?? "", fsname))).toBeFalsy();
       }
     }
 
@@ -300,6 +310,7 @@ export function createTestBuilder(path: string) {
         const { stdout, stderr, exitCode } = output;
         await this.doChecks(stdout, stderr, exitCode);
       } catch (err_) {
+        // biome-ignore lint/suspicious/noExplicitAny: error type casting
         const err: ShellError = err_ as any;
         const { stdout, stderr, exitCode } = err;
         if (this.expected_error === undefined) {
@@ -340,15 +351,13 @@ export function createTestBuilder(path: string) {
     }
 
     runAsTest(name: string) {
-      // biome-ignore lint/complexity/noUselessThisAlias: <explanation>
-      const tb = this;
       if (this.__todo) {
         test.todo(
           typeof this.__todo === "string" ?
             `${name} skipped: ${this.__todo}`
           : name,
           async () => {
-            await tb.run();
+            await this.run();
           },
         );
         return;
@@ -357,7 +366,7 @@ export function createTestBuilder(path: string) {
           test(
             name,
             async () => {
-              await tb.run();
+              await this.run();
             },
             this._timeout,
           );
@@ -365,23 +374,24 @@ export function createTestBuilder(path: string) {
 
         if (this._testMini) {
           test(
-            name + " (exec)",
+            `${name} (exec)`,
             async () => {
               let cwd: string = "";
-              if (tb._miniCwd === undefined) {
-                cwd = tb.newTempdir();
+              if (this._miniCwd === undefined) {
+                cwd = this.newTempdir();
               } else {
-                tb.tempdir = tb._miniCwd;
-                tb._cwd = tb._miniCwd;
-                cwd = tb._cwd;
+                this.tempdir = this._miniCwd;
+                this._cwd = this._miniCwd;
+                cwd = this._cwd;
               }
-              const joinedstr = tb.joinTemplate();
+              const joinedstr = this.joinTemplate();
               await Bun.$`echo ${joinedstr} > script.bun.sh`.cwd(cwd);
-              ((script: TemplateStringsArray, ...exprs: any[]) => {
-                tb._scriptStr = script;
-                tb._expresssions = exprs;
-              })`${bunExe()} run script.bun.sh`;
-              await tb.run();
+              // Set script template for execution
+              this._scriptStr = [
+                `${bunExe()} run script.bun.sh`,
+              ] as unknown as TemplateStringsArray;
+              this._expresssions = [];
+              await this.run();
             },
             this._timeout,
           );
@@ -405,7 +415,7 @@ export function createTestBuilder(path: string) {
     }
 
     joinTemplate(): string {
-      const buf = [];
+      const buf: string[] = [];
       for (let i = 0; i < this._scriptStr.length; i++) {
         buf.push(this._scriptStr[i]);
         if (this._expresssions[i] !== undefined) {
@@ -422,10 +432,17 @@ export function createTestBuilder(path: string) {
         buf.push(Bun.$.escape(expr));
       } else if (typeof expr === "number") {
         buf.push(expr.toString());
-      } else if (typeof expr?.raw === "string") {
-        buf.push(Bun.$.escape(expr.raw));
+      } else if (
+        expr &&
+        typeof expr === "object" &&
+        "raw" in expr &&
+        typeof (expr as { raw: string }).raw === "string"
+      ) {
+        buf.push(Bun.$.escape((expr as { raw: string }).raw));
       } else if (Array.isArray(expr)) {
-        expr.forEach((e) => this.processShellExpr(buf, e));
+        for (const e of expr) {
+          this.processShellExpr(buf, e);
+        }
       } else {
         if (this._skipExecOnUnknownType) {
           console.warn(`Unexpected expression type: ${expr}\nSkipping.`);
@@ -439,7 +456,7 @@ export function createTestBuilder(path: string) {
   return TestBuilder;
 }
 
-function generateRandomString(length: number): string {
+function _generateRandomString(length: number): string {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";

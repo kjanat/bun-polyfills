@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { bunEnv, bunExe } from "../harness";
+import { bunEnv } from "../harness";
 
 // Helper to run Node.js with polyfills loaded
 function nodeWithPolyfillsExe() {

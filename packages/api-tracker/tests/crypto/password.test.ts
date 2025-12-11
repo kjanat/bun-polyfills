@@ -193,24 +193,27 @@ const argons = ["argon2i", "argon2id", "argon2d"];
 for (const algorithmValue of algorithms) {
   const prefix =
     algorithmValue === "bcrypt" ? "$2" : (
-      "$" + (algorithmValue || defaultAlgorithm)
+      `$${algorithmValue || defaultAlgorithm}`
     );
 
   describe(algorithmValue ? algorithmValue : "default", () => {
     const hash = (value: string | TypedArray) => {
       return algorithmValue ?
+          // biome-ignore lint/suspicious/noExplicitAny: dynamic algorithm value
           password.hashSync(value, algorithmValue as any)
         : password.hashSync(value);
     };
 
     const hashSync = (value: string | TypedArray) => {
       return algorithmValue ?
+          // biome-ignore lint/suspicious/noExplicitAny: dynamic algorithm value
           password.hashSync(value, algorithmValue as any)
         : password.hashSync(value);
     };
 
     const verify = (pw: string | TypedArray, value: string | TypedArray) => {
       return algorithmValue ?
+          // biome-ignore lint/suspicious/noExplicitAny: dynamic algorithm value
           password.verify(pw, value, algorithmValue as any)
         : password.verify(pw, value);
     };
@@ -220,6 +223,7 @@ for (const algorithmValue of algorithms) {
       value: string | TypedArray,
     ) => {
       return algorithmValue ?
+          // biome-ignore lint/suspicious/noExplicitAny: dynamic algorithm value
           password.verifySync(pw, value, algorithmValue as any)
         : password.verifySync(pw, value);
     };
@@ -231,21 +235,23 @@ for (const algorithmValue of algorithms) {
           expect(hashed).toStartWith(prefix);
           expect(verifySync(input, hashed)).toBeTrue();
           expect(() => verifySync(hashed, input)).toThrow();
-          expect(verifySync(input + "\0", hashed)).toBeFalse();
+          expect(verifySync(`${input}\0`, hashed)).toBeFalse();
         });
 
         describe("password", async () => {
+          // biome-ignore lint/suspicious/noExplicitAny: dynamic algorithm value
           async function runSlowTest(algorithm = algorithmValue as any) {
             const hashed = await password.hash(input, algorithm);
-            const prefix = "$" + algorithm;
+            const prefix = `$${algorithm}`;
             expect(hashed).toStartWith(prefix);
             expect(await password.verify(input, hashed, algorithm)).toBeTrue();
             expect(() => password.verify(hashed, input, algorithm)).toThrow();
             expect(
-              await password.verify(input + "\0", hashed, algorithm),
+              await password.verify(`${input}\0`, hashed, algorithm),
             ).toBeFalse();
           }
 
+          // biome-ignore lint/suspicious/noExplicitAny: dynamic algorithm options
           async function runSlowTestWithOptions(algorithmLabel: any) {
             const algorithm = {
               algorithm: algorithmLabel,
@@ -253,7 +259,7 @@ for (const algorithmValue of algorithms) {
               memoryCost: 8,
             };
             const hashed = await password.hash(input, algorithm);
-            const prefix = "$" + algorithmLabel;
+            const prefix = `$${algorithmLabel}`;
             expect(hashed).toStartWith(prefix);
             expect(hashed).toContain("t=5");
             expect(hashed).toContain("m=8");
@@ -265,7 +271,7 @@ for (const algorithmValue of algorithms) {
               password.verify(hashed, input, algorithmLabel),
             ).toThrow();
             expect(
-              await password.verify(input + "\0", hashed, algorithmLabel),
+              await password.verify(`${input}\0`, hashed, algorithmLabel),
             ).toBeFalse();
           }
 
@@ -277,7 +283,7 @@ for (const algorithmValue of algorithms) {
             expect(await password.verify(input, hashed, "bcrypt")).toBeTrue();
             expect(() => password.verify(hashed, input, "bcrypt")).toThrow();
             expect(
-              await password.verify(input + "\0", hashed, "bcrypt"),
+              await password.verify(`${input}\0`, hashed, "bcrypt"),
             ).toBeFalse();
           }
 
@@ -298,7 +304,7 @@ for (const algorithmValue of algorithms) {
             expect(hashed).toStartWith(prefix);
             expect(await verify(input, hashed)).toBeTrue();
             expect(() => verify(hashed, input)).toThrow();
-            expect(await verify(input + "\0", hashed)).toBeFalse();
+            expect(await verify(`${input}\0`, hashed)).toBeFalse();
           }
 
           if (algorithmValue === "bcrypt") {

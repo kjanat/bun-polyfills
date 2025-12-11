@@ -1,4 +1,3 @@
-import { ShellOutput, ShellPromise } from "bun";
 import { createTestBuilder } from "./test_builder";
 
 export { createTestBuilder };
@@ -6,8 +5,10 @@ export { createTestBuilder };
 declare module "bun" {
   // Define the additional methods
   interface Shell {
-    parse: (strings: TemplateStringsArray, ...expressions: any[]) => string; // Define the return type for parse
-    lex: (strings: TemplateStringsArray, ...expressions: any[]) => string; // Define the return type for lex
+    // biome-ignore lint/suspicious/noExplicitAny: shell expressions can be any type
+    parse: (strings: TemplateStringsArray, ...expressions: any[]) => string;
+    // biome-ignore lint/suspicious/noExplicitAny: shell expressions can be any type
+    lex: (strings: TemplateStringsArray, ...expressions: any[]) => string;
   }
 }
 

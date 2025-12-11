@@ -41,6 +41,7 @@ export async function compareTypes(
   const bunTypesPath = fullConfig.bunTypesPath ?? resolveBunTypesPath();
 
   // Create TypeScript program with both type sources
+  // biome-ignore lint/correctness/noUnusedVariables: program is kept for potential debugging
   const { program, checker, bunSourceFile, polyfillSourceFile } = createProgram(
     bunTypesPath,
     fullConfig.polyfillTypesPath,
@@ -66,13 +67,15 @@ export async function compareTypes(
     // If no polyfill mapping, mark all as missing
     if (!polyfillName) {
       const members =
-        bunResult.isModule ?
+        bunResult.isModule && bunResult.moduleSymbol ?
           extractModuleExportsAsMissing(
             checker,
-            bunResult.moduleSymbol!,
+            bunResult.moduleSymbol,
             bunName,
           )
-        : extractMembersAsMissing(checker, bunResult.type!, bunName);
+        : bunResult.type ?
+          extractMembersAsMissing(checker, bunResult.type, bunName)
+        : [];
       interfaces.push({
         bunInterface: bunName,
         polyfillInterface: null,
@@ -91,13 +94,15 @@ export async function compareTypes(
     if (!polyfillResult.type && !polyfillResult.isModule) {
       warnings.push(`Could not find Polyfill type: ${polyfillName}`);
       const members =
-        bunResult.isModule ?
+        bunResult.isModule && bunResult.moduleSymbol ?
           extractModuleExportsAsMissing(
             checker,
-            bunResult.moduleSymbol!,
+            bunResult.moduleSymbol,
             bunName,
           )
-        : extractMembersAsMissing(checker, bunResult.type!, bunName);
+        : bunResult.type ?
+          extractMembersAsMissing(checker, bunResult.type, bunName)
+        : [];
       interfaces.push({
         bunInterface: bunName,
         polyfillInterface: polyfillName,
@@ -109,23 +114,25 @@ export async function compareTypes(
 
     // Compare members - handle module vs interface comparison
     let members: MemberComparison[];
-    if (bunResult.isModule) {
+    if (bunResult.isModule && bunResult.moduleSymbol && polyfillResult.type) {
       // Compare module exports against interface properties
       members = compareModuleExportsToInterface(
         checker,
-        bunResult.moduleSymbol!,
-        polyfillResult.type!,
+        bunResult.moduleSymbol,
+        polyfillResult.type,
+        bunName,
+        fullConfig.strictSignatures ?? true,
+      );
+    } else if (bunResult.type && polyfillResult.type) {
+      members = compareMembersBetweenTypes(
+        checker,
+        bunResult.type,
+        polyfillResult.type,
         bunName,
         fullConfig.strictSignatures ?? true,
       );
     } else {
-      members = compareMembersBetweenTypes(
-        checker,
-        bunResult.type!,
-        polyfillResult.type!,
-        bunName,
-        fullConfig.strictSignatures ?? true,
-      );
+      members = [];
     }
 
     interfaces.push({
@@ -185,7 +192,7 @@ function createProgram(
   // Create source files
   const bunSourceFile = ts.createSourceFile(
     "bun.d.ts",
-    bunCode + "\n" + shellCode,
+    `${bunCode}\n${shellCode}`,
     ts.ScriptTarget.Latest,
     true,
   );

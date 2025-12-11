@@ -1,6 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { join } from "path";
-import { bunEnv, bunExe, isPosix } from "../harness";
+import { bunEnv } from "../harness";
 
 // Helper to run Node.js with polyfills loaded
 function nodeWithPolyfillsExe(): string {

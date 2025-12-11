@@ -116,20 +116,23 @@ export function calculateByCategory(
       };
     }
 
-    stats[category]!.total++;
-    switch (impl.status) {
-      case "implemented":
-        stats[category]!.implemented++;
-        break;
-      case "partial":
-        stats[category]!.partial++;
-        break;
-      case "stub":
-        stats[category]!.stub++;
-        break;
-      case "not-started":
-        stats[category]!.notStarted++;
-        break;
+    const categoryStats = stats[category];
+    if (categoryStats) {
+      categoryStats.total++;
+      switch (impl.status) {
+        case "implemented":
+          categoryStats.implemented++;
+          break;
+        case "partial":
+          categoryStats.partial++;
+          break;
+        case "stub":
+          categoryStats.stub++;
+          break;
+        case "not-started":
+          categoryStats.notStarted++;
+          break;
+      }
     }
   }
 
@@ -242,13 +245,13 @@ export function generateMarkdownReport(report: CoverageReport): string {
   lines.push("| Status | Count | % |");
   lines.push("|--------|-------|---|");
   lines.push(
-    `| ${STATUS_EMOJI["implemented"]} Implemented | ${report.summary.implemented} | ${pct(report.summary.implemented, report.summary.total)}% |`,
+    `| ${STATUS_EMOJI.implemented} Implemented | ${report.summary.implemented} | ${pct(report.summary.implemented, report.summary.total)}% |`,
   );
   lines.push(
-    `| ${STATUS_EMOJI["partial"]} Partial | ${report.summary.partial} | ${pct(report.summary.partial, report.summary.total)}% |`,
+    `| ${STATUS_EMOJI.partial} Partial | ${report.summary.partial} | ${pct(report.summary.partial, report.summary.total)}% |`,
   );
   lines.push(
-    `| ${STATUS_EMOJI["stub"]} Stub | ${report.summary.stub} | ${pct(report.summary.stub, report.summary.total)}% |`,
+    `| ${STATUS_EMOJI.stub} Stub | ${report.summary.stub} | ${pct(report.summary.stub, report.summary.total)}% |`,
   );
   lines.push(
     `| ${STATUS_EMOJI["not-started"]} Not Started | ${report.summary.notStarted} | ${pct(report.summary.notStarted, report.summary.total)}% |`,
@@ -322,12 +325,10 @@ export function generateMarkdownReport(report: CoverageReport): string {
   lines.push("## Legend");
   lines.push("");
   lines.push(
-    `- ${STATUS_EMOJI["implemented"]} **Implemented**: Fully working polyfill`,
+    `- ${STATUS_EMOJI.implemented} **Implemented**: Fully working polyfill`,
   );
-  lines.push(`- ${STATUS_EMOJI["partial"]} **Partial**: Some features missing`);
-  lines.push(
-    `- ${STATUS_EMOJI["stub"]} **Stub**: Exists but may throw or no-op`,
-  );
+  lines.push(`- ${STATUS_EMOJI.partial} **Partial**: Some features missing`);
+  lines.push(`- ${STATUS_EMOJI.stub} **Stub**: Exists but may throw or no-op`);
   lines.push(
     `- ${STATUS_EMOJI["not-started"]} **Not Started**: No implementation yet`,
   );
