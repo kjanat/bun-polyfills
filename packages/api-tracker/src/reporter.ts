@@ -277,7 +277,8 @@ export function generateMarkdownReport(report: CoverageReport): string {
     for (const impl of categoryApis) {
       const emoji = STATUS_EMOJI[impl.status];
       const label = STATUS_LABELS[impl.status];
-      const notes = impl.notes ?? "";
+      // Escape pipe characters in notes to prevent breaking markdown tables
+      const notes = (impl.notes ?? "").replace(/\|/g, "\\|");
       lines.push(`| \`${impl.api.fullPath}\` | ${emoji} ${label} | ${notes} |`);
     }
 
