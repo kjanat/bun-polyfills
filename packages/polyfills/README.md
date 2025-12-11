@@ -104,10 +104,7 @@ const proc = Bun.spawn(["node", "--version"]);
 await proc.exited; // exit code
 
 // With options
-const proc2 = Bun.spawn(["cat"], {
-  stdin: "pipe",
-  stdout: "pipe",
-});
+const proc2 = Bun.spawn(["cat"], { stdin: "pipe", stdout: "pipe" });
 proc2.stdin.write("Hello");
 proc2.stdin.end();
 const output = await new Response(proc2.stdout).text();

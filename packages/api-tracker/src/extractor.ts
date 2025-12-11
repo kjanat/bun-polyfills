@@ -1,4 +1,5 @@
-// Extract Bun APIs from bun-types declaration files using TypeScript Compiler API
+// Extract Bun APIs from @types/bun declaration files using TypeScript Compiler API
+// Note: @types/bun re-exports bun-types, so we resolve through @types/bun -> bun-types
 
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -172,38 +173,84 @@ const API_CATEGORIES: Record<string, ApiCategory> = {
 };
 
 /**
- * Resolve bun-types path from node_modules
+ * Resolve @types/bun path from node_modules
+ * @types/bun re-exports bun-types, so we follow the dependency chain
  */
 export function resolveBunTypesPath(startDir: string = process.cwd()): string {
-  // Try to find bun-types in node_modules
-  const candidates = [
-    path.join(startDir, "node_modules", "bun-types"),
-    path.join(startDir, "node_modules", "@types", "bun"),
-  ];
-
-  for (const candidate of candidates) {
-    if (fs.existsSync(candidate)) {
-      return candidate;
-    }
-  }
-
-  // Walk up directories
+  // Walk up directories looking for @types/bun
   let dir = startDir;
   while (dir !== path.dirname(dir)) {
-    const bunTypesPath = path.join(dir, "node_modules", "bun-types");
-    if (fs.existsSync(bunTypesPath)) {
-      return bunTypesPath;
+    // First try @types/bun (preferred)
+    const typesBunPath = path.join(dir, "node_modules", "@types", "bun");
+    if (fs.existsSync(typesBunPath)) {
+      // @types/bun re-exports bun-types, find the actual bun-types
+      const bunTypesPath = resolveBunTypesFromTypesBun(typesBunPath, dir);
+      if (bunTypesPath) return bunTypesPath;
     }
+
+    // Fallback to direct bun-types (legacy)
+    const directPath = path.join(dir, "node_modules", "bun-types");
+    if (fs.existsSync(directPath)) {
+      return directPath;
+    }
+
     dir = path.dirname(dir);
   }
 
   throw new Error(
-    "Could not find bun-types. Install it with: bun add -d bun-types",
+    "Could not find @types/bun. Install it with: bun add -d @types/bun",
   );
 }
 
 /**
- * Get bun-types version from package.json
+ * Resolve bun-types from @types/bun dependency
+ */
+function resolveBunTypesFromTypesBun(
+  typesBunPath: string,
+  rootDir: string,
+): string | null {
+  // Check @types/bun's package.json for bun-types dependency
+  const pkgPath = path.join(typesBunPath, "package.json");
+  if (fs.existsSync(pkgPath)) {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+    const bunTypesVersion = pkg.dependencies?.["bun-types"];
+
+    if (bunTypesVersion) {
+      // Look for bun-types in node_modules
+      const candidates = [
+        // Hoisted to root
+        path.join(rootDir, "node_modules", "bun-types"),
+        // Nested in @types/bun
+        path.join(typesBunPath, "node_modules", "bun-types"),
+        // In .bun cache (Bun workspace format)
+        path.join(
+          rootDir,
+          "node_modules",
+          ".bun",
+          `bun-types@${bunTypesVersion.replace(/[\^~]/, "")}`,
+          "node_modules",
+          "bun-types",
+        ),
+      ];
+
+      for (const candidate of candidates) {
+        if (fs.existsSync(candidate)) {
+          return candidate;
+        }
+      }
+    }
+  }
+
+  // Fallback: just use @types/bun path if it contains the .d.ts files directly
+  if (fs.existsSync(path.join(typesBunPath, "bun.d.ts"))) {
+    return typesBunPath;
+  }
+
+  return null;
+}
+
+/**
+ * Get @types/bun version from package.json
  */
 export function getBunTypesVersion(bunTypesPath: string): string {
   const pkgPath = path.join(bunTypesPath, "package.json");
@@ -316,11 +363,9 @@ function extractFromFile(
       ) {
         // Determine effective module for nested processing
         const _effectiveModule: BunModule =
-          moduleName === '"bun:sqlite"'
-            ? "bun:sqlite"
-            : moduleName === '"bun:ffi"'
-              ? "bun:ffi"
-              : "bun";
+          moduleName === '"bun:sqlite"' ? "bun:sqlite"
+          : moduleName === '"bun:ffi"' ? "bun:ffi"
+          : "bun";
         void _effectiveModule; // Reserved for future use
 
         if (node.body && ts.isModuleBlock(node.body)) {
@@ -651,7 +696,7 @@ export async function extractApis(
     ...config,
   };
 
-  // Resolve bun-types path if not provided
+  // Resolve @types/bun path if not provided
   if (!fullConfig.bunTypesPath) {
     fullConfig.bunTypesPath = resolveBunTypesPath();
   }

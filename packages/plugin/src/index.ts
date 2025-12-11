@@ -24,18 +24,12 @@ export const conditionalPolyfillPlugin: BunPlugin = {
     if (target === "bun") {
       // Intercept @kjanat/bun-polyfills imports
       build.onResolve({ filter: /@kjanat\/bun-polyfills/ }, (args) => {
-        return {
-          path: args.path,
-          namespace: "polyfill-stub",
-        };
+        return { path: args.path, namespace: "polyfill-stub" };
       });
 
       // Also intercept relative polyfill imports (for when used alongside source)
       build.onResolve({ filter: /\/polyfills\// }, (args) => {
-        return {
-          path: args.path,
-          namespace: "polyfill-stub",
-        };
+        return { path: args.path, namespace: "polyfill-stub" };
       });
 
       // Return empty stub for polyfill modules

@@ -204,9 +204,8 @@ function createBunFile(
   let _size: number | null = null;
 
   // MIME type
-  const mimeType = options?.type
-    ? `${options.type};charset=utf-8`
-    : inferMimeType(filePath);
+  const mimeType =
+    options?.type ? `${options.type};charset=utf-8` : inferMimeType(filePath);
 
   const bunFile: PolyfillBunFile = {
     get size(): number {

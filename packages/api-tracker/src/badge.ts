@@ -92,12 +92,7 @@ export function generateBadges(
   const markdown = `[![Bun API Coverage](${coverageUrl})](./packages/api-tracker/output/COVERAGE.md)`;
   const html = `<a href="./packages/api-tracker/output/COVERAGE.md"><img src="${coverageUrl}" alt="Bun API Coverage"></a>`;
 
-  return {
-    coverage: coverageUrl,
-    implemented: implementedUrl,
-    markdown,
-    html,
-  };
+  return { coverage: coverageUrl, implemented: implementedUrl, markdown, html };
 }
 
 /**

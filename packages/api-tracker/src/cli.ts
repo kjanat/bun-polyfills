@@ -24,7 +24,7 @@ COMMANDS:
   check       Check if coverage meets threshold
   badge       Generate badge JSON for shields.io
   list        List all Bun APIs
-  extract     Extract APIs from bun-types (debug)
+  extract     Extract APIs from @types/bun (debug)
   help        Show this help message
 
 OPTIONS:
@@ -108,7 +108,7 @@ function parseArgs(args: string[]): CliOptions {
 }
 
 async function runReport(options: CliOptions): Promise<void> {
-  console.log("Extracting Bun APIs from bun-types...");
+  console.log("Extracting Bun APIs from @types/bun...");
   const extraction = await extractApis();
   console.log(`Found ${extraction.apis.length} top-level APIs`);
 
@@ -210,7 +210,7 @@ async function runBadge(options: CliOptions): Promise<void> {
 }
 
 async function runExtract(_options: CliOptions): Promise<void> {
-  console.log("Extracting APIs from bun-types...\n");
+  console.log("Extracting APIs from @types/bun...\n");
   const extraction = await extractApis();
 
   console.log(`Version: ${extraction.version}`);

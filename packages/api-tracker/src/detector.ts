@@ -263,10 +263,7 @@ export async function detectImplementations(
   apis: BunApi[],
   config: Partial<DetectorConfig> = {},
 ): Promise<DetectionResult> {
-  const fullConfig: DetectorConfig = {
-    ...DEFAULT_DETECTOR_CONFIG,
-    ...config,
-  };
+  const fullConfig: DetectorConfig = { ...DEFAULT_DETECTOR_CONFIG, ...config };
 
   if (!fullConfig.polyfillsPath) {
     throw new Error("polyfillsPath is required");
@@ -278,8 +275,9 @@ export async function detectImplementations(
   const implementedApis = new Set<string>();
 
   // Load manual overrides
-  const overrides = fullConfig.overridesPath
-    ? loadManualOverrides(fullConfig.overridesPath)
+  const overrides =
+    fullConfig.overridesPath ?
+      loadManualOverrides(fullConfig.overridesPath)
     : new Map<string, ManualOverride>();
 
   // Scan polyfill source files
@@ -417,8 +415,8 @@ export function sortByCompleteness(
   ascending: boolean = false,
 ): ApiImplementation[] {
   return Array.from(implementations.values()).sort((a, b) =>
-    ascending
-      ? a.completeness - b.completeness
-      : b.completeness - a.completeness,
+    ascending ?
+      a.completeness - b.completeness
+    : b.completeness - a.completeness,
   );
 }

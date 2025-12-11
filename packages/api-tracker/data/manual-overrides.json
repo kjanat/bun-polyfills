@@ -29,16 +29,8 @@
     "completeness": 80,
     "notes": "Basic stdin reading works"
   },
-  {
-    "fullPath": "Bun.stdout",
-    "status": "implemented",
-    "completeness": 80
-  },
-  {
-    "fullPath": "Bun.stderr",
-    "status": "implemented",
-    "completeness": 80
-  },
+  { "fullPath": "Bun.stdout", "status": "implemented", "completeness": 80 },
+  { "fullPath": "Bun.stderr", "status": "implemented", "completeness": 80 },
   {
     "fullPath": "Bun.$",
     "status": "implemented",
@@ -60,32 +52,16 @@
     "completeness": 85,
     "notes": "Core spawn functionality working"
   },
-  {
-    "fullPath": "Bun.spawnSync",
-    "status": "implemented",
-    "completeness": 85
-  },
+  { "fullPath": "Bun.spawnSync", "status": "implemented", "completeness": 85 },
   {
     "fullPath": "Bun.env",
     "status": "implemented",
     "completeness": 100,
     "notes": "Direct pass-through to process.env"
   },
-  {
-    "fullPath": "Bun.version",
-    "status": "implemented",
-    "completeness": 100
-  },
-  {
-    "fullPath": "Bun.revision",
-    "status": "implemented",
-    "completeness": 100
-  },
-  {
-    "fullPath": "Bun.resolve",
-    "status": "implemented",
-    "completeness": 90
-  },
+  { "fullPath": "Bun.version", "status": "implemented", "completeness": 100 },
+  { "fullPath": "Bun.revision", "status": "implemented", "completeness": 100 },
+  { "fullPath": "Bun.resolve", "status": "implemented", "completeness": 90 },
   {
     "fullPath": "Bun.resolveSync",
     "status": "implemented",

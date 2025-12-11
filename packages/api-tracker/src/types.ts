@@ -176,7 +176,7 @@ export interface CoverageReport {
   /** ISO timestamp of generation */
   generated: string;
 
-  /** Version of bun-types used */
+  /** Version of @types/bun used */
   bunTypesVersion: string;
 
   /** Overall summary */
@@ -225,7 +225,7 @@ export interface ManualOverride {
  * Configuration for the extractor
  */
 export interface ExtractorConfig {
-  /** Path to bun-types package */
+  /** Path to @types/bun package (resolves to bun-types internally) */
   bunTypesPath: string;
 
   /** Which modules to extract */
@@ -288,7 +288,7 @@ export interface ExtractionResult {
   /** Extracted APIs */
   apis: BunApi[];
 
-  /** bun-types version */
+  /** @types/bun version */
   version: string;
 
   /** Extraction timestamp */

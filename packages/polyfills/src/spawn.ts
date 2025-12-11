@@ -247,9 +247,9 @@ class SubprocessImpl implements Subprocess {
         // Call onExit callback if provided
         if (options?.onExit) {
           const error =
-            code !== 0
-              ? new Error(`Process exited with code ${code}`)
-              : undefined;
+            code !== 0 ?
+              new Error(`Process exited with code ${code}`)
+            : undefined;
           Promise.resolve(options.onExit(this, code, signal ? 1 : null, error));
         }
 
@@ -372,8 +372,9 @@ export function spawn(...args: SpawnArgs): Subprocess {
   const [cmd, ...cmdArgs] = command as [string, ...string[]];
 
   // Build stdio array
-  const stdio: StdioOptions = options.stdio
-    ? [
+  const stdio: StdioOptions =
+    options.stdio ?
+      [
         mapStdioOption(options.stdio[0]),
         mapStdioOption(options.stdio[1]),
         mapStdioOption(options.stdio[2]),
@@ -414,8 +415,9 @@ export function spawnSync(...args: SpawnArgs): SyncSubprocess {
   const [cmd, ...cmdArgs] = command as [string, ...string[]];
 
   // Build stdio array
-  const stdio: StdioOptions = options.stdio
-    ? [
+  const stdio: StdioOptions =
+    options.stdio ?
+      [
         mapStdioOption(options.stdio[0]),
         mapStdioOption(options.stdio[1]),
         mapStdioOption(options.stdio[2]),

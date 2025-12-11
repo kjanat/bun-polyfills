@@ -69,14 +69,7 @@ export function calculateSummary(
   const percentComplete =
     total > 0 ? Math.round(((implemented + partial * 0.5) / total) * 100) : 0;
 
-  return {
-    total,
-    implemented,
-    partial,
-    stub,
-    notStarted,
-    percentComplete,
-  };
+  return { total, implemented, partial, stub, notStarted, percentComplete };
 }
 
 /**
@@ -215,7 +208,7 @@ export function generateMarkdownReport(report: CoverageReport): string {
   lines.push("# Bun API Coverage Report");
   lines.push("");
   lines.push(
-    `Generated: ${new Date(report.generated).toLocaleString()} | bun-types: ${report.bunTypesVersion}`,
+    `Generated: ${new Date(report.generated).toLocaleString()} | @types/bun: ${report.bunTypesVersion}`,
   );
   lines.push("");
 
@@ -325,10 +318,7 @@ export async function writeReports(
   report: CoverageReport,
   config: Partial<ReporterConfig> = {},
 ): Promise<{ json?: string; markdown?: string }> {
-  const fullConfig: ReporterConfig = {
-    ...DEFAULT_REPORTER_CONFIG,
-    ...config,
-  };
+  const fullConfig: ReporterConfig = { ...DEFAULT_REPORTER_CONFIG, ...config };
 
   // Ensure output directory exists
   if (!fs.existsSync(fullConfig.outputDir)) {

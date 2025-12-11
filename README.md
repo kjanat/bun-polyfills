@@ -2,7 +2,8 @@
 
 [![Bun API Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/kjanat/bun-polyfills/master/packages/api-tracker/output/badge.json)](./packages/api-tracker/output/COVERAGE.md)
 
-Bun API polyfills for Node.js runtime. Use Bun APIs (`Bun.file()`, `Bun.$`, `Bun.spawn()`, etc.) in Node.js environments.
+Bun API polyfills for Node.js runtime. Use Bun APIs (`Bun.file()`, `Bun.$`,
+`Bun.spawn()`, etc.) in Node.js environments.
 
 ## Packages
 
@@ -34,7 +35,8 @@ await proc.exited;
 
 ## Build Plugin
 
-When building for both Node.js and Bun targets, use the plugin to stub polyfills for Bun:
+When building for both Node.js and Bun targets, use the plugin to stub polyfills
+for Bun:
 
 ```bash
 bun add -D @kjanat/bun-polyfills-plugin
