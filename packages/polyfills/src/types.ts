@@ -213,4 +213,34 @@ export interface PolyfillBun {
   nanoseconds: () => bigint;
   isMainThread: boolean;
   gc: (full?: boolean) => void;
+
+  // Module utilities
+  resolve: (moduleId: string, parent?: string) => Promise<string>;
+  resolveSync: (moduleId: string, parent?: string) => string;
+  pathToFileURL: (path: string) => URL;
+  fileURLToPath: (url: string | URL) => string;
+
+  // Glob
+  Glob: typeof import("./glob.ts").Glob;
+
+  // TOML
+  TOML: typeof import("./toml.ts").TOML;
+
+  // Compression
+  gzipSync: (
+    input: ArrayBuffer | ArrayBufferView | Uint8Array | string,
+    options?: { level?: number; memLevel?: number; windowBits?: number },
+  ) => Uint8Array;
+  gunzipSync: (
+    input: ArrayBuffer | ArrayBufferView | Uint8Array,
+    options?: { level?: number; memLevel?: number; windowBits?: number },
+  ) => Uint8Array;
+  deflateSync: (
+    input: ArrayBuffer | ArrayBufferView | Uint8Array | string,
+    options?: { level?: number; memLevel?: number; windowBits?: number },
+  ) => Uint8Array;
+  inflateSync: (
+    input: ArrayBuffer | ArrayBufferView | Uint8Array,
+    options?: { level?: number; memLevel?: number; windowBits?: number },
+  ) => Uint8Array;
 }

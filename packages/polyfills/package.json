@@ -80,6 +80,9 @@
     }
   },
   "dependencies": {
+    "fast-glob": "^3.3.3",
+    "minimatch": "^10.1.1",
+    "smol-toml": "^1.5.2",
     "zx": "catalog:"
   },
   "devDependencies": {

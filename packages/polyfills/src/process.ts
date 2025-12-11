@@ -115,8 +115,7 @@ export function sleepSync(ms: number): void {
     if (remaining <= 0) break;
 
     // Atomics.wait with timeout - more accurate than busy loop
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    Atomics.wait(int32, 0, 0, Math.min(remaining, 100));
+    void Atomics.wait(int32, 0, 0, Math.min(remaining, 100));
   }
 }
 

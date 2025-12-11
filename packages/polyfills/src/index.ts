@@ -21,6 +21,15 @@ export {
   isMainThread,
   gc,
 } from "./process.ts";
+export {
+  initCompression,
+  gzipSync,
+  gunzipSync,
+  deflateSync,
+  inflateSync,
+} from "./compression.ts";
+export { initGlob, Glob } from "./glob.ts";
+export { initTOML, TOML } from "./toml.ts";
 
 import type { PolyfillBun } from "./types.ts";
 
@@ -56,6 +65,15 @@ export async function initBunShims(): Promise<void> {
 
   const { initProcess } = await import("./process.ts");
   initProcess(bun);
+
+  const { initCompression } = await import("./compression.ts");
+  initCompression(bun);
+
+  const { initGlob } = await import("./glob.ts");
+  initGlob(bun);
+
+  const { initTOML } = await import("./toml.ts");
+  initTOML(bun);
 }
 
 export default initBunShims;
