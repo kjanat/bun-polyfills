@@ -9,13 +9,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    strategy:
-      fail-fast: false
-      matrix:
-        package:
-          - packages/api-tracker
-          - packages/plugin
-          - packages/polyfills
 
     steps:
       - name: Checkout code
@@ -28,8 +21,6 @@ jobs:
 
       - name: Build
         run: bun run build
-        working-directory: ${{ matrix.package }}
 
       - name: Publish
-        run: bunx pkg-pr-new publish
-        working-directory: ${{ matrix.package }}
+        run: bunx pkg-pr-new publish './packages/*'
