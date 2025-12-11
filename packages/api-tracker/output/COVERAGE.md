@@ -1,75 +1,65 @@
 # Bun API Coverage Report
 
-Generated: 12/11/2025, 12:51:34 PM | @types/bun: 1.3.4
+Generated: 12/11/2025, 1:56:51 PM | @types/bun: 1.3.4
 
 ## Summary
 
 | Status | Count | % |
 |--------|-------|---|
-| :white_check_mark: Implemented | 29 | 6% |
-| :yellow_circle: Partial | 4 | 1% |
+| :white_check_mark: Implemented | 8 | 2% |
+| :yellow_circle: Partial | 21 | 5% |
 | :construction: Stub | 0 | 0% |
-| :x: Not Started | 419 | 93% |
+| :x: Not Started | 423 | 94% |
 | **Total** | **452** | - |
 
-**Overall Progress: 7%**
+**Overall Progress: 4%**
 
 ## Progress by Category
 
-### Process (7/7 - 100%)
+### Process (2/7 - 64%)
 
 | API | Status | Notes |
 |-----|--------|-------|
-| `Bun.env` | :white_check_mark: Implemented |  |
 | `Bun.argv` | :white_check_mark: Implemented |  |
-| `Bun.which` | :white_check_mark: Implemented |  |
 | `Bun.main` | :white_check_mark: Implemented |  |
-| `Bun.spawn` | :white_check_mark: Implemented |  |
-| `Bun.spawnSync` | :white_check_mark: Implemented |  |
-| `Bun.$` | :white_check_mark: Implemented |  |
+| `Bun.env` | :yellow_circle: Partial | Direct pass-through to process.env |
+| `Bun.which` | :yellow_circle: Partial | Signature mismatch: Bun="(command: string, options?: WhichOptions | undefined) => string | null" vs Polyfill="(cmd: string, options?: { PATH?: string | undefined; } | undefined) => string | null" |
+| `Bun.spawn` | :yellow_circle: Partial | Core spawn functionality working via node:child_process |
+| `Bun.spawnSync` | :yellow_circle: Partial | Core spawnSync functionality working via node:child_process |
+| `Bun.$` | :yellow_circle: Partial | Uses zx as backend |
 
-### Module (4/5 - 80%)
+### Module (2/5 - 60%)
 
 | API | Status | Notes |
 |-----|--------|-------|
-| `Bun.resolveSync` | :white_check_mark: Implemented |  |
-| `Bun.resolve` | :white_check_mark: Implemented |  |
 | `Bun.pathToFileURL` | :white_check_mark: Implemented |  |
 | `Bun.fileURLToPath` | :white_check_mark: Implemented |  |
+| `Bun.resolveSync` | :yellow_circle: Partial | Uses require.resolve |
+| `Bun.resolve` | :yellow_circle: Partial | Uses import.meta.resolve |
 | `Loader.resolve` | :x: Not Started |  |
 
-### Compression (4/8 - 50%)
+### Compression (0/8 - 25%)
 
 | API | Status | Notes |
 |-----|--------|-------|
-| `Bun.deflateSync` | :white_check_mark: Implemented |  |
-| `Bun.gzipSync` | :white_check_mark: Implemented |  |
-| `Bun.inflateSync` | :white_check_mark: Implemented |  |
-| `Bun.gunzipSync` | :white_check_mark: Implemented |  |
+| `Bun.deflateSync` | :yellow_circle: Partial | Signature mismatch: Bun="(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>" vs Polyfill="(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>" |
+| `Bun.gzipSync` | :yellow_circle: Partial | Signature mismatch: Bun="(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>" vs Polyfill="(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>" |
+| `Bun.inflateSync` | :yellow_circle: Partial | Signature mismatch: Bun="(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>" vs Polyfill="(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>" |
+| `Bun.gunzipSync` | :yellow_circle: Partial | Signature mismatch: Bun="(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>" vs Polyfill="(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>" |
 | `Bun.zstdCompressSync` | :x: Not Started |  |
 | `Bun.zstdCompress` | :x: Not Started |  |
 | `Bun.zstdDecompressSync` | :x: Not Started |  |
 | `Bun.zstdDecompress` | :x: Not Started |  |
 
-### Parsing (1/5 - 30%)
+### Filesystem (0/17 - 15%)
 
 | API | Status | Notes |
 |-----|--------|-------|
-| `Bun.TOML` | :white_check_mark: Implemented |  |
-| `Bun.TOML.parse` | :yellow_circle: Partial | Parent API implemented |
-| `Bun.YAML` | :x: Not Started |  |
-| `Bun.YAML.parse` | :x: Not Started |  |
-| `Bun.YAML.stringify` | :x: Not Started |  |
-
-### Filesystem (5/17 - 29%)
-
-| API | Status | Notes |
-|-----|--------|-------|
-| `Bun.write` | :white_check_mark: Implemented |  |
-| `Bun.file` | :white_check_mark: Implemented |  |
-| `Bun.stdout` | :white_check_mark: Implemented |  |
-| `Bun.stderr` | :white_check_mark: Implemented |  |
-| `Bun.stdin` | :white_check_mark: Implemented |  |
+| `Bun.write` | :yellow_circle: Partial | Most data types supported |
+| `Bun.file` | :yellow_circle: Partial | Core functionality working, uses node:fs |
+| `Bun.stdout` | :yellow_circle: Partial | Signature differs: Bun expects "BunFile", polyfill has "PolyfillBunFile" |
+| `Bun.stderr` | :yellow_circle: Partial | Signature differs: Bun expects "BunFile", polyfill has "PolyfillBunFile" |
+| `Bun.stdin` | :yellow_circle: Partial | Basic stdin reading works |
 | `Bun.ArrayBufferSink.write` | :x: Not Started |  |
 | `Bun.BunFile.write` | :x: Not Started |  |
 | `Bun.embeddedFiles` | :x: Not Started |  |
@@ -83,21 +73,18 @@ Generated: 12/11/2025, 12:51:34 PM | @types/bun: 1.3.4
 | `Bun.S3Client.file` | :x: Not Started |  |
 | `Bun.S3Client.write` | :x: Not Started |  |
 
-### Utility (8/63 - 15%)
+### Utility (4/63 - 10%)
 
 | API | Status | Notes |
 |-----|--------|-------|
-| `Bun.gc` | :white_check_mark: Implemented |  |
-| `Bun.nanoseconds` | :white_check_mark: Implemented |  |
-| `Bun.sleep` | :white_check_mark: Implemented |  |
 | `Bun.sleepSync` | :white_check_mark: Implemented |  |
 | `Bun.isMainThread` | :white_check_mark: Implemented |  |
-| `Bun.version` | :white_check_mark: Implemented |  |
-| `Bun.revision` | :white_check_mark: Implemented |  |
-| `Bun.Glob` | :white_check_mark: Implemented |  |
-| `Bun.Glob.scan` | :yellow_circle: Partial | Parent API implemented |
-| `Bun.Glob.scanSync` | :yellow_circle: Partial | Parent API implemented |
-| `Bun.Glob.match` | :yellow_circle: Partial | Parent API implemented |
+| `Bun.version` | :white_check_mark: Implemented | Returns polyfill version, not actual Bun version |
+| `Bun.revision` | :white_check_mark: Implemented | Returns 'polyfill' as revision |
+| `Bun.gc` | :yellow_circle: Partial | Signature mismatch: Bun="(force?: boolean | undefined) => void" vs Polyfill="(full?: boolean | undefined) => void" |
+| `Bun.nanoseconds` | :yellow_circle: Partial | Signature mismatch: Bun="() => number" vs Polyfill="() => bigint" |
+| `Bun.sleep` | :yellow_circle: Partial | Signature mismatch: Bun="(ms: number | Date) => Promise<void>" vs Polyfill="(ms: number) => Promise<void>" |
+| `Bun.Glob` | :yellow_circle: Partial | Signature mismatch: Bun="typeof Glob" vs Polyfill="any" |
 | `Bun.stringWidth` | :x: Not Started |  |
 | `Bun.stripANSI` | :x: Not Started |  |
 | `Bun.concatArrayBuffers` | :x: Not Started |  |
@@ -121,6 +108,9 @@ Generated: 12/11/2025, 12:51:34 PM | @types/bun: 1.3.4
 | `Bun.enableANSIColors` | :x: Not Started |  |
 | `Bun.generateHeapSnapshot` | :x: Not Started |  |
 | `Bun.openInEditor` | :x: Not Started |  |
+| `Bun.Glob.scan` | :x: Not Started |  |
+| `Bun.Glob.scanSync` | :x: Not Started |  |
+| `Bun.Glob.match` | :x: Not Started |  |
 | `Bun.Cookie` | :x: Not Started |  |
 | `Bun.Cookie.name` | :x: Not Started |  |
 | `Bun.Cookie.value` | :x: Not Started |  |
@@ -150,6 +140,16 @@ Generated: 12/11/2025, 12:51:34 PM | @types/bun: 1.3.4
 | `Bun.CookieMap.values` | :x: Not Started |  |
 | `Bun.CookieMap.forEach` | :x: Not Started |  |
 | `Bun.CookieMap.[Symbol.iterator]` | :x: Not Started |  |
+
+### Parsing (0/5 - 10%)
+
+| API | Status | Notes |
+|-----|--------|-------|
+| `Bun.TOML` | :yellow_circle: Partial | Signature mismatch: Bun="typeof TOML" vs Polyfill="any" |
+| `Bun.TOML.parse` | :x: Not Started |  |
+| `Bun.YAML` | :x: Not Started |  |
+| `Bun.YAML.parse` | :x: Not Started |  |
+| `Bun.YAML.stringify` | :x: Not Started |  |
 
 ### Network (0/9 - 0%)
 
@@ -551,7 +551,7 @@ Generated: 12/11/2025, 12:51:34 PM | @types/bun: 1.3.4
 
 | Module | Total | Implemented | Partial | Progress |
 |--------|-------|-------------|---------|----------|
-| `bun` | 240 | 29 | 4 | 13% |
+| `bun` | 240 | 8 | 21 | 8% |
 | `bun:sqlite` | 40 | 0 | 0 | 0% |
 | `bun:ffi` | 31 | 0 | 0 | 0% |
 | `global` | 141 | 0 | 0 | 0% |

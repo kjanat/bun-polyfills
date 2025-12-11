@@ -1,0 +1,72 @@
+[
+  {
+    "fullPath": "Bun.file",
+    "maxCompleteness": 90,
+    "notes": "Core functionality working, uses node:fs",
+    "limitations": ["stat() not implemented", "unlink() not implemented"]
+  },
+  {
+    "fullPath": "Bun.write",
+    "maxCompleteness": 95,
+    "notes": "Most data types supported"
+  },
+  {
+    "fullPath": "Bun.stdin",
+    "maxCompleteness": 80,
+    "notes": "Basic stdin reading works"
+  },
+  { "fullPath": "Bun.stdout", "maxCompleteness": 80 },
+  { "fullPath": "Bun.stderr", "maxCompleteness": 80 },
+  {
+    "fullPath": "Bun.$",
+    "maxCompleteness": 70,
+    "notes": "Uses zx as backend",
+    "limitations": [
+      "$.braces() not implemented",
+      "$.escape() not implemented",
+      "$.cwd() static method not implemented",
+      "$.env() static method not implemented"
+    ]
+  },
+  {
+    "fullPath": "Bun.spawn",
+    "maxCompleteness": 85,
+    "notes": "Core spawn functionality working via node:child_process"
+  },
+  {
+    "fullPath": "Bun.spawnSync",
+    "maxCompleteness": 85,
+    "notes": "Core spawnSync functionality working via node:child_process"
+  },
+  { "fullPath": "Bun.env", "notes": "Direct pass-through to process.env" },
+  {
+    "fullPath": "Bun.version",
+    "notes": "Returns polyfill version, not actual Bun version"
+  },
+  { "fullPath": "Bun.revision", "notes": "Returns 'polyfill' as revision" },
+  {
+    "fullPath": "Bun.resolve",
+    "maxCompleteness": 90,
+    "notes": "Uses import.meta.resolve"
+  },
+  {
+    "fullPath": "Bun.resolveSync",
+    "maxCompleteness": 90,
+    "notes": "Uses require.resolve"
+  },
+  {
+    "fullPath": "Bun.serve",
+    "requiresNativeBun": true,
+    "nativeBunReason": "HTTP server with WebSocket support requires native implementation"
+  },
+  {
+    "fullPath": "Bun.build",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Bundler requires native implementation"
+  },
+  {
+    "fullPath": "Bun.Transpiler",
+    "requiresNativeBun": true,
+    "nativeBunReason": "Transpiler requires native implementation"
+  }
+]

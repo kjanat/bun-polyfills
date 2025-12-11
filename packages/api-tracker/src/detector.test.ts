@@ -4,10 +4,10 @@ import {
   DEFAULT_DETECTOR_CONFIG,
   filterByStatus,
   getImplementationSummary,
-  loadManualOverrides,
+  loadAnnotations,
   sortByCompleteness,
 } from "./detector";
-import type { ApiImplementation, ManualOverride } from "./types";
+import type { ApiAnnotation, ApiImplementation } from "./types";
 
 describe("detector", () => {
   describe("DEFAULT_DETECTOR_CONFIG", () => {
@@ -17,31 +17,26 @@ describe("detector", () => {
     });
   });
 
-  describe("loadManualOverrides", () => {
+  describe("loadAnnotations", () => {
     test("returns empty map for non-existent file", () => {
-      const overrides = loadManualOverrides("/nonexistent/path.json");
-      expect(overrides.size).toBe(0);
+      const annotations = loadAnnotations("/nonexistent/path.json");
+      expect(annotations.size).toBe(0);
     });
 
-    test("loads overrides from valid JSON array", async () => {
+    test("loads annotations from valid JSON array", async () => {
       // Create a temporary file with test data
-      const testData: ManualOverride[] = [
-        {
-          fullPath: "Bun.test",
-          status: "implemented",
-          completeness: 100,
-          notes: "Test override",
-        },
-        { fullPath: "Bun.other", status: "partial", completeness: 50 },
+      const testData: ApiAnnotation[] = [
+        { fullPath: "Bun.test", notes: "Test annotation", maxCompleteness: 90 },
+        { fullPath: "Bun.other", maxCompleteness: 50, limitations: ["No X"] },
       ];
 
-      const tempPath = `/tmp/test-overrides-${Date.now()}.json`;
+      const tempPath = `/tmp/test-annotations-${Date.now()}.json`;
       await Bun.write(tempPath, JSON.stringify(testData));
 
-      const overrides = loadManualOverrides(tempPath);
-      expect(overrides.size).toBe(2);
-      expect(overrides.get("Bun.test")?.status).toBe("implemented");
-      expect(overrides.get("Bun.other")?.completeness).toBe(50);
+      const annotations = loadAnnotations(tempPath);
+      expect(annotations.size).toBe(2);
+      expect(annotations.get("Bun.test")?.notes).toBe("Test annotation");
+      expect(annotations.get("Bun.other")?.maxCompleteness).toBe(50);
 
       // Cleanup
       await Bun.file(tempPath).delete();
@@ -51,8 +46,8 @@ describe("detector", () => {
       const tempPath = `/tmp/test-invalid-${Date.now()}.json`;
       await Bun.write(tempPath, "not valid json");
 
-      const overrides = loadManualOverrides(tempPath);
-      expect(overrides.size).toBe(0);
+      const annotations = loadAnnotations(tempPath);
+      expect(annotations.size).toBe(0);
 
       // Cleanup
       await Bun.file(tempPath).delete();

@@ -26,12 +26,24 @@ export {
 // Detector
 export {
   detectImplementations,
-  loadManualOverrides,
+  getTypeComparison,
+  loadAnnotations,
+  loadManualOverrides, // deprecated alias for loadAnnotations
   getImplementationSummary,
   filterByStatus,
   sortByCompleteness,
   DEFAULT_DETECTOR_CONFIG,
 } from "./detector.ts";
+
+// Comparator (new automated type comparison)
+export {
+  compareTypes,
+  getComparisonSummary,
+  type ComparatorConfig,
+} from "./comparator.ts";
+
+// Interface mapping
+export { INTERFACE_MAP, SPECIAL_APIS } from "./interface-map.ts";
 
 // Reporter
 export {

@@ -311,3 +311,228 @@ export interface DetectionResult {
   /** Any warnings during detection */
   warnings: string[];
 }
+
+// ============================================================================
+// Type Comparison Types (for new automated comparator)
+// ============================================================================
+
+/**
+ * Comparison status for a single member
+ */
+export type ComparisonStatus = "implemented" | "partial" | "missing";
+
+/**
+ * Comparison result for a single interface/type member
+ */
+export interface MemberComparison {
+  /** Member name (e.g., "file", "text", "spawn") */
+  name: string;
+
+  /** Full path (e.g., "Bun.file", "BunFile.text") */
+  fullPath: string;
+
+  /** Comparison status */
+  status: ComparisonStatus;
+
+  /** Bun's type signature */
+  bunSignature: string | null;
+
+  /** Polyfill's type signature */
+  polyfillSignature: string | null;
+
+  /** Human-readable signature diff if not matching */
+  signatureDiff?: string;
+}
+
+/**
+ * Statistics for an interface comparison
+ */
+export interface ComparisonStats {
+  total: number;
+  implemented: number;
+  partial: number;
+  missing: number;
+  percentComplete: number;
+}
+
+/**
+ * Comparison result for a single interface
+ */
+export interface InterfaceComparison {
+  /** Bun interface name (e.g., "BunFile", "Subprocess") */
+  bunInterface: string;
+
+  /** Polyfill interface name, null if not implemented */
+  polyfillInterface: string | null;
+
+  /** Member-by-member comparison */
+  members: MemberComparison[];
+
+  /** Statistics for this interface */
+  stats: ComparisonStats;
+}
+
+/**
+ * Result of signature comparison
+ */
+export interface SignatureComparisonResult {
+  status: ComparisonStatus;
+  match: boolean;
+  diff?: string;
+}
+
+/**
+ * Full result from type comparison
+ */
+export interface ComparisonResult {
+  /** ISO timestamp */
+  timestamp: string;
+
+  /** Path to @types/bun */
+  bunTypesPath: string;
+
+  /** Path to polyfill types */
+  polyfillTypesPath: string;
+
+  /** Per-interface comparison results */
+  interfaces: InterfaceComparison[];
+
+  /** Overall summary stats */
+  summary: ComparisonStats;
+
+  /** Any warnings during comparison */
+  warnings: string[];
+}
+
+// ============================================================================
+// Test Compatibility Types
+// ============================================================================
+
+/**
+ * Result from a single test
+ */
+export interface TestResult {
+  /** Test file path */
+  file: string;
+
+  /** Test suite name (describe block) */
+  suite: string;
+
+  /** Test name (it/test block) */
+  test: string;
+
+  /** Test status */
+  status: "pass" | "fail" | "skip" | "todo";
+
+  /** Duration in milliseconds */
+  duration: number;
+
+  /** Error message if failed */
+  error?: string;
+}
+
+/**
+ * Aggregated test coverage for an API
+ */
+export interface TestCoverage {
+  /** API path (e.g., "Bun.file") */
+  api: string;
+
+  /** Total tests for this API */
+  testsTotal: number;
+
+  /** Passed tests */
+  testsPassed: number;
+
+  /** Failed tests */
+  testsFailed: number;
+
+  /** Skipped tests */
+  testsSkipped: number;
+
+  /** Percentage of tests passing */
+  percentPassing: number;
+}
+
+/**
+ * Full test run results
+ */
+export interface TestRunResult {
+  /** ISO timestamp */
+  timestamp: string;
+
+  /** All individual test results */
+  results: TestResult[];
+
+  /** Aggregated by API */
+  byApi: TestCoverage[];
+
+  /** Overall stats */
+  summary: {
+    total: number;
+    passed: number;
+    failed: number;
+    skipped: number;
+    duration: number;
+  };
+}
+
+// ============================================================================
+// Annotation Types (replaces ManualOverride)
+// ============================================================================
+
+/**
+ * Human annotation for an API
+ * Can only provide notes or cap completeness downward, never inflate
+ */
+export interface ApiAnnotation {
+  /** Full path of the API */
+  fullPath: string;
+
+  /** Human-readable notes */
+  notes?: string;
+
+  /** Maximum completeness cap (can only reduce auto-detected value) */
+  maxCompleteness?: number;
+
+  /** Known limitations */
+  limitations?: string[];
+
+  /** Whether this requires native Bun (can't be polyfilled) */
+  requiresNativeBun?: boolean;
+
+  /** Reason for requiring native Bun */
+  nativeBunReason?: string;
+}
+
+/**
+ * Combined coverage from all sources
+ */
+export interface CombinedApiCoverage {
+  /** API path */
+  fullPath: string;
+
+  /** From type comparison */
+  typeStatus: ComparisonStatus;
+
+  /** Type signatures match */
+  signatureMatch: boolean;
+
+  /** From test results */
+  testResults?: {
+    total: number;
+    passed: number;
+    failed: number;
+    skipped: number;
+    percentPassing: number;
+  };
+
+  /** From annotations */
+  annotation?: ApiAnnotation;
+
+  /** Final computed completeness */
+  completeness: number;
+
+  /** Final status */
+  status: ApiStatus;
+}

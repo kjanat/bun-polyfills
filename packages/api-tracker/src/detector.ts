@@ -1,16 +1,20 @@
-// Detect Bun API implementations in polyfill source files
+// Detect Bun API implementations using type comparison
+// This replaces the old heuristic-based detection with TS Compiler API comparison
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import ts from "typescript";
 
+import { compareTypes, type ComparatorConfig } from "./comparator.ts";
 import type {
+  ApiAnnotation,
   ApiImplementation,
   ApiStatus,
   BunApi,
+  ComparisonResult,
+  ComparisonStatus,
   DetectionResult,
   DetectorConfig,
-  ManualOverride,
+  MemberComparison,
 } from "./types.ts";
 
 /** Default detector configuration */
@@ -20,23 +24,24 @@ export const DEFAULT_DETECTOR_CONFIG: DetectorConfig = {
 };
 
 /**
- * Load manual overrides from JSON file
+ * Load annotations from JSON file
+ * Annotations can only provide notes or cap completeness downward
  */
-export function loadManualOverrides(
-  overridesPath: string,
-): Map<string, ManualOverride> {
-  const overrides = new Map<string, ManualOverride>();
+export function loadAnnotations(
+  annotationsPath: string,
+): Map<string, ApiAnnotation> {
+  const annotations = new Map<string, ApiAnnotation>();
 
-  if (!fs.existsSync(overridesPath)) {
-    return overrides;
+  if (!fs.existsSync(annotationsPath)) {
+    return annotations;
   }
 
   try {
-    const data = JSON.parse(fs.readFileSync(overridesPath, "utf-8"));
+    const data = JSON.parse(fs.readFileSync(annotationsPath, "utf-8"));
     if (Array.isArray(data)) {
-      for (const override of data as ManualOverride[]) {
-        if (override.fullPath) {
-          overrides.set(override.fullPath, override);
+      for (const annotation of data as ApiAnnotation[]) {
+        if (annotation.fullPath) {
+          annotations.set(annotation.fullPath, annotation);
         }
       }
     }
@@ -44,24 +49,17 @@ export function loadManualOverrides(
     // Ignore parse errors
   }
 
-  return overrides;
+  return annotations;
 }
 
 /**
- * Known API mappings from polyfill files to Bun APIs
+ * Map file paths to which APIs they implement (derived from types.ts structure)
+ * This is informational only - actual detection comes from type comparison
  */
-const POLYFILL_MAPPINGS: Record<string, string[]> = {
-  "file.ts": [
-    "Bun.file",
-    "Bun.write",
-    "Bun.stdin",
-    "Bun.stdout",
-    "Bun.stderr",
-    "BunFile",
-    "FileSink",
-  ],
-  "shell.ts": ["Bun.$", "ShellPromise", "ShellOutput"],
-  "spawn.ts": ["Bun.spawn", "Bun.spawnSync", "Subprocess", "SyncSubprocess"],
+const FILE_TO_API_HINTS: Record<string, string[]> = {
+  "file.ts": ["Bun.file", "Bun.write", "Bun.stdin", "Bun.stdout", "Bun.stderr"],
+  "shell.ts": ["Bun.$"],
+  "spawn.ts": ["Bun.spawn", "Bun.spawnSync"],
   "env.ts": ["Bun.env", "Bun.version", "Bun.revision"],
   "modules.ts": [
     "Bun.resolve",
@@ -69,195 +67,110 @@ const POLYFILL_MAPPINGS: Record<string, string[]> = {
     "Bun.pathToFileURL",
     "Bun.fileURLToPath",
   ],
+  "process.ts": [
+    "Bun.which",
+    "Bun.sleep",
+    "Bun.sleepSync",
+    "Bun.nanoseconds",
+    "Bun.isMainThread",
+    "Bun.gc",
+  ],
+  "compression.ts": [
+    "Bun.gzipSync",
+    "Bun.gunzipSync",
+    "Bun.deflateSync",
+    "Bun.inflateSync",
+  ],
+  "glob.ts": ["Bun.Glob"],
+  "toml.ts": ["Bun.TOML"],
 };
 
 /**
- * Scan a TypeScript file for Bun API implementations
+ * Convert ComparisonStatus to ApiStatus
  */
-function scanFile(
-  filePath: string,
-  code: string,
-): { apis: Set<string>; exports: string[] } {
-  const apis = new Set<string>();
-  const exports: string[] = [];
-
-  const sourceFile = ts.createSourceFile(
-    filePath,
-    code,
-    ts.ScriptTarget.Latest,
-    true,
-    ts.ScriptKind.TS,
-  );
-
-  function visit(node: ts.Node): void {
-    // Look for: bun.propertyName = ...
-    if (
-      ts.isExpressionStatement(node) &&
-      ts.isBinaryExpression(node.expression) &&
-      node.expression.operatorToken.kind === ts.SyntaxKind.EqualsToken
-    ) {
-      const left = node.expression.left;
-      if (
-        ts.isPropertyAccessExpression(left) &&
-        ts.isIdentifier(left.expression)
-      ) {
-        const objName = left.expression.text;
-        const propName = left.name.text;
-
-        if (objName === "bun" || objName === "Bun") {
-          apis.add(`Bun.${propName}`);
-        }
-      }
-    }
-
-    // Look for: if (!("propertyName" in bun)) { bun.propertyName = ... }
-    if (ts.isIfStatement(node)) {
-      const condition = node.expression;
-      // Check for: !("prop" in bun)
-      if (
-        ts.isPrefixUnaryExpression(condition) &&
-        condition.operator === ts.SyntaxKind.ExclamationToken &&
-        ts.isParenthesizedExpression(condition.operand)
-      ) {
-        const inner = condition.operand.expression;
-        if (
-          ts.isBinaryExpression(inner) &&
-          inner.operatorToken.kind === ts.SyntaxKind.InKeyword
-        ) {
-          const left = inner.left;
-          if (ts.isStringLiteral(left)) {
-            apis.add(`Bun.${left.text}`);
-          }
-        }
-      }
-    }
-
-    // Look for export declarations
-    if (ts.isExportDeclaration(node) || ts.isExportAssignment(node)) {
-      // Handle: export { foo, bar }
-      if (ts.isExportDeclaration(node) && node.exportClause) {
-        if (ts.isNamedExports(node.exportClause)) {
-          for (const element of node.exportClause.elements) {
-            exports.push(element.name.text);
-          }
-        }
-      }
-    }
-
-    // Look for exported functions/classes
-    if (
-      (ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node)) &&
-      node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
-    ) {
-      if (node.name) {
-        exports.push(node.name.text);
-
-        // Map init functions to APIs
-        const name = node.name.text;
-        if (name.startsWith("init")) {
-          const apiName = name.slice(4); // Remove "init" prefix
-          // Map to known APIs
-          const mappedApis = Object.entries(POLYFILL_MAPPINGS).find(
-            ([, apis]) =>
-              apis.some(
-                (a) =>
-                  a.toLowerCase().includes(apiName.toLowerCase()) ||
-                  apiName.toLowerCase().includes(a.split(".").pop() ?? ""),
-              ),
-          );
-          if (mappedApis) {
-            for (const api of mappedApis[1]) {
-              apis.add(api);
-            }
-          }
-        }
-      }
-    }
-
-    // Look for exported variables
-    if (
-      ts.isVariableStatement(node) &&
-      node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
-    ) {
-      for (const decl of node.declarationList.declarations) {
-        if (ts.isIdentifier(decl.name)) {
-          exports.push(decl.name.text);
-        }
-      }
-    }
-
-    ts.forEachChild(node, visit);
+function comparisonStatusToApiStatus(status: ComparisonStatus): ApiStatus {
+  switch (status) {
+    case "implemented":
+      return "implemented";
+    case "partial":
+      return "partial";
+    case "missing":
+      return "not-started";
   }
-
-  visit(sourceFile);
-  return { apis, exports };
 }
 
 /**
- * Determine implementation status for an API
+ * Calculate completeness from comparison status and optional annotation cap
  */
-function determineStatus(
+function calculateCompleteness(
+  status: ComparisonStatus,
+  signatureMatch: boolean,
+  annotation?: ApiAnnotation,
+): number {
+  // Base completeness from status
+  let completeness: number;
+  switch (status) {
+    case "implemented":
+      completeness = signatureMatch ? 100 : 90; // 90% if signature differs
+      break;
+    case "partial":
+      completeness = 50;
+      break;
+    case "missing":
+      completeness = 0;
+      break;
+  }
+
+  // Apply annotation cap (can only reduce, never increase)
+  if (annotation?.maxCompleteness !== undefined) {
+    completeness = Math.min(completeness, annotation.maxCompleteness);
+  }
+
+  return completeness;
+}
+
+/**
+ * Find which file implements an API based on hints
+ */
+function findImplementingFile(apiPath: string): string | undefined {
+  for (const [file, apis] of Object.entries(FILE_TO_API_HINTS)) {
+    if (apis.some((a) => apiPath === a || apiPath.startsWith(`${a}.`))) {
+      return file;
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Convert type comparison result to legacy API implementation format
+ * This maintains backwards compatibility with existing reporter
+ */
+function comparisonToImplementation(
+  member: MemberComparison,
   api: BunApi,
-  implementedApis: Set<string>,
-  overrides: Map<string, ManualOverride>,
-): { status: ApiStatus; completeness: number; notes?: string } {
-  // Check manual override first
-  const override = overrides.get(api.fullPath);
-  if (override) {
-    if (override.skip) {
-      return { status: "not-started", completeness: 0, notes: "Skipped" };
-    }
-    return {
-      status: override.status ?? "not-started",
-      completeness: override.completeness ?? 0,
-      notes: override.notes,
-    };
-  }
+  annotations: Map<string, ApiAnnotation>,
+): ApiImplementation {
+  const annotation = annotations.get(member.fullPath);
+  const signatureMatch =
+    member.status === "implemented" && !member.signatureDiff;
 
-  // Check if this API or its parent is implemented
-  if (implementedApis.has(api.fullPath)) {
-    // Check if it has children and count implemented
-    if (api.children && api.children.length > 0) {
-      const implementedChildren = api.children.filter(
-        (child) =>
-          implementedApis.has(child.fullPath) ||
-          overrides.get(child.fullPath)?.status === "implemented",
-      ).length;
-
-      const completeness = Math.round(
-        (implementedChildren / api.children.length) * 100,
-      );
-
-      if (completeness === 100) {
-        return { status: "implemented", completeness: 100 };
-      } else if (completeness > 0) {
-        return {
-          status: "partial",
-          completeness,
-          notes: `${implementedChildren}/${api.children.length} methods implemented`,
-        };
-      }
-    }
-
-    return { status: "implemented", completeness: 100 };
-  }
-
-  // Check parent path
-  const parentPath = api.parent;
-  if (parentPath && implementedApis.has(parentPath)) {
-    // Parent is implemented, so this might be partially done
-    return {
-      status: "partial",
-      completeness: 50,
-      notes: "Parent API implemented",
-    };
-  }
-
-  return { status: "not-started", completeness: 0 };
+  return {
+    api,
+    status: comparisonStatusToApiStatus(member.status),
+    completeness: calculateCompleteness(
+      member.status,
+      signatureMatch,
+      annotation,
+    ),
+    implementedIn: findImplementingFile(member.fullPath),
+    notes: annotation?.notes ?? member.signatureDiff,
+    missingFeatures: annotation?.limitations,
+  };
 }
 
 /**
- * Detect implementations for a list of APIs
+ * Detect implementations using type comparison
+ * This is the new automated detection method
  */
 export async function detectImplementations(
   apis: BunApi[],
@@ -272,84 +185,101 @@ export async function detectImplementations(
   const implementations = new Map<string, ApiImplementation>();
   const filesScanned: string[] = [];
   const warnings: string[] = [];
-  const implementedApis = new Set<string>();
 
-  // Load manual overrides
-  const overrides =
-    fullConfig.overridesPath ?
-      loadManualOverrides(fullConfig.overridesPath)
-    : new Map<string, ManualOverride>();
+  // Load annotations (formerly manual overrides)
+  const annotationsPath =
+    fullConfig.overridesPath ??
+    path.join(
+      path.dirname(fullConfig.polyfillsPath),
+      "..",
+      "api-tracker",
+      "data",
+      "annotations.json",
+    );
+  const annotations = loadAnnotations(annotationsPath);
 
-  // Scan polyfill source files
-  const srcDir = fullConfig.polyfillsPath;
-  if (!fs.existsSync(srcDir)) {
-    warnings.push(`Polyfills directory not found: ${srcDir}`);
+  // Get polyfill types path
+  const polyfillTypesPath = path.join(fullConfig.polyfillsPath, "types.ts");
+  if (!fs.existsSync(polyfillTypesPath)) {
+    warnings.push(`Polyfill types not found: ${polyfillTypesPath}`);
+    // Return all APIs as not implemented
+    for (const api of apis) {
+      implementations.set(api.fullPath, {
+        api,
+        status: "not-started",
+        completeness: 0,
+      });
+    }
     return { implementations, filesScanned, warnings };
   }
 
-  // Get list of .ts files
-  const files = fs.readdirSync(srcDir).filter((f) => f.endsWith(".ts"));
+  filesScanned.push(polyfillTypesPath);
 
-  for (const file of files) {
-    const filePath = path.join(srcDir, file);
-    filesScanned.push(filePath);
+  // Run type comparison
+  const comparatorConfig: ComparatorConfig = {
+    polyfillTypesPath,
+    strictSignatures: true, // wider signatures => partial
+  };
 
-    try {
-      const code = fs.readFileSync(filePath, "utf-8");
-      const { apis: fileApis } = scanFile(filePath, code);
+  let comparison: ComparisonResult;
+  try {
+    comparison = await compareTypes(comparatorConfig);
+  } catch (err) {
+    warnings.push(`Type comparison failed: ${err}`);
+    // Return all APIs as not implemented
+    for (const api of apis) {
+      implementations.set(api.fullPath, {
+        api,
+        status: "not-started",
+        completeness: 0,
+      });
+    }
+    return { implementations, filesScanned, warnings };
+  }
 
-      // Add detected APIs
-      for (const api of fileApis) {
-        implementedApis.add(api);
-      }
+  // Add comparison warnings
+  warnings.push(...comparison.warnings);
 
-      // Also add APIs from known mappings
-      const mappedApis = POLYFILL_MAPPINGS[file];
-      if (mappedApis) {
-        for (const api of mappedApis) {
-          implementedApis.add(api);
-        }
-      }
-    } catch (err) {
-      warnings.push(`Failed to scan ${filePath}: ${err}`);
+  // Build a lookup of comparison results by fullPath
+  const comparisonByPath = new Map<string, MemberComparison>();
+  for (const iface of comparison.interfaces) {
+    for (const member of iface.members) {
+      comparisonByPath.set(member.fullPath, member);
     }
   }
 
-  // Create implementation entries for all APIs
+  // Create implementation entries for all requested APIs
   for (const api of apis) {
-    const { status, completeness, notes } = determineStatus(
-      api,
-      implementedApis,
-      overrides,
-    );
+    const member = comparisonByPath.get(api.fullPath);
 
-    // Find which file implements this API
-    let implementedIn: string | undefined;
-    for (const [file, mappedApis] of Object.entries(POLYFILL_MAPPINGS)) {
-      if (
-        mappedApis.some(
-          (a) => api.fullPath === a || api.fullPath.startsWith(a + "."),
-        )
-      ) {
-        implementedIn = file;
-        break;
-      }
+    if (member) {
+      implementations.set(
+        api.fullPath,
+        comparisonToImplementation(member, api, annotations),
+      );
+    } else {
+      // API not in comparison result - check if it's a child of a compared API
+      // or if it's genuinely missing
+      const annotation = annotations.get(api.fullPath);
+      implementations.set(api.fullPath, {
+        api,
+        status: annotation?.requiresNativeBun ? "not-started" : "not-started",
+        completeness: 0,
+        notes: annotation?.notes ?? annotation?.nativeBunReason,
+      });
     }
-
-    const override = overrides.get(api.fullPath);
-
-    implementations.set(api.fullPath, {
-      api,
-      status,
-      completeness,
-      implementedIn,
-      notes,
-      missingFeatures: override?.missingFeatures,
-      implementedFeatures: override?.implementedFeatures,
-    });
   }
 
   return { implementations, filesScanned, warnings };
+}
+
+/**
+ * Get comparison result directly (for new reporting)
+ */
+export async function getTypeComparison(
+  polyfillTypesPath: string,
+): Promise<ComparisonResult> {
+  return compareTypes({ polyfillTypesPath, strictSignatures: true });
 }
 
 /**
@@ -420,3 +350,6 @@ export function sortByCompleteness(
     : b.completeness - a.completeness,
   );
 }
+
+// Legacy exports for backwards compatibility
+export { loadAnnotations as loadManualOverrides };

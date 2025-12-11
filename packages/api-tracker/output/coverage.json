@@ -1,54 +1,54 @@
 {
-  "generated": "2025-12-11T11:51:34.496Z",
+  "generated": "2025-12-11T12:56:51.963Z",
   "bunTypesVersion": "1.3.4",
   "summary": {
     "total": 452,
-    "implemented": 29,
-    "partial": 4,
+    "implemented": 8,
+    "partial": 21,
     "stub": 0,
-    "notStarted": 419,
-    "percentComplete": 7
+    "notStarted": 423,
+    "percentComplete": 4
   },
   "byCategory": {
     "process": {
       "total": 7,
-      "implemented": 7,
-      "partial": 0,
+      "implemented": 2,
+      "partial": 5,
       "stub": 0,
       "notStarted": 0,
-      "percentComplete": 100
+      "percentComplete": 64
     },
     "utility": {
       "total": 63,
-      "implemented": 8,
-      "partial": 3,
+      "implemented": 4,
+      "partial": 4,
       "stub": 0,
-      "notStarted": 52,
-      "percentComplete": 15
+      "notStarted": 55,
+      "percentComplete": 10
     },
     "parsing": {
       "total": 5,
-      "implemented": 1,
+      "implemented": 0,
       "partial": 1,
       "stub": 0,
-      "notStarted": 3,
-      "percentComplete": 30
+      "notStarted": 4,
+      "percentComplete": 10
     },
     "module": {
       "total": 5,
-      "implemented": 4,
-      "partial": 0,
+      "implemented": 2,
+      "partial": 2,
       "stub": 0,
       "notStarted": 1,
-      "percentComplete": 80
+      "percentComplete": 60
     },
     "filesystem": {
       "total": 17,
-      "implemented": 5,
-      "partial": 0,
+      "implemented": 0,
+      "partial": 5,
       "stub": 0,
       "notStarted": 12,
-      "percentComplete": 29
+      "percentComplete": 15
     },
     "network": {
       "total": 9,
@@ -92,11 +92,11 @@
     },
     "compression": {
       "total": 8,
-      "implemented": 4,
-      "partial": 0,
+      "implemented": 0,
+      "partial": 4,
       "stub": 0,
       "notStarted": 4,
-      "percentComplete": 50
+      "percentComplete": 25
     },
     "function toString() {\n    [native code]\n}": {
       "total": 3,
@@ -142,11 +142,11 @@
   "byModule": {
     "bun": {
       "total": 240,
-      "implemented": 29,
-      "partial": 4,
+      "implemented": 8,
+      "partial": 21,
       "stub": 0,
-      "notStarted": 207,
-      "percentComplete": 13
+      "notStarted": 211,
+      "percentComplete": 8
     },
     "bun:sqlite": {
       "total": 40,
@@ -188,9 +188,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "env.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "env.ts",
+      "notes": "Direct pass-through to process.env"
     },
     {
       "api": {
@@ -224,8 +225,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "process.ts",
+      "notes": "Signature mismatch: Bun=\"(command: string, options?: WhichOptions | undefined) => string | null\" vs Polyfill=\"(cmd: string, options?: { PATH?: string | undefined; } | undefined) => string | null\""
     },
     {
       "api": {
@@ -293,8 +296,10 @@
           }
         ]
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "toml.ts",
+      "notes": "Signature mismatch: Bun=\"typeof TOML\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -311,9 +316,8 @@
         "isDeprecated": false,
         "parent": "Bun.TOML"
       },
-      "status": "partial",
-      "completeness": 50,
-      "notes": "Parent API implemented"
+      "status": "not-started",
+      "completeness": 0
     },
     {
       "api": {
@@ -413,9 +417,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "modules.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "modules.ts",
+      "notes": "Uses require.resolve"
     },
     {
       "api": {
@@ -432,9 +437,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "modules.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "modules.ts",
+      "notes": "Uses import.meta.resolve"
     },
     {
       "api": {
@@ -451,9 +457,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "file.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "file.ts",
+      "notes": "Most data types supported"
     },
     {
       "api": {
@@ -1814,9 +1821,14 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "file.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "file.ts",
+      "notes": "Core functionality working, uses node:fs",
+      "missingFeatures": [
+        "stat() not implemented",
+        "unlink() not implemented"
+      ]
     },
     {
       "api": {
@@ -1902,9 +1914,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "file.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "file.ts",
+      "notes": "Signature differs: Bun expects \"BunFile\", polyfill has \"PolyfillBunFile\""
     },
     {
       "api": {
@@ -1920,9 +1933,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "file.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "file.ts",
+      "notes": "Signature differs: Bun expects \"BunFile\", polyfill has \"PolyfillBunFile\""
     },
     {
       "api": {
@@ -1938,9 +1952,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "file.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "file.ts",
+      "notes": "Basic stdin reading works"
     },
     {
       "api": {
@@ -2091,8 +2106,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "process.ts",
+      "notes": "Signature mismatch: Bun=\"(force?: boolean | undefined) => void\" vs Polyfill=\"(full?: boolean | undefined) => void\""
     },
     {
       "api": {
@@ -2109,8 +2126,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "process.ts",
+      "notes": "Signature mismatch: Bun=\"() => number\" vs Polyfill=\"() => bigint\""
     },
     {
       "api": {
@@ -2614,8 +2633,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "process.ts",
+      "notes": "Signature mismatch: Bun=\"(ms: number | Date) => Promise<void>\" vs Polyfill=\"(ms: number) => Promise<void>\""
     },
     {
       "api": {
@@ -2633,7 +2654,8 @@
         "parent": "Bun"
       },
       "status": "implemented",
-      "completeness": 100
+      "completeness": 100,
+      "implementedIn": "process.ts"
     },
     {
       "api": {
@@ -3052,8 +3074,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "compression.ts",
+      "notes": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
     },
     {
       "api": {
@@ -3070,8 +3094,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "compression.ts",
+      "notes": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
     },
     {
       "api": {
@@ -3088,8 +3114,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "compression.ts",
+      "notes": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
     },
     {
       "api": {
@@ -3106,8 +3134,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "compression.ts",
+      "notes": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
     },
     {
       "api": {
@@ -3212,7 +3242,8 @@
         "parent": "Bun"
       },
       "status": "implemented",
-      "completeness": 100
+      "completeness": 100,
+      "implementedIn": "process.ts"
     },
     {
       "api": {
@@ -4091,9 +4122,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "spawn.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "spawn.ts",
+      "notes": "Core spawn functionality working via node:child_process"
     },
     {
       "api": {
@@ -4110,9 +4142,10 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "spawn.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "spawn.ts",
+      "notes": "Core spawnSync functionality working via node:child_process"
     },
     {
       "api": {
@@ -4320,7 +4353,8 @@
       },
       "status": "implemented",
       "completeness": 100,
-      "implementedIn": "env.ts"
+      "implementedIn": "env.ts",
+      "notes": "Returns polyfill version, not actual Bun version"
     },
     {
       "api": {
@@ -4355,7 +4389,8 @@
       },
       "status": "implemented",
       "completeness": 100,
-      "implementedIn": "env.ts"
+      "implementedIn": "env.ts",
+      "notes": "Returns 'polyfill' as revision"
     },
     {
       "api": {
@@ -4433,8 +4468,10 @@
           }
         ]
       },
-      "status": "implemented",
-      "completeness": 100
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "glob.ts",
+      "notes": "Signature mismatch: Bun=\"typeof Glob\" vs Polyfill=\"any\""
     },
     {
       "api": {
@@ -4451,9 +4488,8 @@
         "isDeprecated": false,
         "parent": "Bun.Glob"
       },
-      "status": "partial",
-      "completeness": 50,
-      "notes": "Parent API implemented"
+      "status": "not-started",
+      "completeness": 0
     },
     {
       "api": {
@@ -4470,9 +4506,8 @@
         "isDeprecated": false,
         "parent": "Bun.Glob"
       },
-      "status": "partial",
-      "completeness": 50,
-      "notes": "Parent API implemented"
+      "status": "not-started",
+      "completeness": 0
     },
     {
       "api": {
@@ -4489,9 +4524,8 @@
         "isDeprecated": false,
         "parent": "Bun.Glob"
       },
-      "status": "partial",
-      "completeness": 50,
-      "notes": "Parent API implemented"
+      "status": "not-started",
+      "completeness": 0
     },
     {
       "api": {
@@ -5494,9 +5528,16 @@
         "isDeprecated": false,
         "parent": "Bun"
       },
-      "status": "implemented",
-      "completeness": 100,
-      "implementedIn": "shell.ts"
+      "status": "partial",
+      "completeness": 50,
+      "implementedIn": "shell.ts",
+      "notes": "Uses zx as backend",
+      "missingFeatures": [
+        "$.braces() not implemented",
+        "$.escape() not implemented",
+        "$.cwd() static method not implemented",
+        "$.env() static method not implemented"
+      ]
     },
     {
       "api": {

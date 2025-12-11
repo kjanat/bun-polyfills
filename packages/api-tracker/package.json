@@ -53,10 +53,13 @@
     "build:bundle": "bun build ./src/index.ts ./src/cli.ts ./src/types.ts --outdir dist --target node",
     "build:types": "tsc --emitDeclarationOnly",
     "check": "bun run src/cli.ts check",
-    "clean": "rm -rf dist output",
+    "clean": "rm -rf dist output tests/file tests/spawn tests/shell tests/util tests/glob",
+    "compare": "bun run src/cli.ts compare",
     "report": "bun run src/cli.ts report",
+    "sync-tests": "bun run src/cli.ts sync-tests",
+    "sync-tests:dry": "bun run src/cli.ts sync-tests --dry-run",
     "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsgo --noEmit"
   },
   "peerDependencies": {
     "@types/bun": "catalog:"
@@ -66,6 +69,7 @@
   },
   "devDependencies": {
     "@types/bun": "catalog:",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "@typescript/native-preview": "catalog:"
   }
 }

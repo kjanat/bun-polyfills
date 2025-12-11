@@ -1,16 +1,22 @@
 // Generate coverage reports in JSON and Markdown formats
+// Supports three-tier verification: Type Comparison -> Test Results -> Annotations
 
 import * as fs from "node:fs";
 import * as path from "node:path";
 
 import type {
+  ApiAnnotation,
   ApiCategory,
   ApiImplementation,
+  ApiStatus,
   BunModule,
   CategoryStats,
+  CombinedApiCoverage,
+  ComparisonResult,
   CoverageReport,
   CoverageSummary,
   ReporterConfig,
+  TestRunResult,
 } from "./types.ts";
 
 /** Default reporter configuration */
@@ -342,6 +348,338 @@ export async function writeReports(
   }
 
   return result;
+}
+
+// ============================================================================
+// Three-Tier Reporting System
+// ============================================================================
+
+/**
+ * Load annotations from JSON file
+ */
+function loadAnnotations(annotationsPath: string): Map<string, ApiAnnotation> {
+  const annotations = new Map<string, ApiAnnotation>();
+
+  if (!fs.existsSync(annotationsPath)) {
+    return annotations;
+  }
+
+  try {
+    const data = JSON.parse(fs.readFileSync(annotationsPath, "utf-8"));
+    if (Array.isArray(data)) {
+      for (const annotation of data as ApiAnnotation[]) {
+        if (annotation.fullPath) {
+          annotations.set(annotation.fullPath, annotation);
+        }
+      }
+    }
+  } catch {
+    // Ignore parse errors
+  }
+
+  return annotations;
+}
+
+/**
+ * Combine type comparison, test results, and annotations into final coverage
+ * Each tier can only reduce confidence, never inflate it
+ *
+ * Tier 1: Type Comparison (auto-detected from TS types)
+ * Tier 2: Test Results (runtime verification)
+ * Tier 3: Annotations (human notes, can only cap)
+ */
+export function combineThreeTiers(
+  comparison: ComparisonResult,
+  testResults: TestRunResult | null,
+  annotationsPath: string,
+): CombinedApiCoverage[] {
+  const annotations = loadAnnotations(annotationsPath);
+  const combined: CombinedApiCoverage[] = [];
+
+  // Build test results lookup
+  const testsByApi = new Map<string, TestRunResult["byApi"][number]>();
+  if (testResults) {
+    for (const coverage of testResults.byApi) {
+      testsByApi.set(coverage.api, coverage);
+    }
+  }
+
+  // Process each member from type comparison
+  for (const iface of comparison.interfaces) {
+    for (const member of iface.members) {
+      const annotation = annotations.get(member.fullPath);
+      const testCoverage = testsByApi.get(member.fullPath);
+
+      // Start with type comparison status
+      let completeness = statusToCompleteness(member.status);
+      let status: ApiStatus = comparisonStatusToApiStatus(member.status);
+      const signatureMatch =
+        member.status === "implemented" && !member.signatureDiff;
+
+      // Tier 2: Apply test results (can only reduce)
+      if (testCoverage && testCoverage.testsTotal > 0) {
+        const testCompleteness = testCoverage.percentPassing;
+        // Tests can reduce but not increase completeness
+        if (testCompleteness < completeness) {
+          completeness = testCompleteness;
+          status = completenessToStatus(completeness);
+        }
+      }
+
+      // Tier 3: Apply annotation cap (can only reduce)
+      if (annotation?.maxCompleteness !== undefined) {
+        if (annotation.maxCompleteness < completeness) {
+          completeness = annotation.maxCompleteness;
+          status = completenessToStatus(completeness);
+        }
+      }
+
+      // If requires native Bun, cap at 0
+      if (annotation?.requiresNativeBun) {
+        completeness = 0;
+        status = "not-started";
+      }
+
+      combined.push({
+        fullPath: member.fullPath,
+        typeStatus: member.status,
+        signatureMatch,
+        testResults:
+          testCoverage ?
+            {
+              total: testCoverage.testsTotal,
+              passed: testCoverage.testsPassed,
+              failed: testCoverage.testsFailed,
+              skipped: testCoverage.testsSkipped,
+              percentPassing: testCoverage.percentPassing,
+            }
+          : undefined,
+        annotation,
+        completeness,
+        status,
+      });
+    }
+  }
+
+  return combined;
+}
+
+/**
+ * Convert comparison status to initial completeness
+ */
+function statusToCompleteness(
+  status: "implemented" | "partial" | "missing",
+): number {
+  switch (status) {
+    case "implemented":
+      return 100;
+    case "partial":
+      return 50;
+    case "missing":
+      return 0;
+  }
+}
+
+/**
+ * Convert comparison status to ApiStatus
+ */
+function comparisonStatusToApiStatus(
+  status: "implemented" | "partial" | "missing",
+): ApiStatus {
+  switch (status) {
+    case "implemented":
+      return "implemented";
+    case "partial":
+      return "partial";
+    case "missing":
+      return "not-started";
+  }
+}
+
+/**
+ * Convert completeness percentage back to status
+ */
+function completenessToStatus(completeness: number): ApiStatus {
+  if (completeness >= 90) return "implemented";
+  if (completeness >= 30) return "partial";
+  if (completeness > 0) return "stub";
+  return "not-started";
+}
+
+/**
+ * Generate three-tier coverage summary
+ */
+export function generateThreeTierSummary(
+  coverage: CombinedApiCoverage[],
+): string {
+  const lines: string[] = [];
+
+  const total = coverage.length;
+  const implemented = coverage.filter((c) => c.status === "implemented").length;
+  const partial = coverage.filter((c) => c.status === "partial").length;
+  const stub = coverage.filter((c) => c.status === "stub").length;
+  const notStarted = coverage.filter((c) => c.status === "not-started").length;
+
+  const avgCompleteness =
+    total > 0 ?
+      Math.round(coverage.reduce((sum, c) => sum + c.completeness, 0) / total)
+    : 0;
+
+  lines.push("=== Three-Tier Coverage Summary ===");
+  lines.push("");
+  lines.push(`Total APIs:     ${total}`);
+  lines.push(`Implemented:    ${implemented}`);
+  lines.push(`Partial:        ${partial}`);
+  lines.push(`Stub:           ${stub}`);
+  lines.push(`Not Started:    ${notStarted}`);
+  lines.push("");
+  lines.push(`Avg Completeness: ${avgCompleteness}%`);
+  lines.push("");
+
+  // Show APIs with test results that reduced their score
+  const reducedByTests = coverage.filter(
+    (c) =>
+      c.testResults &&
+      c.testResults.percentPassing < statusToCompleteness(c.typeStatus),
+  );
+
+  if (reducedByTests.length > 0) {
+    lines.push("APIs reduced by test failures:");
+    for (const c of reducedByTests.slice(0, 10)) {
+      lines.push(
+        `  ${c.fullPath}: type=${c.typeStatus} -> tests=${c.testResults?.percentPassing}%`,
+      );
+    }
+    if (reducedByTests.length > 10) {
+      lines.push(`  ... and ${reducedByTests.length - 10} more`);
+    }
+    lines.push("");
+  }
+
+  // Show APIs with annotation caps
+  const cappedByAnnotation = coverage.filter(
+    (c) =>
+      c.annotation?.maxCompleteness !== undefined &&
+      c.annotation.maxCompleteness < statusToCompleteness(c.typeStatus),
+  );
+
+  if (cappedByAnnotation.length > 0) {
+    lines.push("APIs capped by annotations:");
+    for (const c of cappedByAnnotation.slice(0, 10)) {
+      lines.push(
+        `  ${c.fullPath}: capped to ${c.annotation?.maxCompleteness}% - ${c.annotation?.notes ?? ""}`,
+      );
+    }
+    if (cappedByAnnotation.length > 10) {
+      lines.push(`  ... and ${cappedByAnnotation.length - 10} more`);
+    }
+    lines.push("");
+  }
+
+  return lines.join("\n");
+}
+
+/**
+ * Generate three-tier markdown report
+ */
+export function generateThreeTierMarkdown(
+  coverage: CombinedApiCoverage[],
+  comparison: ComparisonResult,
+): string {
+  const lines: string[] = [];
+
+  lines.push("# Bun API Coverage Report (Three-Tier Verification)");
+  lines.push("");
+  lines.push(`Generated: ${new Date().toLocaleString()}`);
+  lines.push("");
+
+  // Summary
+  const total = coverage.length;
+  const implemented = coverage.filter((c) => c.status === "implemented").length;
+  const partial = coverage.filter((c) => c.status === "partial").length;
+  const notStarted = coverage.filter((c) => c.status === "not-started").length;
+
+  lines.push("## Summary");
+  lines.push("");
+  lines.push("| Metric | Value |");
+  lines.push("|--------|-------|");
+  lines.push(`| Total APIs | ${total} |`);
+  lines.push(
+    `| Implemented | ${implemented} (${Math.round((implemented / total) * 100)}%) |`,
+  );
+  lines.push(
+    `| Partial | ${partial} (${Math.round((partial / total) * 100)}%) |`,
+  );
+  lines.push(
+    `| Not Started | ${notStarted} (${Math.round((notStarted / total) * 100)}%) |`,
+  );
+  lines.push("");
+
+  // By Interface
+  lines.push("## Coverage by Interface");
+  lines.push("");
+
+  for (const iface of comparison.interfaces) {
+    const ifaceMembers = coverage.filter((c) =>
+      c.fullPath.startsWith(`${iface.bunInterface}.`),
+    );
+    const ifaceImpl = ifaceMembers.filter(
+      (c) => c.status === "implemented",
+    ).length;
+
+    lines.push(
+      `### ${iface.bunInterface} -> ${iface.polyfillInterface ?? "(not implemented)"}`,
+    );
+    lines.push("");
+    lines.push(
+      `Progress: ${ifaceImpl}/${ifaceMembers.length} (${iface.stats.percentComplete}%)`,
+    );
+    lines.push("");
+
+    if (ifaceMembers.length > 0) {
+      lines.push("| API | Type Status | Tests | Final |");
+      lines.push("|-----|-------------|-------|-------|");
+
+      for (const member of ifaceMembers) {
+        const typeEmoji =
+          member.typeStatus === "implemented" ? ":white_check_mark:"
+          : member.typeStatus === "partial" ? ":yellow_circle:"
+          : ":x:";
+        const testStatus =
+          member.testResults ?
+            `${member.testResults.passed}/${member.testResults.total}`
+          : "-";
+        const finalEmoji =
+          member.status === "implemented" ? ":white_check_mark:"
+          : member.status === "partial" ? ":yellow_circle:"
+          : member.status === "stub" ? ":construction:"
+          : ":x:";
+
+        lines.push(
+          `| \`${member.fullPath}\` | ${typeEmoji} | ${testStatus} | ${finalEmoji} ${member.completeness}% |`,
+        );
+      }
+      lines.push("");
+    }
+  }
+
+  // Verification Tiers explanation
+  lines.push("## Verification Tiers");
+  lines.push("");
+  lines.push(
+    "1. **Type Comparison** (Tier 1): Automated comparison of TypeScript types",
+  );
+  lines.push(
+    "2. **Test Results** (Tier 2): Runtime verification from Bun test suite",
+  );
+  lines.push(
+    "3. **Annotations** (Tier 3): Human notes and caps (can only reduce)",
+  );
+  lines.push("");
+  lines.push("Each tier can only reduce confidence, never inflate it.");
+  lines.push("");
+
+  return lines.join("\n");
 }
 
 /**

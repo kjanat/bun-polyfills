@@ -28,3 +28,5 @@ yarn.lock
 pnpm-lock.yaml
 
 /bun
+/app
+/app-with-resources

@@ -1,0 +1,5481 @@
+{
+  "timestamp": "2025-12-11T12:47:05.591Z",
+  "comparison": {
+    "timestamp": "2025-12-11T12:47:05.587Z",
+    "bunTypesPath": "/home/kjanat/projects/bun-polyfills/packages/api-tracker/node_modules/bun-types",
+    "polyfillTypesPath": "/home/kjanat/projects/bun-polyfills/packages/polyfills/src/types.ts",
+    "interfaces": [
+      {
+        "bunInterface": "Bun",
+        "polyfillInterface": "PolyfillBun",
+        "members": [
+          {
+            "name": "which",
+            "fullPath": "Bun.which",
+            "status": "partial",
+            "bunSignature": "(command: string, options?: WhichOptions | undefined) => string | null",
+            "polyfillSignature": "(cmd: string, options?: { PATH?: string | undefined; } | undefined) => string | null",
+            "signatureDiff": "Signature mismatch: Bun=\"(command: string, options?: WhichOptions | undefined) => string | null\" vs Polyfill=\"(cmd: string, options?: { PATH?: string | undefined; } | undefined) => string | null\""
+          },
+          {
+            "name": "stringWidth",
+            "fullPath": "Bun.stringWidth",
+            "status": "missing",
+            "bunSignature": "(input: string, options?: StringWidthOptions | undefined) => number",
+            "polyfillSignature": null
+          },
+          {
+            "name": "stripANSI",
+            "fullPath": "Bun.stripANSI",
+            "status": "missing",
+            "bunSignature": "(input: string) => string",
+            "polyfillSignature": null
+          },
+          {
+            "name": "resolveSync",
+            "fullPath": "Bun.resolveSync",
+            "status": "partial",
+            "bunSignature": "(moduleId: string, parent: string) => string",
+            "polyfillSignature": "(moduleId: string, parent?: string | undefined) => string",
+            "signatureDiff": "Signature mismatch: Bun=\"(moduleId: string, parent: string) => string\" vs Polyfill=\"(moduleId: string, parent?: string | undefined) => string\""
+          },
+          {
+            "name": "resolve",
+            "fullPath": "Bun.resolve",
+            "status": "partial",
+            "bunSignature": "(moduleId: string, parent: string) => Promise<string>",
+            "polyfillSignature": "(moduleId: string, parent?: string | undefined) => Promise<string>",
+            "signatureDiff": "Signature mismatch: Bun=\"(moduleId: string, parent: string) => Promise<string>\" vs Polyfill=\"(moduleId: string, parent?: string | undefined) => Promise<string>\""
+          },
+          {
+            "name": "write",
+            "fullPath": "Bun.write",
+            "status": "partial",
+            "bunSignature": "{ (destination: BunFile | S3File | PathLike, input: string | Blob | ArrayBufferLike | TypedArray<ArrayBufferLike> | BlobPart[], options?: { ...; } | undefined): Promise<...>; (destination: BunFile, input: Response, options?: { ...; } | undefined): Promise<...>; (destinationPath: PathLike, input: Response, options?: ...",
+            "polyfillSignature": "(destination: string | number | URL | PolyfillBunFile, data: string | Blob | ArrayBuffer | SharedArrayBuffer | Uint8Array<...> | Response | PolyfillBunFile | ReadableStream<...>) => Promise<...>",
+            "signatureDiff": "Signature mismatch: Bun=\"{ (destination: BunFile | S3File | PathLike, input: string | Blob | ArrayBufferLike | TypedArray<ArrayBufferLike> | BlobPart[], options?: { ...; } | undefined): Promise<...>; (destination: BunFile, input: Response, options?: { ...; } | undefined): Promise<...>; (destinationPath: PathLike, input: Response, options?: ...\" vs Polyfill=\"(destination: string | number | URL | PolyfillBunFile, data: string | Blob | ArrayBuffer | SharedArrayBuffer | Uint8Array<...> | Response | PolyfillBunFile | ReadableStream<...>) => Promise<...>\""
+          },
+          {
+            "name": "concatArrayBuffers",
+            "fullPath": "Bun.concatArrayBuffers",
+            "status": "missing",
+            "bunSignature": "{ (buffers: (ArrayBufferLike | ArrayBufferView<ArrayBufferLike>)[], maxLength?: number | undefined): ArrayBuffer; (buffers: (ArrayBufferLike | ArrayBufferView<...>)[], maxLength: number, asUint8Array: false): ArrayBuffer; (buffers: (ArrayBufferLike | ArrayBufferView<...>)[], maxLength: number, asUint8Array: true): U...",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readableStreamToArrayBuffer",
+            "fullPath": "Bun.readableStreamToArrayBuffer",
+            "status": "missing",
+            "bunSignature": "(stream: ReadableStream<ArrayBufferLike | ArrayBufferView<ArrayBufferLike>>) => ArrayBuffer | Promise<...>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readableStreamToFormData",
+            "fullPath": "Bun.readableStreamToFormData",
+            "status": "missing",
+            "bunSignature": "(stream: ReadableStream<string | Uint8Array<ArrayBufferLike> | Uint8ClampedArray<ArrayBufferLike> | Uint16Array<ArrayBufferLike> | ... 8 more ... | DataView<...>>, multipartBoundaryExcludingDashes?: string | ... 12 more ... | undefined) => Promise<...>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readableStreamToArray",
+            "fullPath": "Bun.readableStreamToArray",
+            "status": "missing",
+            "bunSignature": "<T>(stream: ReadableStream<T>) => T[] | Promise<T[]>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "escapeHTML",
+            "fullPath": "Bun.escapeHTML",
+            "status": "missing",
+            "bunSignature": "(input: string | number | boolean | object) => string",
+            "polyfillSignature": null
+          },
+          {
+            "name": "pathToFileURL",
+            "fullPath": "Bun.pathToFileURL",
+            "status": "implemented",
+            "bunSignature": "(path: string) => URL",
+            "polyfillSignature": "(path: string) => URL"
+          },
+          {
+            "name": "peek",
+            "fullPath": "Bun.peek",
+            "status": "missing",
+            "bunSignature": "typeof peek",
+            "polyfillSignature": null
+          },
+          {
+            "name": "fileURLToPath",
+            "fullPath": "Bun.fileURLToPath",
+            "status": "implemented",
+            "bunSignature": "(url: string | URL) => string",
+            "polyfillSignature": "(url: string | URL) => string"
+          },
+          {
+            "name": "deepEquals",
+            "fullPath": "Bun.deepEquals",
+            "status": "missing",
+            "bunSignature": "(a: any, b: any, strict?: boolean | undefined) => boolean",
+            "polyfillSignature": null
+          },
+          {
+            "name": "deepMatch",
+            "fullPath": "Bun.deepMatch",
+            "status": "missing",
+            "bunSignature": "(subset: unknown, a: unknown) => boolean",
+            "polyfillSignature": null
+          },
+          {
+            "name": "build",
+            "fullPath": "Bun.build",
+            "status": "missing",
+            "bunSignature": "(config: BuildConfig) => Promise<BuildOutput>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "file",
+            "fullPath": "Bun.file",
+            "status": "partial",
+            "bunSignature": "{ (path: string | URL, options?: BlobPropertyBag | undefined): BunFile; (path: ArrayBufferLike | Uint8Array<ArrayBuffer>, options?: BlobPropertyBag | undefined): BunFile; (fileDescriptor: number, options?: BlobPropertyBag | undefined): BunFile; }",
+            "polyfillSignature": "(path: string | number | URL, options?: { type?: string | undefined; } | undefined) => PolyfillBunFile",
+            "signatureDiff": "Signature mismatch: Bun=\"{ (path: string | URL, options?: BlobPropertyBag | undefined): BunFile; (path: ArrayBufferLike | Uint8Array<ArrayBuffer>, options?: BlobPropertyBag | undefined): BunFile; (fileDescriptor: number, options?: BlobPropertyBag | undefined): BunFile; }\" vs Polyfill=\"(path: string | number | URL, options?: { type?: string | undefined; } | undefined) => PolyfillBunFile\""
+          },
+          {
+            "name": "allocUnsafe",
+            "fullPath": "Bun.allocUnsafe",
+            "status": "missing",
+            "bunSignature": "(size: number) => Uint8Array<ArrayBuffer>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "inspect",
+            "fullPath": "Bun.inspect",
+            "status": "missing",
+            "bunSignature": "typeof inspect",
+            "polyfillSignature": null
+          },
+          {
+            "name": "mmap",
+            "fullPath": "Bun.mmap",
+            "status": "missing",
+            "bunSignature": "(path: PathLike, opts?: MMapOptions | undefined) => Uint8Array<ArrayBuffer>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "color",
+            "fullPath": "Bun.color",
+            "status": "missing",
+            "bunSignature": "{ (input: ColorInput, outputFormat?: \"number\" | \"ansi\" | \"ansi-16\" | \"ansi-16m\" | \"ansi-256\" | \"css\" | \"hex\" | \"HEX\" | \"hsl\" | \"lab\" | \"rgb\" | \"rgba\" | undefined): string | null; (input: ColorInput, outputFormat: \"[rgb]\"): [...] | null; (input: ColorInput, outputFormat: \"[rgba]\"): [...] | null; (input: ColorInput, o...",
+            "polyfillSignature": null
+          },
+          {
+            "name": "gc",
+            "fullPath": "Bun.gc",
+            "status": "partial",
+            "bunSignature": "(force?: boolean | undefined) => void",
+            "polyfillSignature": "(full?: boolean | undefined) => void",
+            "signatureDiff": "Signature mismatch: Bun=\"(force?: boolean | undefined) => void\" vs Polyfill=\"(full?: boolean | undefined) => void\""
+          },
+          {
+            "name": "nanoseconds",
+            "fullPath": "Bun.nanoseconds",
+            "status": "partial",
+            "bunSignature": "() => number",
+            "polyfillSignature": "() => bigint",
+            "signatureDiff": "Signature mismatch: Bun=\"() => number\" vs Polyfill=\"() => bigint\""
+          },
+          {
+            "name": "generateHeapSnapshot",
+            "fullPath": "Bun.generateHeapSnapshot",
+            "status": "missing",
+            "bunSignature": "{ (format?: \"jsc\" | undefined): HeapSnapshot; (format: \"v8\"): string; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "shrink",
+            "fullPath": "Bun.shrink",
+            "status": "missing",
+            "bunSignature": "() => void",
+            "polyfillSignature": null
+          },
+          {
+            "name": "openInEditor",
+            "fullPath": "Bun.openInEditor",
+            "status": "missing",
+            "bunSignature": "(path: string, options?: EditorOptions | undefined) => void",
+            "polyfillSignature": null
+          },
+          {
+            "name": "sleep",
+            "fullPath": "Bun.sleep",
+            "status": "partial",
+            "bunSignature": "(ms: number | Date) => Promise<void>",
+            "polyfillSignature": "(ms: number) => Promise<void>",
+            "signatureDiff": "Signature mismatch: Bun=\"(ms: number | Date) => Promise<void>\" vs Polyfill=\"(ms: number) => Promise<void>\""
+          },
+          {
+            "name": "sleepSync",
+            "fullPath": "Bun.sleepSync",
+            "status": "implemented",
+            "bunSignature": "(ms: number) => void",
+            "polyfillSignature": "(ms: number) => void"
+          },
+          {
+            "name": "sha",
+            "fullPath": "Bun.sha",
+            "status": "missing",
+            "bunSignature": "{ (input: StringOrBuffer, hashInto?: TypedArray<ArrayBufferLike> | undefined): TypedArray<ArrayBufferLike>; (input: StringOrBuffer, encoding: DigestEncoding): string; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "deflateSync",
+            "fullPath": "Bun.deflateSync",
+            "status": "partial",
+            "bunSignature": "(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>",
+            "polyfillSignature": "(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>",
+            "signatureDiff": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
+          },
+          {
+            "name": "gzipSync",
+            "fullPath": "Bun.gzipSync",
+            "status": "partial",
+            "bunSignature": "(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>",
+            "polyfillSignature": "(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>",
+            "signatureDiff": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: string | ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
+          },
+          {
+            "name": "inflateSync",
+            "fullPath": "Bun.inflateSync",
+            "status": "partial",
+            "bunSignature": "(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>",
+            "polyfillSignature": "(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>",
+            "signatureDiff": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
+          },
+          {
+            "name": "gunzipSync",
+            "fullPath": "Bun.gunzipSync",
+            "status": "partial",
+            "bunSignature": "(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>",
+            "polyfillSignature": "(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>",
+            "signatureDiff": "Signature mismatch: Bun=\"(data: string | ArrayBuffer | Uint8Array<ArrayBuffer>, options?: ZlibCompressionOptions | LibdeflateCompressionOptions | undefined) => Uint8Array<...>\" vs Polyfill=\"(input: ArrayBuffer | Uint8Array<ArrayBufferLike> | ArrayBufferView<ArrayBufferLike>, options?: { ...; } | undefined) => Uint8Array<...>\""
+          },
+          {
+            "name": "zstdCompressSync",
+            "fullPath": "Bun.zstdCompressSync",
+            "status": "missing",
+            "bunSignature": "(data: string | ArrayBuffer | TypedArray<ArrayBufferLike> | Buffer<ArrayBufferLike>, options?: { level?: number | undefined; } | undefined) => Buffer<...>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "zstdCompress",
+            "fullPath": "Bun.zstdCompress",
+            "status": "missing",
+            "bunSignature": "(data: string | ArrayBuffer | TypedArray<ArrayBufferLike> | Buffer<ArrayBufferLike>, options?: { level?: number | undefined; } | undefined) => Promise<...>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "zstdDecompressSync",
+            "fullPath": "Bun.zstdDecompressSync",
+            "status": "missing",
+            "bunSignature": "(data: string | ArrayBuffer | TypedArray<ArrayBufferLike> | Buffer<ArrayBufferLike>) => Buffer<ArrayBufferLike>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "zstdDecompress",
+            "fullPath": "Bun.zstdDecompress",
+            "status": "missing",
+            "bunSignature": "(data: string | ArrayBuffer | TypedArray<ArrayBufferLike> | Buffer<ArrayBufferLike>) => Promise<Buffer<ArrayBufferLike>>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "connect",
+            "fullPath": "Bun.connect",
+            "status": "missing",
+            "bunSignature": "{ <Data = undefined>(options: TCPSocketConnectOptions<Data>): Promise<Socket<Data>>; <Data = undefined>(options: UnixSocketOptions<Data>): Promise<...>; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "listen",
+            "fullPath": "Bun.listen",
+            "status": "missing",
+            "bunSignature": "{ <Data = undefined>(options: TCPSocketListenOptions<Data>): TCPSocketListener<Data>; <Data = undefined>(options: UnixSocketOptions<Data>): UnixSocketListener<...>; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "udpSocket",
+            "fullPath": "Bun.udpSocket",
+            "status": "missing",
+            "bunSignature": "{ <DataBinaryType extends BinaryType = \"buffer\">(options: SocketOptions<DataBinaryType>): Promise<Socket<DataBinaryType>>; <DataBinaryType extends BinaryType = \"buffer\">(options: ConnectSocketOptions<...>): Promise<...>; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "spawn",
+            "fullPath": "Bun.spawn",
+            "status": "partial",
+            "bunSignature": "{ <const In extends SpawnOptions.Writable = \"ignore\", const Out extends SpawnOptions.Readable = \"pipe\", const Err extends SpawnOptions.Readable = \"inherit\">(options: SpawnOptions<In, Out, Err> & { cmd: string[]; }): Subprocess<...>; <const In extends SpawnOptions.Writable = \"ignore\", const Out extends SpawnOptions.R...",
+            "polyfillSignature": "{ (command: string[], options?: SpawnOptionsObject | undefined): Subprocess; (options: { cmd: string[]; } & SpawnOptionsObject): Subprocess; }",
+            "signatureDiff": "Signature mismatch: Bun=\"{ <const In extends SpawnOptions.Writable = \"ignore\", const Out extends SpawnOptions.Readable = \"pipe\", const Err extends SpawnOptions.Readable = \"inherit\">(options: SpawnOptions<In, Out, Err> & { cmd: string[]; }): Subprocess<...>; <const In extends SpawnOptions.Writable = \"ignore\", const Out extends SpawnOptions.R...\" vs Polyfill=\"{ (command: string[], options?: SpawnOptionsObject | undefined): Subprocess; (options: { cmd: string[]; } & SpawnOptionsObject): Subprocess; }\""
+          },
+          {
+            "name": "spawnSync",
+            "fullPath": "Bun.spawnSync",
+            "status": "partial",
+            "bunSignature": "{ <const In extends SpawnOptions.Writable = \"ignore\", const Out extends SpawnOptions.Readable = \"pipe\", const Err extends SpawnOptions.Readable = \"pipe\">(options: SpawnSyncOptions<In, Out, Err> & { cmd: string[]; onExit?: undefined; }): SyncSubprocess<...>; <const In extends SpawnOptions.Writable = \"ignore\", const O...",
+            "polyfillSignature": "{ (command: string[], options?: SpawnOptionsObject | undefined): SyncSubprocess; (options: { cmd: string[]; } & SpawnOptionsObject): SyncSubprocess; }",
+            "signatureDiff": "Signature mismatch: Bun=\"{ <const In extends SpawnOptions.Writable = \"ignore\", const Out extends SpawnOptions.Readable = \"pipe\", const Err extends SpawnOptions.Readable = \"pipe\">(options: SpawnSyncOptions<In, Out, Err> & { cmd: string[]; onExit?: undefined; }): SyncSubprocess<...>; <const In extends SpawnOptions.Writable = \"ignore\", const O...\" vs Polyfill=\"{ (command: string[], options?: SpawnOptionsObject | undefined): SyncSubprocess; (options: { cmd: string[]; } & SpawnOptionsObject): SyncSubprocess; }\""
+          },
+          {
+            "name": "indexOfLine",
+            "fullPath": "Bun.indexOfLine",
+            "status": "missing",
+            "bunSignature": "(buffer: ArrayBufferLike | ArrayBufferView<ArrayBufferLike>, offset?: number | undefined) => number",
+            "polyfillSignature": null
+          },
+          {
+            "name": "randomUUIDv7",
+            "fullPath": "Bun.randomUUIDv7",
+            "status": "missing",
+            "bunSignature": "{ (encoding?: \"hex\" | \"base64\" | \"base64url\" | undefined, timestamp?: number | Date | undefined): string; (encoding: \"buffer\", timestamp?: number | Date | undefined): Buffer<...>; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "randomUUIDv5",
+            "fullPath": "Bun.randomUUIDv5",
+            "status": "missing",
+            "bunSignature": "{ (name: string | BufferSource, namespace: string | BufferSource, encoding?: \"hex\" | \"base64\" | \"base64url\" | undefined): string; (name: string | BufferSource, namespace: string | BufferSource, encoding: \"buffer\"): Buffer<...>; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "PathLike",
+            "fullPath": "Bun.PathLike",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ArrayBufferView",
+            "fullPath": "Bun.ArrayBufferView",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BufferSource",
+            "fullPath": "Bun.BufferSource",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "StringOrBuffer",
+            "fullPath": "Bun.StringOrBuffer",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "XMLHttpRequestBodyInit",
+            "fullPath": "Bun.XMLHttpRequestBodyInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReadableStreamController",
+            "fullPath": "Bun.ReadableStreamController",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReadableStreamDefaultReadResult",
+            "fullPath": "Bun.ReadableStreamDefaultReadResult",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReadableStreamReader",
+            "fullPath": "Bun.ReadableStreamReader",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Transferable",
+            "fullPath": "Bun.Transferable",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MessageEventSource",
+            "fullPath": "Bun.MessageEventSource",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Encoding",
+            "fullPath": "Bun.Encoding",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UncaughtExceptionOrigin",
+            "fullPath": "Bun.UncaughtExceptionOrigin",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MultipleResolveType",
+            "fullPath": "Bun.MultipleResolveType",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BeforeExitListener",
+            "fullPath": "Bun.BeforeExitListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "DisconnectListener",
+            "fullPath": "Bun.DisconnectListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ExitListener",
+            "fullPath": "Bun.ExitListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "RejectionHandledListener",
+            "fullPath": "Bun.RejectionHandledListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "FormDataEntryValue",
+            "fullPath": "Bun.FormDataEntryValue",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WarningListener",
+            "fullPath": "Bun.WarningListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MessageListener",
+            "fullPath": "Bun.MessageListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SignalsListener",
+            "fullPath": "Bun.SignalsListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BlobPart",
+            "fullPath": "Bun.BlobPart",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TimerHandler",
+            "fullPath": "Bun.TimerHandler",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "DOMHighResTimeStamp",
+            "fullPath": "Bun.DOMHighResTimeStamp",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventListenerOrEventListenerObject",
+            "fullPath": "Bun.EventListenerOrEventListenerObject",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BlobOrStringOrBuffer",
+            "fullPath": "Bun.BlobOrStringOrBuffer",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MaybePromise",
+            "fullPath": "Bun.MaybePromise",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ErrorEventInit",
+            "fullPath": "Bun.ErrorEventInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CloseEventInit",
+            "fullPath": "Bun.CloseEventInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MessageEventInit",
+            "fullPath": "Bun.MessageEventInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventInit",
+            "fullPath": "Bun.EventInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventListenerOptions",
+            "fullPath": "Bun.EventListenerOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CustomEventInit",
+            "fullPath": "Bun.CustomEventInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunMessageEvent",
+            "fullPath": "Bun.BunMessageEvent",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MessageEvent",
+            "fullPath": "Bun.MessageEvent",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReadableStreamDefaultReadManyResult",
+            "fullPath": "Bun.ReadableStreamDefaultReadManyResult",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventSourceEventMap",
+            "fullPath": "Bun.EventSourceEventMap",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "AddEventListenerOptions",
+            "fullPath": "Bun.AddEventListenerOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventListener",
+            "fullPath": "Bun.EventListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventListenerObject",
+            "fullPath": "Bun.EventListenerObject",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "FetchEvent",
+            "fullPath": "Bun.FetchEvent",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventMap",
+            "fullPath": "Bun.EventMap",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "StructuredSerializeOptions",
+            "fullPath": "Bun.StructuredSerializeOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EventSource",
+            "fullPath": "Bun.EventSource",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TransformerFlushCallback",
+            "fullPath": "Bun.TransformerFlushCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TransformerStartCallback",
+            "fullPath": "Bun.TransformerStartCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TransformerTransformCallback",
+            "fullPath": "Bun.TransformerTransformCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSinkAbortCallback",
+            "fullPath": "Bun.UnderlyingSinkAbortCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSinkCloseCallback",
+            "fullPath": "Bun.UnderlyingSinkCloseCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSinkStartCallback",
+            "fullPath": "Bun.UnderlyingSinkStartCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSinkWriteCallback",
+            "fullPath": "Bun.UnderlyingSinkWriteCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSourceCancelCallback",
+            "fullPath": "Bun.UnderlyingSourceCancelCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSink",
+            "fullPath": "Bun.UnderlyingSink",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSource",
+            "fullPath": "Bun.UnderlyingSource",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "DirectUnderlyingSource",
+            "fullPath": "Bun.DirectUnderlyingSource",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSourcePullCallback",
+            "fullPath": "Bun.UnderlyingSourcePullCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnderlyingSourceStartCallback",
+            "fullPath": "Bun.UnderlyingSourceStartCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "GenericTransformStream",
+            "fullPath": "Bun.GenericTransformStream",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "AbstractWorkerEventMap",
+            "fullPath": "Bun.AbstractWorkerEventMap",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WorkerEventMap",
+            "fullPath": "Bun.WorkerEventMap",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WorkerType",
+            "fullPath": "Bun.WorkerType",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "AbstractWorker",
+            "fullPath": "Bun.AbstractWorker",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WorkerOptions",
+            "fullPath": "Bun.WorkerOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Worker",
+            "fullPath": "Bun.Worker",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Env",
+            "fullPath": "Bun.Env",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "env",
+            "fullPath": "Bun.env",
+            "status": "partial",
+            "bunSignature": "Env & ProcessEnv & ImportMetaEnv",
+            "polyfillSignature": "ProcessEnv",
+            "signatureDiff": "Signature mismatch: Bun=\"Env & ProcessEnv & ImportMetaEnv\" vs Polyfill=\"ProcessEnv\""
+          },
+          {
+            "name": "argv",
+            "fullPath": "Bun.argv",
+            "status": "implemented",
+            "bunSignature": "string[]",
+            "polyfillSignature": "string[]"
+          },
+          {
+            "name": "WhichOptions",
+            "fullPath": "Bun.WhichOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "StringWidthOptions",
+            "fullPath": "Bun.StringWidthOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TOML",
+            "fullPath": "Bun.TOML",
+            "status": "partial",
+            "bunSignature": "typeof TOML",
+            "polyfillSignature": "any",
+            "signatureDiff": "Signature mismatch: Bun=\"typeof TOML\" vs Polyfill=\"any\""
+          },
+          {
+            "name": "YAML",
+            "fullPath": "Bun.YAML",
+            "status": "missing",
+            "bunSignature": "typeof YAML",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SystemError",
+            "fullPath": "Bun.SystemError",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ArrayBufferSink",
+            "fullPath": "Bun.ArrayBufferSink",
+            "status": "missing",
+            "bunSignature": "typeof ArrayBufferSink",
+            "polyfillSignature": null
+          },
+          {
+            "name": "dns",
+            "fullPath": "Bun.dns",
+            "status": "missing",
+            "bunSignature": "typeof dns",
+            "polyfillSignature": null
+          },
+          {
+            "name": "DNSLookup",
+            "fullPath": "Bun.DNSLookup",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "FileBlob",
+            "fullPath": "Bun.FileBlob",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunFile",
+            "fullPath": "Bun.BunFile",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CSRFAlgorithm",
+            "fullPath": "Bun.CSRFAlgorithm",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CSRFGenerateOptions",
+            "fullPath": "Bun.CSRFGenerateOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CSRFVerifyOptions",
+            "fullPath": "Bun.CSRFVerifyOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CSRF",
+            "fullPath": "Bun.CSRF",
+            "status": "missing",
+            "bunSignature": "typeof CSRF",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MacroMap",
+            "fullPath": "Bun.MacroMap",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "hash",
+            "fullPath": "Bun.hash",
+            "status": "missing",
+            "bunSignature": "((data: string | ArrayBuffer | SharedArrayBuffer | ArrayBufferView<ArrayBufferLike>, seed?: number | bigint | undefined) => number | bigint) & Hash",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Hash",
+            "fullPath": "Bun.Hash",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "JavaScriptLoader",
+            "fullPath": "Bun.JavaScriptLoader",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TSConfig",
+            "fullPath": "Bun.TSConfig",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TranspilerOptions",
+            "fullPath": "Bun.TranspilerOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Transpiler",
+            "fullPath": "Bun.Transpiler",
+            "status": "missing",
+            "bunSignature": "typeof Transpiler",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ImportKind",
+            "fullPath": "Bun.ImportKind",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Import",
+            "fullPath": "Bun.Import",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Build",
+            "fullPath": "Bun.Build",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BuildConfigBase",
+            "fullPath": "Bun.BuildConfigBase",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CompileBuildOptions",
+            "fullPath": "Bun.CompileBuildOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CompileBuildConfig",
+            "fullPath": "Bun.CompileBuildConfig",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "NormalBuildConfig",
+            "fullPath": "Bun.NormalBuildConfig",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BuildConfig",
+            "fullPath": "Bun.BuildConfig",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Password",
+            "fullPath": "Bun.Password",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "password",
+            "fullPath": "Bun.password",
+            "status": "missing",
+            "bunSignature": "{ verify(password: StringOrBuffer, hash: StringOrBuffer, algorithm?: \"bcrypt\" | \"argon2id\" | \"argon2d\" | \"argon2i\" | undefined): Promise<boolean>; hash(password: StringOrBuffer, algorithm?: BCryptAlgorithm | ... 5 more ... | undefined): Promise<...>; verifySync(password: StringOrBuffer, hash: StringOrBuffer, algorit...",
+            "polyfillSignature": null
+          },
+          {
+            "name": "secrets",
+            "fullPath": "Bun.secrets",
+            "status": "missing",
+            "bunSignature": "{ get(options: { service: string; name: string; }): Promise<string | null>; set(options: { service: string; name: string; value: string; allowUnrestrictedAccess?: boolean | undefined; }): Promise<...>; delete(options: { ...; }): Promise<...>; }",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BuildArtifact",
+            "fullPath": "Bun.BuildArtifact",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BuildOutput",
+            "fullPath": "Bun.BuildOutput",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ErrorLike",
+            "fullPath": "Bun.ErrorLike",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TLSOptions",
+            "fullPath": "Bun.TLSOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SocketAddress",
+            "fullPath": "Bun.SocketAddress",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "embeddedFiles",
+            "fullPath": "Bun.embeddedFiles",
+            "status": "missing",
+            "bunSignature": "readonly Blob[]",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunInspectOptions",
+            "fullPath": "Bun.BunInspectOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketOptionsProtocolsOrProtocol",
+            "fullPath": "Bun.WebSocketOptionsProtocolsOrProtocol",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketOptionsTLS",
+            "fullPath": "Bun.WebSocketOptionsTLS",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketOptionsHeaders",
+            "fullPath": "Bun.WebSocketOptionsHeaders",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketOptions",
+            "fullPath": "Bun.WebSocketOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketEventMap",
+            "fullPath": "Bun.WebSocketEventMap",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocket",
+            "fullPath": "Bun.WebSocket",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MMapOptions",
+            "fullPath": "Bun.MMapOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "stdout",
+            "fullPath": "Bun.stdout",
+            "status": "partial",
+            "bunSignature": "BunFile",
+            "polyfillSignature": "PolyfillBunFile",
+            "signatureDiff": "Signature differs: Bun expects \"BunFile\", polyfill has \"PolyfillBunFile\""
+          },
+          {
+            "name": "stderr",
+            "fullPath": "Bun.stderr",
+            "status": "partial",
+            "bunSignature": "BunFile",
+            "polyfillSignature": "PolyfillBunFile",
+            "signatureDiff": "Signature differs: Bun expects \"BunFile\", polyfill has \"PolyfillBunFile\""
+          },
+          {
+            "name": "stdin",
+            "fullPath": "Bun.stdin",
+            "status": "partial",
+            "bunSignature": "BunFile",
+            "polyfillSignature": "PolyfillBunFile",
+            "signatureDiff": "Signature differs: Bun expects \"BunFile\", polyfill has \"PolyfillBunFile\""
+          },
+          {
+            "name": "StringLike",
+            "fullPath": "Bun.StringLike",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ColorInput",
+            "fullPath": "Bun.ColorInput",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "semver",
+            "fullPath": "Bun.semver",
+            "status": "missing",
+            "bunSignature": "typeof semver",
+            "polyfillSignature": null
+          },
+          {
+            "name": "unsafe",
+            "fullPath": "Bun.unsafe",
+            "status": "missing",
+            "bunSignature": "typeof unsafe",
+            "polyfillSignature": null
+          },
+          {
+            "name": "DigestEncoding",
+            "fullPath": "Bun.DigestEncoding",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "enableANSIColors",
+            "fullPath": "Bun.enableANSIColors",
+            "status": "missing",
+            "bunSignature": "boolean",
+            "polyfillSignature": null
+          },
+          {
+            "name": "main",
+            "fullPath": "Bun.main",
+            "status": "implemented",
+            "bunSignature": "string",
+            "polyfillSignature": "string"
+          },
+          {
+            "name": "HeapSnapshot",
+            "fullPath": "Bun.HeapSnapshot",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "fetch",
+            "fullPath": "Bun.fetch",
+            "status": "missing",
+            "bunSignature": "typeof fetch",
+            "polyfillSignature": null
+          },
+          {
+            "name": "EditorOptions",
+            "fullPath": "Bun.EditorOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CryptoHashInterface",
+            "fullPath": "Bun.CryptoHashInterface",
+            "status": "missing",
+            "bunSignature": "typeof CryptoHashInterface",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SupportedCryptoAlgorithms",
+            "fullPath": "Bun.SupportedCryptoAlgorithms",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CryptoHasher",
+            "fullPath": "Bun.CryptoHasher",
+            "status": "missing",
+            "bunSignature": "typeof CryptoHasher",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SHA1",
+            "fullPath": "Bun.SHA1",
+            "status": "missing",
+            "bunSignature": "typeof SHA1",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MD5",
+            "fullPath": "Bun.MD5",
+            "status": "missing",
+            "bunSignature": "typeof MD5",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MD4",
+            "fullPath": "Bun.MD4",
+            "status": "missing",
+            "bunSignature": "typeof MD4",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SHA224",
+            "fullPath": "Bun.SHA224",
+            "status": "missing",
+            "bunSignature": "typeof SHA224",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SHA512",
+            "fullPath": "Bun.SHA512",
+            "status": "missing",
+            "bunSignature": "typeof SHA512",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SHA384",
+            "fullPath": "Bun.SHA384",
+            "status": "missing",
+            "bunSignature": "typeof SHA384",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SHA256",
+            "fullPath": "Bun.SHA256",
+            "status": "missing",
+            "bunSignature": "typeof SHA256",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SHA512_256",
+            "fullPath": "Bun.SHA512_256",
+            "status": "missing",
+            "bunSignature": "typeof SHA512_256",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ZlibCompressionOptions",
+            "fullPath": "Bun.ZlibCompressionOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "LibdeflateCompressionOptions",
+            "fullPath": "Bun.LibdeflateCompressionOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Target",
+            "fullPath": "Bun.Target",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Loader",
+            "fullPath": "Bun.Loader",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "PluginConstraints",
+            "fullPath": "Bun.PluginConstraints",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnLoadResultSourceCode",
+            "fullPath": "Bun.OnLoadResultSourceCode",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnLoadResultObject",
+            "fullPath": "Bun.OnLoadResultObject",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnLoadArgs",
+            "fullPath": "Bun.OnLoadArgs",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnLoadResult",
+            "fullPath": "Bun.OnLoadResult",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnLoadCallback",
+            "fullPath": "Bun.OnLoadCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnStartCallback",
+            "fullPath": "Bun.OnStartCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnEndCallback",
+            "fullPath": "Bun.OnEndCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnBeforeParseCallback",
+            "fullPath": "Bun.OnBeforeParseCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnResolveArgs",
+            "fullPath": "Bun.OnResolveArgs",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnResolveResult",
+            "fullPath": "Bun.OnResolveResult",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "OnResolveCallback",
+            "fullPath": "Bun.OnResolveCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "FFIFunctionCallable",
+            "fullPath": "Bun.FFIFunctionCallable",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "PluginBuilder",
+            "fullPath": "Bun.PluginBuilder",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunPlugin",
+            "fullPath": "Bun.BunPlugin",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunRegisterPlugin",
+            "fullPath": "Bun.BunRegisterPlugin",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "plugin",
+            "fullPath": "Bun.plugin",
+            "status": "missing",
+            "bunSignature": "BunRegisterPlugin",
+            "polyfillSignature": null
+          },
+          {
+            "name": "isMainThread",
+            "fullPath": "Bun.isMainThread",
+            "status": "implemented",
+            "bunSignature": "boolean",
+            "polyfillSignature": "boolean"
+          },
+          {
+            "name": "HTMLBundle",
+            "fullPath": "Bun.HTMLBundle",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Socket",
+            "fullPath": "Bun.Socket",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TLSUpgradeOptions",
+            "fullPath": "Bun.TLSUpgradeOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SocketListener",
+            "fullPath": "Bun.SocketListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TCPSocketListener",
+            "fullPath": "Bun.TCPSocketListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnixSocketListener",
+            "fullPath": "Bun.UnixSocketListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TCPSocket",
+            "fullPath": "Bun.TCPSocket",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TLSSocket",
+            "fullPath": "Bun.TLSSocket",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BinaryTypeList",
+            "fullPath": "Bun.BinaryTypeList",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BinaryType",
+            "fullPath": "Bun.BinaryType",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SocketHandler",
+            "fullPath": "Bun.SocketHandler",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SocketOptions",
+            "fullPath": "Bun.SocketOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TCPSocketListenOptions",
+            "fullPath": "Bun.TCPSocketListenOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TCPSocketConnectOptions",
+            "fullPath": "Bun.TCPSocketConnectOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnixSocketOptions",
+            "fullPath": "Bun.UnixSocketOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "FdSocketOptions",
+            "fullPath": "Bun.FdSocketOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "udp",
+            "fullPath": "Bun.udp",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SpawnOptions",
+            "fullPath": "Bun.SpawnOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Spawn",
+            "fullPath": "Bun.Spawn",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ResourceUsage",
+            "fullPath": "Bun.ResourceUsage",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Subprocess",
+            "fullPath": "Bun.Subprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SyncSubprocess",
+            "fullPath": "Bun.SyncSubprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReadableSubprocess",
+            "fullPath": "Bun.ReadableSubprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WritableSubprocess",
+            "fullPath": "Bun.WritableSubprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "PipedSubprocess",
+            "fullPath": "Bun.PipedSubprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "NullSubprocess",
+            "fullPath": "Bun.NullSubprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReadableSyncSubprocess",
+            "fullPath": "Bun.ReadableSyncSubprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "NullSyncSubprocess",
+            "fullPath": "Bun.NullSyncSubprocess",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "FileSystemRouter",
+            "fullPath": "Bun.FileSystemRouter",
+            "status": "missing",
+            "bunSignature": "typeof FileSystemRouter",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MatchedRoute",
+            "fullPath": "Bun.MatchedRoute",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "version",
+            "fullPath": "Bun.version",
+            "status": "implemented",
+            "bunSignature": "string",
+            "polyfillSignature": "string"
+          },
+          {
+            "name": "version_with_sha",
+            "fullPath": "Bun.version_with_sha",
+            "status": "missing",
+            "bunSignature": "string",
+            "polyfillSignature": null
+          },
+          {
+            "name": "revision",
+            "fullPath": "Bun.revision",
+            "status": "implemented",
+            "bunSignature": "string",
+            "polyfillSignature": "string"
+          },
+          {
+            "name": "GlobScanOptions",
+            "fullPath": "Bun.GlobScanOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Glob",
+            "fullPath": "Bun.Glob",
+            "status": "partial",
+            "bunSignature": "typeof Glob",
+            "polyfillSignature": "any",
+            "signatureDiff": "Signature mismatch: Bun=\"typeof Glob\" vs Polyfill=\"any\""
+          },
+          {
+            "name": "BunLockFile",
+            "fullPath": "Bun.BunLockFile",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunLockFileBasePackageInfo",
+            "fullPath": "Bun.BunLockFileBasePackageInfo",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunLockFileWorkspacePackage",
+            "fullPath": "Bun.BunLockFileWorkspacePackage",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunLockFilePackageInfo",
+            "fullPath": "Bun.BunLockFilePackageInfo",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunLockFilePackageArray",
+            "fullPath": "Bun.BunLockFilePackageArray",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CookieInit",
+            "fullPath": "Bun.CookieInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CookieStoreDeleteOptions",
+            "fullPath": "Bun.CookieStoreDeleteOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CookieStoreGetOptions",
+            "fullPath": "Bun.CookieStoreGetOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CookieSameSite",
+            "fullPath": "Bun.CookieSameSite",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Cookie",
+            "fullPath": "Bun.Cookie",
+            "status": "missing",
+            "bunSignature": "typeof Cookie",
+            "polyfillSignature": null
+          },
+          {
+            "name": "CookieMap",
+            "fullPath": "Bun.CookieMap",
+            "status": "missing",
+            "bunSignature": "typeof CookieMap",
+            "polyfillSignature": null
+          },
+          {
+            "name": "$",
+            "fullPath": "Bun.$",
+            "status": "partial",
+            "bunSignature": "typeof $",
+            "polyfillSignature": "ShellFunction",
+            "signatureDiff": "Signature mismatch: Bun=\"typeof $\" vs Polyfill=\"ShellFunction\""
+          },
+          {
+            "name": "ShellExpression",
+            "fullPath": "Bun.ShellExpression",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "FileSink",
+            "fullPath": "Bun.FileSink",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "NetworkSink",
+            "fullPath": "Bun.NetworkSink",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "S3Options",
+            "fullPath": "Bun.S3Options",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "S3FilePresignOptions",
+            "fullPath": "Bun.S3FilePresignOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "S3Stats",
+            "fullPath": "Bun.S3Stats",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "S3File",
+            "fullPath": "Bun.S3File",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "S3ListObjectsOptions",
+            "fullPath": "Bun.S3ListObjectsOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "S3ListObjectsResponse",
+            "fullPath": "Bun.S3ListObjectsResponse",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "S3Client",
+            "fullPath": "Bun.S3Client",
+            "status": "missing",
+            "bunSignature": "typeof S3Client",
+            "polyfillSignature": null
+          },
+          {
+            "name": "s3",
+            "fullPath": "Bun.s3",
+            "status": "missing",
+            "bunSignature": "S3Client",
+            "polyfillSignature": null
+          },
+          {
+            "name": "HeadersInit",
+            "fullPath": "Bun.HeadersInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BodyInit",
+            "fullPath": "Bun.BodyInit",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "HMREventNames",
+            "fullPath": "Bun.HMREventNames",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "HMREvent",
+            "fullPath": "Bun.HMREvent",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebAssembly",
+            "fullPath": "Bun.WebAssembly",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readableStreamToBytes",
+            "fullPath": "Bun.readableStreamToBytes",
+            "status": "missing",
+            "bunSignature": "(stream: ReadableStream<ArrayBufferLike | ArrayBufferView<ArrayBufferLike>>) => Uint8Array<ArrayBuffer> | Promise<...>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readableStreamToBlob",
+            "fullPath": "Bun.readableStreamToBlob",
+            "status": "missing",
+            "bunSignature": "(stream: ReadableStream<any>) => Promise<Blob>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readableStreamToText",
+            "fullPath": "Bun.readableStreamToText",
+            "status": "missing",
+            "bunSignature": "(stream: ReadableStream<any>) => Promise<string>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readableStreamToJSON",
+            "fullPath": "Bun.readableStreamToJSON",
+            "status": "missing",
+            "bunSignature": "(stream: ReadableStream<any>) => Promise<any>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Platform",
+            "fullPath": "Bun.Platform",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Architecture",
+            "fullPath": "Bun.Architecture",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UncaughtExceptionListener",
+            "fullPath": "Bun.UncaughtExceptionListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "UnhandledRejectionListener",
+            "fullPath": "Bun.UnhandledRejectionListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "MultipleResolveListener",
+            "fullPath": "Bun.MultipleResolveListener",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ServeOptions",
+            "fullPath": "Bun.ServeOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SQLQuery",
+            "fullPath": "Bun.SQLQuery",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SQLTransactionContextCallback",
+            "fullPath": "Bun.SQLTransactionContextCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SQLSavepointContextCallback",
+            "fullPath": "Bun.SQLSavepointContextCallback",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SQLOptions",
+            "fullPath": "Bun.SQLOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Errorlike",
+            "fullPath": "Bun.Errorlike",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ShellFunction",
+            "fullPath": "Bun.ShellFunction",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReadableIO",
+            "fullPath": "Bun.ReadableIO",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "RedisOptions",
+            "fullPath": "Bun.RedisOptions",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "RedisClient",
+            "fullPath": "Bun.RedisClient",
+            "status": "missing",
+            "bunSignature": "typeof RedisClient",
+            "polyfillSignature": null
+          },
+          {
+            "name": "redis",
+            "fullPath": "Bun.redis",
+            "status": "missing",
+            "bunSignature": "RedisClient",
+            "polyfillSignature": null
+          },
+          {
+            "name": "serve",
+            "fullPath": "Bun.serve",
+            "status": "missing",
+            "bunSignature": "<WebSocketData = undefined, R extends string = never>(options: Options<WebSocketData, R>) => Server<WebSocketData>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ServerWebSocketSendStatus",
+            "fullPath": "Bun.ServerWebSocketSendStatus",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketReadyState",
+            "fullPath": "Bun.WebSocketReadyState",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ServerWebSocket",
+            "fullPath": "Bun.ServerWebSocket",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketCompressor",
+            "fullPath": "Bun.WebSocketCompressor",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "WebSocketHandler",
+            "fullPath": "Bun.WebSocketHandler",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Serve",
+            "fullPath": "Bun.Serve",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "BunRequest",
+            "fullPath": "Bun.BunRequest",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Server",
+            "fullPath": "Bun.Server",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "Security",
+            "fullPath": "Bun.Security",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ReservedSQL",
+            "fullPath": "Bun.ReservedSQL",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ArrayType",
+            "fullPath": "Bun.ArrayType",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SQLArrayParameter",
+            "fullPath": "Bun.SQLArrayParameter",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "TransactionSQL",
+            "fullPath": "Bun.TransactionSQL",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SQL",
+            "fullPath": "Bun.SQL",
+            "status": "missing",
+            "bunSignature": "typeof SQL",
+            "polyfillSignature": null
+          },
+          {
+            "name": "sql",
+            "fullPath": "Bun.sql",
+            "status": "missing",
+            "bunSignature": "SQL",
+            "polyfillSignature": null
+          },
+          {
+            "name": "postgres",
+            "fullPath": "Bun.postgres",
+            "status": "missing",
+            "bunSignature": "SQL",
+            "polyfillSignature": null
+          },
+          {
+            "name": "SavepointSQL",
+            "fullPath": "Bun.SavepointSQL",
+            "status": "missing",
+            "bunSignature": "any",
+            "polyfillSignature": null
+          }
+        ],
+        "stats": {
+          "total": 306,
+          "implemented": 8,
+          "partial": 21,
+          "missing": 277,
+          "percentComplete": 6
+        }
+      },
+      {
+        "bunInterface": "BunFile",
+        "polyfillInterface": "PolyfillBunFile",
+        "members": [
+          {
+            "name": "slice",
+            "fullPath": "BunFile.slice",
+            "status": "partial",
+            "bunSignature": "{ (begin?: number | undefined, end?: number | undefined, contentType?: string | undefined): BunFile; (begin?: number | undefined, contentType?: string | undefined): BunFile; (contentType?: string | undefined): BunFile; }",
+            "polyfillSignature": "(begin?: number | undefined, end?: number | undefined, contentType?: string | undefined) => PolyfillBunFile",
+            "signatureDiff": "Signature mismatch: Bun=\"{ (begin?: number | undefined, end?: number | undefined, contentType?: string | undefined): BunFile; (begin?: number | undefined, contentType?: string | undefined): BunFile; (contentType?: string | undefined): BunFile; }\" vs Polyfill=\"(begin?: number | undefined, end?: number | undefined, contentType?: string | undefined) => PolyfillBunFile\""
+          },
+          {
+            "name": "writer",
+            "fullPath": "BunFile.writer",
+            "status": "partial",
+            "bunSignature": "(options?: { highWaterMark?: number | undefined; } | undefined) => FileSink",
+            "polyfillSignature": "(params?: { highWaterMark?: number | undefined; } | undefined) => PolyfillFileSink",
+            "signatureDiff": "Signature mismatch: Bun=\"(options?: { highWaterMark?: number | undefined; } | undefined) => FileSink\" vs Polyfill=\"(params?: { highWaterMark?: number | undefined; } | undefined) => PolyfillFileSink\""
+          },
+          {
+            "name": "lastModified",
+            "fullPath": "BunFile.lastModified",
+            "status": "missing",
+            "bunSignature": "number",
+            "polyfillSignature": null
+          },
+          {
+            "name": "name",
+            "fullPath": "BunFile.name",
+            "status": "implemented",
+            "bunSignature": "string | undefined",
+            "polyfillSignature": "string | undefined"
+          },
+          {
+            "name": "exists",
+            "fullPath": "BunFile.exists",
+            "status": "implemented",
+            "bunSignature": "() => Promise<boolean>",
+            "polyfillSignature": "() => Promise<boolean>"
+          },
+          {
+            "name": "write",
+            "fullPath": "BunFile.write",
+            "status": "missing",
+            "bunSignature": "(data: string | BunFile | ArrayBuffer | SharedArrayBuffer | Response | ArrayBufferView<ArrayBufferLike> | Request, options?: { ...; } | undefined) => Promise<...>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "unlink",
+            "fullPath": "BunFile.unlink",
+            "status": "missing",
+            "bunSignature": "() => Promise<void>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "delete",
+            "fullPath": "BunFile.delete",
+            "status": "implemented",
+            "bunSignature": "() => Promise<void>",
+            "polyfillSignature": "() => Promise<void>"
+          },
+          {
+            "name": "stat",
+            "fullPath": "BunFile.stat",
+            "status": "missing",
+            "bunSignature": "() => Promise<Stats>",
+            "polyfillSignature": null
+          },
+          {
+            "name": "size",
+            "fullPath": "BunFile.size",
+            "status": "implemented",
+            "bunSignature": "number",
+            "polyfillSignature": "number"
+          },
+          {
+            "name": "type",
+            "fullPath": "BunFile.type",
+            "status": "implemented",
+            "bunSignature": "string",
+            "polyfillSignature": "string"
+          },
+          {
+            "name": "arrayBuffer",
+            "fullPath": "BunFile.arrayBuffer",
+            "status": "partial",
+            "bunSignature": "{ (): Promise<ArrayBuffer>; (): Promise<ArrayBuffer>; }",
+            "polyfillSignature": "() => Promise<ArrayBuffer>",
+            "signatureDiff": "Signature mismatch: Bun=\"{ (): Promise<ArrayBuffer>; (): Promise<ArrayBuffer>; }\" vs Polyfill=\"() => Promise<ArrayBuffer>\""
+          },
+          {
+            "name": "bytes",
+            "fullPath": "BunFile.bytes",
+            "status": "partial",
+            "bunSignature": "{ (): Promise<Uint8Array<ArrayBuffer>>; (): Promise<Uint8Array<ArrayBuffer>>; }",
+            "polyfillSignature": "() => Promise<Uint8Array<ArrayBufferLike>>",
+            "signatureDiff": "Signature mismatch: Bun=\"{ (): Promise<Uint8Array<ArrayBuffer>>; (): Promise<Uint8Array<ArrayBuffer>>; }\" vs Polyfill=\"() => Promise<Uint8Array<ArrayBufferLike>>\""
+          },
+          {
+            "name": "stream",
+            "fullPath": "BunFile.stream",
+            "status": "partial",
+            "bunSignature": "{ (): ReadableStream<Uint8Array<ArrayBuffer>>; (): ReadableStream<Uint8Array<ArrayBuffer>>; }",
+            "polyfillSignature": "() => ReadableStream<Uint8Array<ArrayBufferLike>>",
+            "signatureDiff": "Signature mismatch: Bun=\"{ (): ReadableStream<Uint8Array<ArrayBuffer>>; (): ReadableStream<Uint8Array<ArrayBuffer>>; }\" vs Polyfill=\"() => ReadableStream<Uint8Array<ArrayBufferLike>>\""
+          },
+          {
+            "name": "text",
+            "fullPath": "BunFile.text",
+            "status": "partial",
+            "bunSignature": "{ (): Promise<string>; (): Promise<string>; }",
+            "polyfillSignature": "() => Promise<string>",
+            "signatureDiff": "Signature mismatch: Bun=\"{ (): Promise<string>; (): Promise<string>; }\" vs Polyfill=\"() => Promise<string>\""
+          },
+          {
+            "name": "json",
+            "fullPath": "BunFile.json",
+            "status": "partial",
+            "bunSignature": "() => Promise<any>",
+            "polyfillSignature": "<T = unknown>() => Promise<T>",
+            "signatureDiff": "Signature mismatch: Bun=\"() => Promise<any>\" vs Polyfill=\"<T = unknown>() => Promise<T>\""
+          },
+          {
+            "name": "formData",
+            "fullPath": "BunFile.formData",
+            "status": "missing",
+            "bunSignature": "() => Promise<FormData>",
+            "polyfillSignature": null
+          }
+        ],
+        "stats": {
+          "total": 17,
+          "implemented": 5,
+          "partial": 7,
+          "missing": 5,
+          "percentComplete": 50
+        }
+      },
+      {
+        "bunInterface": "Subprocess",
+        "polyfillInterface": "Subprocess",
+        "members": [
+          {
+            "name": "stdin",
+            "fullPath": "Subprocess.stdin",
+            "status": "partial",
+            "bunSignature": "WritableToIO<In>",
+            "polyfillSignature": "number | FileSink | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"WritableToIO<In>\" vs Polyfill=\"number | FileSink | undefined\""
+          },
+          {
+            "name": "stdout",
+            "fullPath": "Subprocess.stdout",
+            "status": "partial",
+            "bunSignature": "ReadableToIO<Out>",
+            "polyfillSignature": "number | ReadableStream<Uint8Array<ArrayBufferLike>> | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"ReadableToIO<Out>\" vs Polyfill=\"number | ReadableStream<Uint8Array<ArrayBufferLike>> | undefined\""
+          },
+          {
+            "name": "stderr",
+            "fullPath": "Subprocess.stderr",
+            "status": "partial",
+            "bunSignature": "ReadableToIO<Err>",
+            "polyfillSignature": "number | ReadableStream<Uint8Array<ArrayBufferLike>> | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"ReadableToIO<Err>\" vs Polyfill=\"number | ReadableStream<Uint8Array<ArrayBufferLike>> | undefined\""
+          },
+          {
+            "name": "stdio",
+            "fullPath": "Subprocess.stdio",
+            "status": "missing",
+            "bunSignature": "[null, null, null, ...number[]]",
+            "polyfillSignature": null
+          },
+          {
+            "name": "readable",
+            "fullPath": "Subprocess.readable",
+            "status": "partial",
+            "bunSignature": "ReadableToIO<Out>",
+            "polyfillSignature": "number | ReadableStream<Uint8Array<ArrayBufferLike>> | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"ReadableToIO<Out>\" vs Polyfill=\"number | ReadableStream<Uint8Array<ArrayBufferLike>> | undefined\""
+          },
+          {
+            "name": "pid",
+            "fullPath": "Subprocess.pid",
+            "status": "implemented",
+            "bunSignature": "number",
+            "polyfillSignature": "number"
+          },
+          {
+            "name": "exited",
+            "fullPath": "Subprocess.exited",
+            "status": "implemented",
+            "bunSignature": "Promise<number>",
+            "polyfillSignature": "Promise<number>"
+          },
+          {
+            "name": "exitCode",
+            "fullPath": "Subprocess.exitCode",
+            "status": "implemented",
+            "bunSignature": "number | null",
+            "polyfillSignature": "number | null"
+          },
+          {
+            "name": "signalCode",
+            "fullPath": "Subprocess.signalCode",
+            "status": "implemented",
+            "bunSignature": "Signals | null",
+            "polyfillSignature": "Signals | null"
+          },
+          {
+            "name": "killed",
+            "fullPath": "Subprocess.killed",
+            "status": "implemented",
+            "bunSignature": "boolean",
+            "polyfillSignature": "boolean"
+          },
+          {
+            "name": "kill",
+            "fullPath": "Subprocess.kill",
+            "status": "implemented",
+            "bunSignature": "(exitCode?: number | Signals | undefined) => void",
+            "polyfillSignature": "(exitCode?: number | Signals | undefined) => void"
+          },
+          {
+            "name": "ref",
+            "fullPath": "Subprocess.ref",
+            "status": "implemented",
+            "bunSignature": "() => void",
+            "polyfillSignature": "() => void"
+          },
+          {
+            "name": "unref",
+            "fullPath": "Subprocess.unref",
+            "status": "implemented",
+            "bunSignature": "() => void",
+            "polyfillSignature": "() => void"
+          },
+          {
+            "name": "send",
+            "fullPath": "Subprocess.send",
+            "status": "partial",
+            "bunSignature": "(message: any) => void",
+            "polyfillSignature": "(message: unknown) => void",
+            "signatureDiff": "Signature mismatch: Bun=\"(message: any) => void\" vs Polyfill=\"(message: unknown) => void\""
+          },
+          {
+            "name": "disconnect",
+            "fullPath": "Subprocess.disconnect",
+            "status": "implemented",
+            "bunSignature": "() => void",
+            "polyfillSignature": "() => void"
+          },
+          {
+            "name": "resourceUsage",
+            "fullPath": "Subprocess.resourceUsage",
+            "status": "implemented",
+            "bunSignature": "() => ResourceUsage | undefined",
+            "polyfillSignature": "() => ResourceUsage | undefined"
+          }
+        ],
+        "stats": {
+          "total": 16,
+          "implemented": 10,
+          "partial": 5,
+          "missing": 1,
+          "percentComplete": 78
+        }
+      },
+      {
+        "bunInterface": "SyncSubprocess",
+        "polyfillInterface": "SyncSubprocess",
+        "members": [
+          {
+            "name": "stdout",
+            "fullPath": "SyncSubprocess.stdout",
+            "status": "partial",
+            "bunSignature": "ReadableToSyncIO<Out>",
+            "polyfillSignature": "Buffer<ArrayBufferLike> | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"ReadableToSyncIO<Out>\" vs Polyfill=\"Buffer<ArrayBufferLike> | undefined\""
+          },
+          {
+            "name": "stderr",
+            "fullPath": "SyncSubprocess.stderr",
+            "status": "partial",
+            "bunSignature": "ReadableToSyncIO<Err>",
+            "polyfillSignature": "Buffer<ArrayBufferLike> | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"ReadableToSyncIO<Err>\" vs Polyfill=\"Buffer<ArrayBufferLike> | undefined\""
+          },
+          {
+            "name": "exitCode",
+            "fullPath": "SyncSubprocess.exitCode",
+            "status": "implemented",
+            "bunSignature": "number",
+            "polyfillSignature": "number"
+          },
+          {
+            "name": "success",
+            "fullPath": "SyncSubprocess.success",
+            "status": "implemented",
+            "bunSignature": "boolean",
+            "polyfillSignature": "boolean"
+          },
+          {
+            "name": "resourceUsage",
+            "fullPath": "SyncSubprocess.resourceUsage",
+            "status": "implemented",
+            "bunSignature": "ResourceUsage",
+            "polyfillSignature": "ResourceUsage"
+          },
+          {
+            "name": "signalCode",
+            "fullPath": "SyncSubprocess.signalCode",
+            "status": "implemented",
+            "bunSignature": "string | undefined",
+            "polyfillSignature": "string | undefined"
+          },
+          {
+            "name": "exitedDueToTimeout",
+            "fullPath": "SyncSubprocess.exitedDueToTimeout",
+            "status": "partial",
+            "bunSignature": "boolean | undefined",
+            "polyfillSignature": "true | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"boolean | undefined\" vs Polyfill=\"true | undefined\""
+          },
+          {
+            "name": "exitedDueToMaxBuffer",
+            "fullPath": "SyncSubprocess.exitedDueToMaxBuffer",
+            "status": "missing",
+            "bunSignature": "boolean | undefined",
+            "polyfillSignature": null
+          },
+          {
+            "name": "pid",
+            "fullPath": "SyncSubprocess.pid",
+            "status": "implemented",
+            "bunSignature": "number",
+            "polyfillSignature": "number"
+          }
+        ],
+        "stats": {
+          "total": 9,
+          "implemented": 5,
+          "partial": 3,
+          "missing": 1,
+          "percentComplete": 72
+        }
+      },
+      {
+        "bunInterface": "SpawnOptions",
+        "polyfillInterface": "SpawnOptionsObject",
+        "members": [
+          {
+            "name": "lazy",
+            "fullPath": "SpawnOptions.lazy",
+            "status": "missing",
+            "bunSignature": "boolean | undefined",
+            "polyfillSignature": null
+          },
+          {
+            "name": "cwd",
+            "fullPath": "SpawnOptions.cwd",
+            "status": "implemented",
+            "bunSignature": "string | undefined",
+            "polyfillSignature": "string | undefined"
+          },
+          {
+            "name": "detached",
+            "fullPath": "SpawnOptions.detached",
+            "status": "missing",
+            "bunSignature": "boolean | undefined",
+            "polyfillSignature": null
+          },
+          {
+            "name": "env",
+            "fullPath": "SpawnOptions.env",
+            "status": "implemented",
+            "bunSignature": "Record<string, string | undefined> | undefined",
+            "polyfillSignature": "Record<string, string | undefined> | undefined"
+          },
+          {
+            "name": "stdio",
+            "fullPath": "SpawnOptions.stdio",
+            "status": "partial",
+            "bunSignature": "[In, Out, Err, ...Readable[]] | undefined",
+            "polyfillSignature": "[SpawnWritable, SpawnReadable, SpawnReadable] | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"[In, Out, Err, ...Readable[]] | undefined\" vs Polyfill=\"[SpawnWritable, SpawnReadable, SpawnReadable] | undefined\""
+          },
+          {
+            "name": "stdin",
+            "fullPath": "SpawnOptions.stdin",
+            "status": "partial",
+            "bunSignature": "In | undefined",
+            "polyfillSignature": "SpawnWritable",
+            "signatureDiff": "Signature mismatch: Bun=\"In | undefined\" vs Polyfill=\"SpawnWritable\""
+          },
+          {
+            "name": "stdout",
+            "fullPath": "SpawnOptions.stdout",
+            "status": "partial",
+            "bunSignature": "Out | undefined",
+            "polyfillSignature": "SpawnReadable",
+            "signatureDiff": "Signature mismatch: Bun=\"Out | undefined\" vs Polyfill=\"SpawnReadable\""
+          },
+          {
+            "name": "stderr",
+            "fullPath": "SpawnOptions.stderr",
+            "status": "partial",
+            "bunSignature": "Err | undefined",
+            "polyfillSignature": "SpawnReadable",
+            "signatureDiff": "Signature mismatch: Bun=\"Err | undefined\" vs Polyfill=\"SpawnReadable\""
+          },
+          {
+            "name": "onExit",
+            "fullPath": "SpawnOptions.onExit",
+            "status": "partial",
+            "bunSignature": "((subprocess: Subprocess<In, Out, Err>, exitCode: number | null, signalCode: number | null, error?: ErrorLike | undefined) => void | Promise<...>) | undefined",
+            "polyfillSignature": "((subprocess: Subprocess, exitCode: number | null, signalCode: number | null, error?: Error | undefined) => void | Promise<void>) | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"((subprocess: Subprocess<In, Out, Err>, exitCode: number | null, signalCode: number | null, error?: ErrorLike | undefined) => void | Promise<...>) | undefined\" vs Polyfill=\"((subprocess: Subprocess, exitCode: number | null, signalCode: number | null, error?: Error | undefined) => void | Promise<void>) | undefined\""
+          },
+          {
+            "name": "onDisconnect",
+            "fullPath": "SpawnOptions.onDisconnect",
+            "status": "missing",
+            "bunSignature": "(() => void | Promise<void>) | undefined",
+            "polyfillSignature": null
+          },
+          {
+            "name": "ipc",
+            "fullPath": "SpawnOptions.ipc",
+            "status": "partial",
+            "bunSignature": "((message: any, subprocess: Subprocess<In, Out, Err>, handle?: unknown) => void) | undefined",
+            "polyfillSignature": "((message: unknown, subprocess: Subprocess) => void) | undefined",
+            "signatureDiff": "Signature mismatch: Bun=\"((message: any, subprocess: Subprocess<In, Out, Err>, handle?: unknown) => void) | undefined\" vs Polyfill=\"((message: unknown, subprocess: Subprocess) => void) | undefined\""
+          },
+          {
+            "name": "serialization",
+            "fullPath": "SpawnOptions.serialization",
+            "status": "implemented",
+            "bunSignature": "\"json\" | \"advanced\" | undefined",
+            "polyfillSignature": "\"json\" | \"advanced\" | undefined"
+          },
+          {
+            "name": "windowsHide",
+            "fullPath": "SpawnOptions.windowsHide",
+            "status": "implemented",
+            "bunSignature": "boolean | undefined",
+            "polyfillSignature": "boolean | undefined"
+          },
+          {
+            "name": "windowsVerbatimArguments",
+            "fullPath": "SpawnOptions.windowsVerbatimArguments",
+            "status": "implemented",
+            "bunSignature": "boolean | undefined",
+            "polyfillSignature": "boolean | undefined"
+          },
+          {
+            "name": "argv0",
+            "fullPath": "SpawnOptions.argv0",
+            "status": "implemented",
+            "bunSignature": "string | undefined",
+            "polyfillSignature": "string | undefined"
+          },
+          {
+            "name": "signal",
+            "fullPath": "SpawnOptions.signal",
+            "status": "implemented",
+            "bunSignature": "AbortSignal | undefined",
+            "polyfillSignature": "AbortSignal | undefined"
+          },
+          {
+            "name": "timeout",
+            "fullPath": "SpawnOptions.timeout",
+            "status": "implemented",
+            "bunSignature": "number | undefined",
+            "polyfillSignature": "number | undefined"
+          },
+          {
+            "name": "killSignal",
+            "fullPath": "SpawnOptions.killSignal",
+            "status": "implemented",
+            "bunSignature": "string | number | undefined",
+            "polyfillSignature": "string | number | undefined"
+          },
+          {
+            "name": "maxBuffer",
+            "fullPath": "SpawnOptions.maxBuffer",
+            "status": "implemented",
+            "bunSignature": "number | undefined",
+            "polyfillSignature": "number | undefined"
+          }
+        ],
+        "stats": {
+          "total": 19,
+          "implemented": 10,
+          "partial": 6,
+          "missing": 3,
+          "percentComplete": 68
+        }
+      },
+      {
+        "bunInterface": "ShellOutput",
+        "polyfillInterface": "ShellOutput",
+        "members": [
+          {
+            "name": "stdout",
+            "fullPath": "ShellOutput.stdout",
+            "status": "implemented",
+            "bunSignature": "Buffer<ArrayBufferLike>",
+            "polyfillSignature": "Buffer<ArrayBufferLike>"
+          },
+          {
+            "name": "stderr",
+            "fullPath": "ShellOutput.stderr",
+            "status": "implemented",
+            "bunSignature": "Buffer<ArrayBufferLike>",
+            "polyfillSignature": "Buffer<ArrayBufferLike>"
+          },
+          {
+            "name": "exitCode",
+            "fullPath": "ShellOutput.exitCode",
+            "status": "implemented",
+            "bunSignature": "number",
+            "polyfillSignature": "number"
+          },
+          {
+            "name": "text",
+            "fullPath": "ShellOutput.text",
+            "status": "implemented",
+            "bunSignature": "(encoding?: BufferEncoding | undefined) => string",
+            "polyfillSignature": "(encoding?: BufferEncoding | undefined) => string"
+          },
+          {
+            "name": "json",
+            "fullPath": "ShellOutput.json",
+            "status": "partial",
+            "bunSignature": "() => any",
+            "polyfillSignature": "<T = unknown>() => T",
+            "signatureDiff": "Signature mismatch: Bun=\"() => any\" vs Polyfill=\"<T = unknown>() => T\""
+          },
+          {
+            "name": "arrayBuffer",
+            "fullPath": "ShellOutput.arrayBuffer",
+            "status": "implemented",
+            "bunSignature": "() => ArrayBuffer",
+            "polyfillSignature": "() => ArrayBuffer"
+          },
+          {
+            "name": "bytes",
+            "fullPath": "ShellOutput.bytes",
+            "status": "partial",
+            "bunSignature": "() => Uint8Array<ArrayBuffer>",
+            "polyfillSignature": "() => Uint8Array<ArrayBufferLike>",
+            "signatureDiff": "Signature mismatch: Bun=\"() => Uint8Array<ArrayBuffer>\" vs Polyfill=\"() => Uint8Array<ArrayBufferLike>\""
+          },
+          {
+            "name": "blob",
+            "fullPath": "ShellOutput.blob",
+            "status": "implemented",
+            "bunSignature": "() => Blob",
+            "polyfillSignature": "() => Blob"
+          }
+        ],
+        "stats": {
+          "total": 8,
+          "implemented": 6,
+          "partial": 2,
+          "missing": 0,
+          "percentComplete": 88
+        }
+      }
+    ],
+    "summary": {
+      "total": 375,
+      "implemented": 44,
+      "partial": 44,
+      "missing": 287,
+      "percentComplete": 18
+    },
+    "warnings": [
+      "Could not find Bun type: FileSink",
+      "Could not find Bun type: ShellPromise",
+      "Could not find Bun type: Server",
+      "Could not find Bun type: ServerWebSocket",
+      "Could not find Bun type: Database",
+      "Could not find Bun type: Statement",
+      "Could not find Bun type: Transpiler",
+      "Could not find Bun type: CryptoHasher",
+      "Could not find Bun type: S3Client",
+      "Could not find Bun type: S3File",
+      "Could not find Bun type: HTMLRewriter"
+    ]
+  },
+  "testResults": null,
+  "combined": [
+    {
+      "fullPath": "Bun.which",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.stringWidth",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.stripANSI",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.resolveSync",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.resolveSync",
+        "maxCompleteness": 90,
+        "notes": "Uses require.resolve"
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.resolve",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.resolve",
+        "maxCompleteness": 90,
+        "notes": "Uses import.meta.resolve"
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.write",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.write",
+        "maxCompleteness": 95,
+        "notes": "Most data types supported"
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.concatArrayBuffers",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.readableStreamToArrayBuffer",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.readableStreamToFormData",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.readableStreamToArray",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.escapeHTML",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.pathToFileURL",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.peek",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.fileURLToPath",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.deepEquals",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.deepMatch",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.build",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.build",
+        "requiresNativeBun": true,
+        "nativeBunReason": "Bundler requires native implementation"
+      },
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.file",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.file",
+        "maxCompleteness": 90,
+        "notes": "Core functionality working, uses node:fs",
+        "limitations": ["stat() not implemented", "unlink() not implemented"]
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.allocUnsafe",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.inspect",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.mmap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.color",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.gc",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.nanoseconds",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.generateHeapSnapshot",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.shrink",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.openInEditor",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.sleep",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.sleepSync",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.sha",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.deflateSync",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.gzipSync",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.inflateSync",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.gunzipSync",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.zstdCompressSync",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.zstdCompress",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.zstdDecompressSync",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.zstdDecompress",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.connect",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.listen",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.udpSocket",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.spawn",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.spawn",
+        "maxCompleteness": 85,
+        "notes": "Core spawn functionality working via node:child_process"
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.spawnSync",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.spawnSync",
+        "maxCompleteness": 85,
+        "notes": "Core spawnSync functionality working via node:child_process"
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.indexOfLine",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.randomUUIDv7",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.randomUUIDv5",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.PathLike",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ArrayBufferView",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BufferSource",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.StringOrBuffer",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.XMLHttpRequestBodyInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReadableStreamController",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReadableStreamDefaultReadResult",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReadableStreamReader",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Transferable",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MessageEventSource",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Encoding",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UncaughtExceptionOrigin",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MultipleResolveType",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BeforeExitListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.DisconnectListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ExitListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.RejectionHandledListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.FormDataEntryValue",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WarningListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MessageListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SignalsListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BlobPart",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TimerHandler",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.DOMHighResTimeStamp",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventListenerOrEventListenerObject",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BlobOrStringOrBuffer",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MaybePromise",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ErrorEventInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CloseEventInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MessageEventInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventListenerOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CustomEventInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunMessageEvent",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MessageEvent",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReadableStreamDefaultReadManyResult",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventSourceEventMap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.AddEventListenerOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventListenerObject",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.FetchEvent",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventMap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.StructuredSerializeOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EventSource",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TransformerFlushCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TransformerStartCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TransformerTransformCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSinkAbortCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSinkCloseCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSinkStartCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSinkWriteCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSourceCancelCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSink",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSource",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.DirectUnderlyingSource",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSourcePullCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnderlyingSourceStartCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.GenericTransformStream",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.AbstractWorkerEventMap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WorkerEventMap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WorkerType",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.AbstractWorker",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WorkerOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Worker",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Env",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.env",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.env",
+        "notes": "Direct pass-through to process.env"
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.argv",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.WhichOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.StringWidthOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TOML",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.YAML",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SystemError",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ArrayBufferSink",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.dns",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.DNSLookup",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.FileBlob",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunFile",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CSRFAlgorithm",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CSRFGenerateOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CSRFVerifyOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CSRF",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MacroMap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.hash",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Hash",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.JavaScriptLoader",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TSConfig",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TranspilerOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Transpiler",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.Transpiler",
+        "requiresNativeBun": true,
+        "nativeBunReason": "Transpiler requires native implementation"
+      },
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ImportKind",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Import",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Build",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BuildConfigBase",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CompileBuildOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CompileBuildConfig",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.NormalBuildConfig",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BuildConfig",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Password",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.password",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.secrets",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BuildArtifact",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BuildOutput",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ErrorLike",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TLSOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SocketAddress",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.embeddedFiles",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunInspectOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketOptionsProtocolsOrProtocol",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketOptionsTLS",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketOptionsHeaders",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketEventMap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocket",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MMapOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.stdout",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": { "fullPath": "Bun.stdout", "maxCompleteness": 80 },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.stderr",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": { "fullPath": "Bun.stderr", "maxCompleteness": 80 },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.stdin",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.stdin",
+        "maxCompleteness": 80,
+        "notes": "Basic stdin reading works"
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.StringLike",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ColorInput",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.semver",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.unsafe",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.DigestEncoding",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.enableANSIColors",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.main",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.HeapSnapshot",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.fetch",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.EditorOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CryptoHashInterface",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SupportedCryptoAlgorithms",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CryptoHasher",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SHA1",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MD5",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MD4",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SHA224",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SHA512",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SHA384",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SHA256",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SHA512_256",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ZlibCompressionOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.LibdeflateCompressionOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Target",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Loader",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.PluginConstraints",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnLoadResultSourceCode",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnLoadResultObject",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnLoadArgs",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnLoadResult",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnLoadCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnStartCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnEndCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnBeforeParseCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnResolveArgs",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnResolveResult",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.OnResolveCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.FFIFunctionCallable",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.PluginBuilder",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunPlugin",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunRegisterPlugin",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.plugin",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.isMainThread",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.HTMLBundle",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Socket",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TLSUpgradeOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SocketListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TCPSocketListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnixSocketListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TCPSocket",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TLSSocket",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BinaryTypeList",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BinaryType",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SocketHandler",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SocketOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TCPSocketListenOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TCPSocketConnectOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnixSocketOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.FdSocketOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.udp",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SpawnOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Spawn",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ResourceUsage",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Subprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SyncSubprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReadableSubprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WritableSubprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.PipedSubprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.NullSubprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReadableSyncSubprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.NullSyncSubprocess",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.FileSystemRouter",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MatchedRoute",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.version",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "annotation": {
+        "fullPath": "Bun.version",
+        "notes": "Returns polyfill version, not actual Bun version"
+      },
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.version_with_sha",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.revision",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "annotation": {
+        "fullPath": "Bun.revision",
+        "notes": "Returns 'polyfill' as revision"
+      },
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Bun.GlobScanOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Glob",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.BunLockFile",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunLockFileBasePackageInfo",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunLockFileWorkspacePackage",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunLockFilePackageInfo",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunLockFilePackageArray",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CookieInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CookieStoreDeleteOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CookieStoreGetOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CookieSameSite",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Cookie",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.CookieMap",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.$",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.$",
+        "maxCompleteness": 70,
+        "notes": "Uses zx as backend",
+        "limitations": [
+          "$.braces() not implemented",
+          "$.escape() not implemented",
+          "$.cwd() static method not implemented",
+          "$.env() static method not implemented"
+        ]
+      },
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Bun.ShellExpression",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.FileSink",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.NetworkSink",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.S3Options",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.S3FilePresignOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.S3Stats",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.S3File",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.S3ListObjectsOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.S3ListObjectsResponse",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.S3Client",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.s3",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.HeadersInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BodyInit",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.HMREventNames",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.HMREvent",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebAssembly",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.readableStreamToBytes",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.readableStreamToBlob",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.readableStreamToText",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.readableStreamToJSON",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Platform",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Architecture",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UncaughtExceptionListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.UnhandledRejectionListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.MultipleResolveListener",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ServeOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SQLQuery",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SQLTransactionContextCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SQLSavepointContextCallback",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SQLOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Errorlike",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ShellFunction",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReadableIO",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.RedisOptions",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.RedisClient",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.redis",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.serve",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "annotation": {
+        "fullPath": "Bun.serve",
+        "requiresNativeBun": true,
+        "nativeBunReason": "HTTP server with WebSocket support requires native implementation"
+      },
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ServerWebSocketSendStatus",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketReadyState",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ServerWebSocket",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketCompressor",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.WebSocketHandler",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Serve",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.BunRequest",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Server",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.Security",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ReservedSQL",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.ArrayType",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SQLArrayParameter",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.TransactionSQL",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SQL",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.sql",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.postgres",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Bun.SavepointSQL",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "BunFile.slice",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "BunFile.writer",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "BunFile.lastModified",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "BunFile.name",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "BunFile.exists",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "BunFile.write",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "BunFile.unlink",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "BunFile.delete",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "BunFile.stat",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "BunFile.size",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "BunFile.type",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "BunFile.arrayBuffer",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "BunFile.bytes",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "BunFile.stream",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "BunFile.text",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "BunFile.json",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "BunFile.formData",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Subprocess.stdin",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Subprocess.stdout",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Subprocess.stderr",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Subprocess.stdio",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "Subprocess.readable",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Subprocess.pid",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.exited",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.exitCode",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.signalCode",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.killed",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.kill",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.ref",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.unref",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.send",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "Subprocess.disconnect",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "Subprocess.resourceUsage",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SyncSubprocess.stdout",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SyncSubprocess.stderr",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SyncSubprocess.exitCode",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SyncSubprocess.success",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SyncSubprocess.resourceUsage",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SyncSubprocess.signalCode",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SyncSubprocess.exitedDueToTimeout",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SyncSubprocess.exitedDueToMaxBuffer",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "SyncSubprocess.pid",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.lazy",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "SpawnOptions.cwd",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.detached",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "SpawnOptions.env",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.stdio",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SpawnOptions.stdin",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SpawnOptions.stdout",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SpawnOptions.stderr",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SpawnOptions.onExit",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SpawnOptions.onDisconnect",
+      "typeStatus": "missing",
+      "signatureMatch": false,
+      "completeness": 0,
+      "status": "not-started"
+    },
+    {
+      "fullPath": "SpawnOptions.ipc",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "SpawnOptions.serialization",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.windowsHide",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.windowsVerbatimArguments",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.argv0",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.signal",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.timeout",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.killSignal",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "SpawnOptions.maxBuffer",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "ShellOutput.stdout",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "ShellOutput.stderr",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "ShellOutput.exitCode",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "ShellOutput.text",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "ShellOutput.json",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "ShellOutput.arrayBuffer",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    },
+    {
+      "fullPath": "ShellOutput.bytes",
+      "typeStatus": "partial",
+      "signatureMatch": false,
+      "completeness": 50,
+      "status": "partial"
+    },
+    {
+      "fullPath": "ShellOutput.blob",
+      "typeStatus": "implemented",
+      "signatureMatch": true,
+      "completeness": 100,
+      "status": "implemented"
+    }
+  ]
+}
