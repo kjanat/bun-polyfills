@@ -113,6 +113,6 @@ export class Glob {
 /**
  * Initialize Glob on the Bun object
  */
-export function initGlob(bun: PolyfillBun): void {
-  bun.Glob = Glob;
+export function initGlob(Bun: PolyfillBun): void {
+  Bun.Glob = Glob;
 }

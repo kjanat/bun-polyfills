@@ -44,6 +44,6 @@ export const TOML = {
 /**
  * Initialize TOML on the Bun object
  */
-export function initTOML(bun: PolyfillBun): void {
-  bun.TOML = TOML;
+export function initTOML(Bun: PolyfillBun): void {
+  Bun.TOML = TOML;
 }

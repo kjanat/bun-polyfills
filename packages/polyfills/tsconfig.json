@@ -1,13 +1,6 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "noEmit": false,
-    "emitDeclarationOnly": true,
-    "types": ["node", "bun"]
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@kjanat/bun-polyfills-tsconfig",
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": { "types": ["node", "bun"] }
 }

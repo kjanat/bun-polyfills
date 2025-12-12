@@ -194,8 +194,8 @@ for (const [gcTick, label] of [
         const count = isWindows ? 100 : 1000;
 
         for (let i = 0; i < count; i++) {
-          let exitCode1: number | null;
-          let exitCode2: number | null;
+          let exitCode1!: number | null;
+          let exitCode2!: number | null;
           await new Promise<void>((resolve) => {
             let counter = 0;
             spawn({
@@ -1003,7 +1003,7 @@ describe("argv0", () => {
     const output = await proc.stdout.text();
     const lines = output.trim().split(/\r?\n/);
     expect(lines[0]).toBe("custom-argv0");
-    expect(path.normalize(lines[1])).toBe(
+    expect(path.normalize(lines[1]!)).toBe(
       path.normalize(nodeWithPolyfillsExe()),
     );
     await proc.exited;

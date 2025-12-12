@@ -333,7 +333,7 @@ export function stringWidth(
   options?: { countAnsiEscapeCodes?: boolean; ambiguousIsNarrow?: boolean },
 ): number {
   const countAnsi = options?.countAnsiEscapeCodes ?? false;
-  const ambiguousIsNarrow = options?.ambiguousIsNarrow ?? true;
+  // const ambiguousIsNarrow = options?.ambiguousIsNarrow ?? true;
 
   // If counting ANSI codes, use raw string. Otherwise strip them.
   const str = countAnsi ? input : stripANSI(input);
@@ -356,7 +356,10 @@ export function stringWidth(
     let firstCodePoint = 0;
 
     for (const char of segment) {
-      const code = char.codePointAt(0)!;
+      const code = char.codePointAt(0);
+      if (code === undefined) {
+        continue;
+      }
 
       if (charCount === 0) {
         firstCodePoint = code;
@@ -622,36 +625,36 @@ export function inspect(
 /**
  * Initialize utility functions on Bun global
  */
-export function initUtils(bun: Partial<PolyfillBun>): void {
-  if (!("escapeHTML" in bun)) {
-    (bun as Record<string, unknown>).escapeHTML = escapeHTML;
+export function initUtils(Bun: Partial<PolyfillBun>): void {
+  if (!("escapeHTML" in Bun)) {
+    (Bun as Record<string, unknown>).escapeHTML = escapeHTML;
   }
 
-  if (!("stripANSI" in bun)) {
-    (bun as Record<string, unknown>).stripANSI = stripANSI;
+  if (!("stripANSI" in Bun)) {
+    (Bun as Record<string, unknown>).stripANSI = stripANSI;
   }
 
-  if (!("stringWidth" in bun)) {
-    (bun as Record<string, unknown>).stringWidth = stringWidth;
+  if (!("stringWidth" in Bun)) {
+    (Bun as Record<string, unknown>).stringWidth = stringWidth;
   }
 
-  if (!("peek" in bun)) {
-    (bun as Record<string, unknown>).peek = peek;
+  if (!("peek" in Bun)) {
+    (Bun as Record<string, unknown>).peek = peek;
   }
 
-  if (!("deepEquals" in bun)) {
-    (bun as Record<string, unknown>).deepEquals = deepEquals;
+  if (!("deepEquals" in Bun)) {
+    (Bun as Record<string, unknown>).deepEquals = deepEquals;
   }
 
-  if (!("deepMatch" in bun)) {
-    (bun as Record<string, unknown>).deepMatch = deepMatch;
+  if (!("deepMatch" in Bun)) {
+    (Bun as Record<string, unknown>).deepMatch = deepMatch;
   }
 
-  if (!("concatArrayBuffers" in bun)) {
-    (bun as Record<string, unknown>).concatArrayBuffers = concatArrayBuffers;
+  if (!("concatArrayBuffers" in Bun)) {
+    (Bun as Record<string, unknown>).concatArrayBuffers = concatArrayBuffers;
   }
 
-  if (!("inspect" in bun)) {
-    (bun as Record<string, unknown>).inspect = inspect;
+  if (!("inspect" in Bun)) {
+    (Bun as Record<string, unknown>).inspect = inspect;
   }
 }

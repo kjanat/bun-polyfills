@@ -148,46 +148,46 @@ export function gc(full?: boolean): void {
 /**
  * Initialize process utilities on Bun global
  */
-export function initProcess(bun: Partial<PolyfillBun>): void {
+export function initProcess(Bun: Partial<PolyfillBun>): void {
   // argv - just reference process.argv
-  if (!("argv" in bun)) {
-    Object.defineProperty(bun, "argv", {
+  if (!("argv" in Bun)) {
+    Object.defineProperty(Bun, "argv", {
       get: () => process.argv,
       enumerable: true,
     });
   }
 
   // main - entry point file
-  if (!("main" in bun)) {
-    Object.defineProperty(bun, "main", {
+  if (!("main" in Bun)) {
+    Object.defineProperty(Bun, "main", {
       get: () => process.argv[1] ?? "",
       enumerable: true,
     });
   }
 
   // which
-  if (!("which" in bun)) {
-    bun.which = which;
+  if (!("which" in Bun)) {
+    Bun.which = which;
   }
 
   // sleep
-  if (!("sleep" in bun)) {
-    bun.sleep = sleep;
+  if (!("sleep" in Bun)) {
+    Bun.sleep = sleep;
   }
 
   // sleepSync
-  if (!("sleepSync" in bun)) {
-    bun.sleepSync = sleepSync;
+  if (!("sleepSync" in Bun)) {
+    Bun.sleepSync = sleepSync;
   }
 
   // nanoseconds
-  if (!("nanoseconds" in bun)) {
-    bun.nanoseconds = nanoseconds;
+  if (!("nanoseconds" in Bun)) {
+    Bun.nanoseconds = nanoseconds;
   }
 
   // isMainThread
-  if (!("isMainThread" in bun)) {
-    Object.defineProperty(bun, "isMainThread", {
+  if (!("isMainThread" in Bun)) {
+    Object.defineProperty(Bun, "isMainThread", {
       value: isMainThread,
       writable: false,
       enumerable: true,
@@ -195,7 +195,7 @@ export function initProcess(bun: Partial<PolyfillBun>): void {
   }
 
   // gc
-  if (!("gc" in bun)) {
-    bun.gc = gc;
+  if (!("gc" in Bun)) {
+    Bun.gc = gc;
   }
 }

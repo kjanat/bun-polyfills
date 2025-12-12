@@ -128,9 +128,9 @@ export function inflateSync(
 /**
  * Initialize compression polyfills on the Bun object
  */
-export function initCompression(bun: PolyfillBun): void {
-  bun.gzipSync = gzipSync;
-  bun.gunzipSync = gunzipSync;
-  bun.deflateSync = deflateSync;
-  bun.inflateSync = inflateSync;
+export function initCompression(Bun: PolyfillBun): void {
+  Bun.gzipSync = gzipSync;
+  Bun.gunzipSync = gunzipSync;
+  Bun.deflateSync = deflateSync;
+  Bun.inflateSync = inflateSync;
 }

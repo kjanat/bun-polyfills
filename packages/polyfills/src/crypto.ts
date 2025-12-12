@@ -1,6 +1,5 @@
 // Crypto polyfills for Bun APIs
 
-import type { BinaryLike } from "node:crypto";
 import {
   createHash,
   randomBytes,
@@ -403,16 +402,16 @@ export const password = {
 /**
  * Initialize crypto APIs on the Bun global
  */
-export function initCrypto(bun: PolyfillBun): void {
-  bun.hash = hash;
-  bun.CryptoHasher = CryptoHasher as any;
-  bun.MD4 = MD4 as any;
-  bun.MD5 = MD5 as any;
-  bun.SHA1 = SHA1 as any;
-  bun.SHA224 = SHA224 as any;
-  bun.SHA256 = SHA256 as any;
-  bun.SHA384 = SHA384 as any;
-  bun.SHA512 = SHA512 as any;
-  bun.SHA512_256 = SHA512_256 as any;
-  bun.password = password as any;
+export function initCrypto(Bun: PolyfillBun): void {
+  Bun.hash = hash;
+  Bun.CryptoHasher = CryptoHasher;
+  Bun.MD4 = MD4;
+  Bun.MD5 = MD5;
+  Bun.SHA1 = SHA1;
+  Bun.SHA224 = SHA224;
+  Bun.SHA256 = SHA256;
+  Bun.SHA384 = SHA384;
+  Bun.SHA512 = SHA512;
+  Bun.SHA512_256 = SHA512_256;
+  Bun.password = password;
 }

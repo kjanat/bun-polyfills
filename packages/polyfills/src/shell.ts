@@ -168,17 +168,32 @@ function createShellPromise(zxProc: ProcessPromise): ShellPromise {
 /**
  * Initialize the Bun.$ polyfill using zx as backend
  */
-export function initShell(bun: Partial<PolyfillBun>): void {
-  if ("$" in bun) return;
+export function initShell(Bun: Partial<PolyfillBun>): void {
+  if ("$" in Bun && !process.env.BUN_POLYFILLS_FORCE) return;
+  if (process.env.BUN_POLYFILLS_FORCE) {
+    console.error(
+      "!!! BUN_POLYFILLS_FORCE active - overriding native Bun.$ !!!",
+    );
+  }
 
   const shell: ShellFunction = (
-    strings: TemplateStringsArray,
+    strings: TemplateStringsArray | string,
     ...values: unknown[]
   ): ShellPromise => {
+    // Normalize string to TemplateStringsArray-like object
+    let templateStrings: TemplateStringsArray;
+    if (typeof strings === "string") {
+      const arr = [strings] as string[] & { raw: string[] };
+      arr.raw = [strings];
+      templateStrings = arr as TemplateStringsArray;
+    } else {
+      templateStrings = strings;
+    }
+
     // Use zx's tagged template function
-    const zxProc = $(strings, ...(values as string[]));
+    const zxProc = $(templateStrings, ...(values as string[]));
     return createShellPromise(zxProc);
   };
 
-  bun.$ = shell;
+  Bun.$ = shell;
 }

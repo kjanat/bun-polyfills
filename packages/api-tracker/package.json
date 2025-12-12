@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/kjanat/bun-polyfills/issues"
   },
-  "author": "Kaj Kowalski",
+  "author": "Kaj Kowalski <dev@kajkowalski.nl> (https://github.com/kjanat)",
   "license": "GPL-3.0-only",
   "packageManager": "bun@1.3.4",
   "engines": {
@@ -21,17 +21,14 @@
   "bin": {
     "bun-api-tracker": "./dist/cli.js"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "module": "./dist/index.mjs",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./types": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/types.js"
-    }
+    ".": "./dist/index.mjs",
+    "./cli": "./dist/cli.mjs",
+    "./types": "./dist/types.mjs",
+    "./package.json": "./package.json"
   },
   "files": [
     "data",
@@ -49,13 +46,14 @@
   ],
   "scripts": {
     "badge": "bun run src/cli.ts badge",
-    "build": "bun build:bun && bun build:tsc",
+    "build": "tsdown",
     "build:bun": "bun build ./src/index.ts ./src/cli.ts ./src/types.ts --outdir dist --target node",
+    "build:legacy": "bun build:bun && bun build:tsc",
     "build:tsc": "tsc --emitDeclarationOnly",
     "check": "bun run src/cli.ts check",
     "clean": "rm -rf dist output tests/file tests/spawn tests/shell tests/util tests/glob",
     "compare": "bun run src/cli.ts compare",
-    "fmt": "cd ../../ && bun run prettier ./packages/api-tracker/ --write",
+    "fmt": "DIR=\"${PWD}\"; cd \"$(git rev-parse --show-toplevel)\" && bun run prettier \"${PWD}\" --write",
     "lint": "biome check --write",
     "lint:package": "bunx publint",
     "report": "bun run src/cli.ts report",
@@ -73,11 +71,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:lint",
+    "@kjanat/bun-polyfills-tsconfig": "workspace:*",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:",
     "react": "^19.2.1",
     "string-width": "catalog:test",
-    "strip-ansi": "catalog:test"
+    "strip-ansi": "catalog:test",
+    "tsdown": "catalog:bundler"
   }
 }

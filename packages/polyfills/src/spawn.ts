@@ -282,8 +282,10 @@ class SubprocessImpl implements Subprocess {
 
     // Handle IPC
     if (options?.ipc && proc.channel) {
+      const ipc = options.ipc;
+
       proc.on("message", (message) => {
-        options.ipc!(message, this);
+        ipc(message, this);
       });
     }
   }
@@ -460,11 +462,11 @@ export function spawnSync(...args: SpawnArgs): SyncSubprocess {
 // Init
 // ============================================================================
 
-export function initSpawn(bun: Partial<PolyfillBun>): void {
-  if (!("spawn" in bun)) {
-    bun.spawn = spawn;
+export function initSpawn(Bun: Partial<PolyfillBun>): void {
+  if (!("spawn" in Bun)) {
+    Bun.spawn = spawn;
   }
-  if (!("spawnSync" in bun)) {
-    bun.spawnSync = spawnSync;
+  if (!("spawnSync" in Bun)) {
+    Bun.spawnSync = spawnSync;
   }
 }

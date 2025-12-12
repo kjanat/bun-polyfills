@@ -57,16 +57,16 @@ test("sleep should saturate timeout values", async () => {
 
   await Promise.all(toWait);
   for (let i = 0; i < toKill.length; i++) {
-    const proc = toKill[i];
+    const proc = toKill[i]!;
     if (proc.exitCode === 0) {
       console.warn("warn: Expected process #", i, "to timeout, but it didn't");
     }
     expect(proc.exitCode).toBe(null);
   }
 
-  const allExited = Promise.all(toKill.map((proc) => proc.exited));
+  const allExited = Promise.all(toKill.map((proc) => proc!.exited));
   for (const proc of toKill) {
-    proc.kill();
+    proc!.kill();
   }
 
   await allExited;

@@ -15,7 +15,7 @@ test("bun-file-exists", async () => {
   const temp = join(tmpdir(), "bun-file-exists.test.js");
   try {
     unlinkSync(temp);
-  } catch (_e) {}
+  } catch {}
   expect(await Bun.file(temp).exists()).toBeFalse();
   await write(temp, "boop");
   expect(await Bun.file(temp).exists()).toBeTrue();

@@ -67,15 +67,14 @@ export function createTestBuilder(path: string) {
       "Unexpected `)`, subshells are currently not supported right now. Escape the `)` or open a GitHub issue.";
 
     /**
-   * Start the test builder with a command:
-   *
-   * @example
-   * ```ts
-   * await TestBuilder.command`echo hi!`.stdout('hi!\n').run()
-
-   * TestBuilder.command`echo hi!`.stdout('hi!\n').runAsTest('echo works')
-   * ```
-   */
+     * Start the test builder with a command:
+     *
+     * @example
+     * ```ts
+     * await TestBuilder.command`echo hi!`.stdout('hi!\n').run()
+     * TestBuilder.command`echo hi!`.stdout('hi!\n').runAsTest('echo works')
+     * ```
+     */
     static command(
       strings: TemplateStringsArray,
       // biome-ignore lint/suspicious/noExplicitAny: shell expressions can be any type
@@ -417,9 +416,9 @@ export function createTestBuilder(path: string) {
     joinTemplate(): string {
       const buf: string[] = [];
       for (let i = 0; i < this._scriptStr.length; i++) {
-        buf.push(this._scriptStr[i]);
+        buf.push(this._scriptStr[i]!);
         if (this._expresssions[i] !== undefined) {
-          const expr = this._expresssions[i];
+          const expr = this._expresssions[i]!;
           this.processShellExpr(buf, expr);
         }
       }

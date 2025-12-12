@@ -28,6 +28,6 @@ test("spawn env", async () => {
         env,
         cmd: [nodeWithPolyfillsExe(), "-e", "console.log(process.env.LOL)"],
       });
-    } catch (_e) {}
+    } catch {}
   }
 });

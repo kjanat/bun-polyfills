@@ -207,7 +207,7 @@ function createBunFile(
   const mimeType =
     options?.type ? `${options.type};charset=utf-8` : inferMimeType(filePath);
 
-  const bunFile: PolyfillBunFile = {
+  const BunFile: PolyfillBunFile = {
     get size(): number {
       if (_size !== null) return _size;
       try {
@@ -262,16 +262,22 @@ function createBunFile(
     },
 
     async json<T = unknown>(): Promise<T> {
-      const text = await bunFile.text();
+      const text = await BunFile.text();
       return JSON.parse(text) as T;
     },
 
-    stream(): ReadableStream<Uint8Array> {
+    stream(chunkSize?: number): ReadableStream<Uint8Array> {
       let nodeStream: fs.ReadStream;
       if (fd !== null) {
-        nodeStream = fs.createReadStream("", { fd, autoClose: false });
+        nodeStream = fs.createReadStream("", {
+          fd,
+          autoClose: false,
+          ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
+        });
       } else {
-        nodeStream = fs.createReadStream(filePath!);
+        nodeStream = fs.createReadStream(filePath!, {
+          ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
+        });
       }
       return Readable.toWeb(
         nodeStream,
@@ -283,7 +289,7 @@ function createBunFile(
       // Limitation: still reads full file, then slices
       const slicedFile: PolyfillBunFile = {
         get size(): number {
-          const fullSize = bunFile.size;
+          const fullSize = BunFile.size;
           const start = begin ?? 0;
           const stop = end ?? fullSize;
           return Math.max(0, stop - start);
@@ -298,21 +304,21 @@ function createBunFile(
         },
 
         async text(): Promise<string> {
-          const full = await bunFile.text();
+          const full = await BunFile.text();
           return full.slice(begin, end);
         },
 
         async arrayBuffer(): Promise<ArrayBuffer> {
-          const full = await bunFile.arrayBuffer();
+          const full = await BunFile.arrayBuffer();
           return full.slice(begin ?? 0, end ?? full.byteLength);
         },
 
         async bytes(): Promise<Uint8Array> {
-          const full = await bunFile.bytes();
+          const full = await BunFile.bytes();
           return full.slice(begin, end);
         },
 
-        stream(): ReadableStream<Uint8Array> {
+        stream(chunkSize?: number): ReadableStream<Uint8Array> {
           // For sliced stream, read with start/end options
           let nodeStream: fs.ReadStream;
           if (fd !== null) {
@@ -321,11 +327,13 @@ function createBunFile(
               autoClose: false,
               start: begin,
               end: end !== undefined ? end - 1 : undefined,
+              ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
             });
           } else {
             nodeStream = fs.createReadStream(filePath!, {
               start: begin,
               end: end !== undefined ? end - 1 : undefined,
+              ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
             });
           }
           return Readable.toWeb(
@@ -341,11 +349,11 @@ function createBunFile(
         slice(b?: number, e?: number, ct?: string): PolyfillBunFile {
           const newBegin = (begin ?? 0) + (b ?? 0);
           const newEnd = e !== undefined ? (begin ?? 0) + e : end;
-          return bunFile.slice(newBegin, newEnd, ct ?? contentType);
+          return BunFile.slice(newBegin, newEnd, ct ?? contentType);
         },
 
         async exists(): Promise<boolean> {
-          return bunFile.exists();
+          return BunFile.exists();
         },
 
         writer(_params?: { highWaterMark?: number }): PolyfillFileSink {
@@ -353,7 +361,7 @@ function createBunFile(
         },
 
         async delete(): Promise<void> {
-          return bunFile.delete();
+          return BunFile.delete();
         },
       };
       return slicedFile;
@@ -384,7 +392,7 @@ function createBunFile(
     },
   };
 
-  return bunFile;
+  return BunFile;
 }
 
 // ============================================================================
@@ -452,10 +460,11 @@ function createStdioBunFile(
       return new Uint8Array(ab);
     },
 
-    stream(): ReadableStream<Uint8Array> {
+    stream(_chunkSize?: number): ReadableStream<Uint8Array> {
       if (!isReadable) {
         throw new Error(`Cannot read stream from ${name}`);
       }
+      // Note: chunkSize is ignored for stdin as it's controlled by the terminal
       return Readable.toWeb(
         process.stdin,
       ) as unknown as ReadableStream<Uint8Array>;
@@ -577,25 +586,25 @@ async function bunWrite(
 // Init
 // ============================================================================
 
-export function initFile(bun: Partial<PolyfillBun>): void {
+export function initFile(Bun: Partial<PolyfillBun>): void {
   // Bun.file()
-  if (!("file" in bun)) {
-    bun.file = createBunFile;
+  if (!("file" in Bun)) {
+    Bun.file = createBunFile;
   }
 
   // Bun.write()
-  if (!("write" in bun)) {
-    bun.write = bunWrite;
+  if (!("write" in Bun)) {
+    Bun.write = bunWrite;
   }
 
   // Bun.stdin/stdout/stderr
-  if (!("stdin" in bun)) {
-    bun.stdin = createStdioBunFile(0, "stdin");
+  if (!("stdin" in Bun)) {
+    Bun.stdin = createStdioBunFile(0, "stdin");
   }
-  if (!("stdout" in bun)) {
-    bun.stdout = createStdioBunFile(1, "stdout");
+  if (!("stdout" in Bun)) {
+    Bun.stdout = createStdioBunFile(1, "stdout");
   }
-  if (!("stderr" in bun)) {
-    bun.stderr = createStdioBunFile(2, "stderr");
+  if (!("stderr" in Bun)) {
+    Bun.stderr = createStdioBunFile(2, "stderr");
   }
 }

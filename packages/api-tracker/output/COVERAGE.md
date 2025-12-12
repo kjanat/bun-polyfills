@@ -1,6 +1,6 @@
 # Bun API Coverage Report
 
-Generated: 12/11/2025, 9:42:29 PM | @types/bun: 1.3.4
+Generated: 12/12/2025, 1:14:01 AM | @types/bun: 1.3.4
 
 ## Summary
 

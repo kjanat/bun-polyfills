@@ -74,27 +74,34 @@ import { initUtils } from "./utils.ts";
  * No-op if running in native Bun runtime.
  */
 export async function initBunShims(): Promise<void> {
-  if (globalThis.Bun !== undefined) {
+  if (globalThis.Bun !== undefined && !process.env.BUN_POLYFILLS_FORCE) {
     return; // Native Bun or already shimmed: No-op
   }
+  if (process.env.BUN_POLYFILLS_FORCE && globalThis.Bun === undefined) {
+    // Force mode but Bun doesn't exist? Create it.
+    (globalThis as { Bun?: unknown }).Bun = {} as PolyfillBun;
+  } else if (process.env.BUN_POLYFILLS_FORCE) {
+    // Force mode and Bun exists - proceed to overwrite
+  } else {
+    // Normal mode and Bun doesn't exist - create it
+    (globalThis as { Bun?: unknown }).Bun = {} as PolyfillBun;
+  }
 
-  const bun = {} as PolyfillBun;
-
-  // Cast to unknown first since we're shimming with a partial implementation
-  (globalThis as { Bun?: unknown }).Bun = bun;
+  // We know Bun exists now (either native or our object)
+  const Bun = globalThis.Bun as unknown as PolyfillBun;
 
   // Initialize all polyfills directly without dynamic import to ensure code is included
-  initEnv(bun);
-  initFile(bun);
-  initShell(bun);
-  initSpawn(bun);
-  initModules(bun);
-  initProcess(bun);
-  initCompression(bun);
-  initGlob(bun);
-  initTOML(bun);
-  initUtils(bun);
-  initCrypto(bun);
+  initEnv(Bun);
+  initFile(Bun);
+  initShell(Bun);
+  initSpawn(Bun);
+  initModules(Bun);
+  initProcess(Bun);
+  initCompression(Bun);
+  initGlob(Bun);
+  initTOML(Bun);
+  initUtils(Bun);
+  initCrypto(Bun);
 }
 
 export default initBunShims;

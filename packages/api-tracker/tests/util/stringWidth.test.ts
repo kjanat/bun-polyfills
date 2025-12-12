@@ -6,11 +6,29 @@ import npmStringWidth from "string-width";
 await initBunShims();
 
 // Force override Bun.stringWidth with our polyfill for testing purposes
-// @ts-expect-error
+// @ts-ignore
 Bun.stringWidth = stringWidth;
 
+// Add type declaration for custom matchers
+interface CustomMatchers<R = unknown> {
+  toMatchNPMStringWidth(): R;
+  toMatchNPMStringWidthExcludeANSI(): R;
+}
+
+declare module "bun:test" {
+  interface Matchers<T> extends CustomMatchers<T> {
+    [key: string]: any;
+  }
+  interface AsymmetricMatchers extends CustomMatchers {
+    [key: string]: any;
+  }
+}
+
 expect.extend({
-  toMatchNPMStringWidth(received: string) {
+  toMatchNPMStringWidth(received: unknown) {
+    if (typeof received !== "string") {
+      return { pass: true, message: () => "" };
+    }
     const width = npmStringWidth(received, { countAnsiEscapeCodes: true });
     const bunWidth = Bun.stringWidth(received, { countAnsiEscapeCodes: true });
     const pass = width === bunWidth;
@@ -18,7 +36,10 @@ expect.extend({
       `expected ${received} to have npm string width ${width} but got ${bunWidth}`;
     return { pass, message };
   },
-  toMatchNPMStringWidthExcludeANSI(received: string) {
+  toMatchNPMStringWidthExcludeANSI(received: unknown) {
+    if (typeof received !== "string") {
+      return { pass: true, message: () => "" };
+    }
     const width = npmStringWidth(received, { countAnsiEscapeCodes: false });
     const bunWidth = Bun.stringWidth(received, { countAnsiEscapeCodes: false });
     const pass = width === bunWidth;

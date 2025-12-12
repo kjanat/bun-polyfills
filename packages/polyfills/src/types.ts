@@ -26,7 +26,7 @@ export interface PolyfillBunFile {
   arrayBuffer(): Promise<ArrayBuffer>;
   bytes(): Promise<Uint8Array>;
   text(): Promise<string>;
-  stream(): ReadableStream<Uint8Array>;
+  stream(chunkSize?: number): ReadableStream<Uint8Array>;
   json<T = unknown>(): Promise<T>;
   slice(begin?: number, end?: number, contentType?: string): PolyfillBunFile;
   exists(): Promise<boolean>;

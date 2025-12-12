@@ -21,7 +21,7 @@
     "fmt": "prettier . --write",
     "lint": "bun run --filter '*' lint",
     "postinstall": "simple-git-hooks",
-    "test": "AGENT=1 bun run --filter '*' test",
+    "test": "AGENT=1 bun run --filter '*' test --drop console #--drop debugger",
     "typecheck": "bun run --filter '*' typecheck"
   },
   "devDependencies": {
@@ -54,6 +54,10 @@
     },
     "lint": {
       "@biomejs/biome": "2.3.8"
+    },
+    "bundler": {
+      "tsdown": "^0.17.2",
+      "@arethetypeswrong/core": "^0.18.2"
     }
   },
   "prettier": "@kjanat/prettier-config",

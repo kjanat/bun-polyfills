@@ -221,8 +221,8 @@ describe("Zstandard compression", async () => {
           expect(syncDecompressed).toStrictEqual(asyncDecompressed);
 
           // Verify both match original
-          expect(syncDecompressed).toStrictEqual(input);
-          expect(asyncDecompressed).toStrictEqual(input);
+          expect(syncDecompressed).toStrictEqual(input as any);
+          expect(asyncDecompressed).toStrictEqual(input as any);
         });
       }
     });
@@ -379,7 +379,7 @@ describe("Zstandard HTTP compression", () => {
       "application/octet-stream",
     );
 
-    const buffer = await response.bytes();
+    const buffer = new Uint8Array(await response.arrayBuffer());
     expect(buffer).toStrictEqual(testData.binary);
   });
 

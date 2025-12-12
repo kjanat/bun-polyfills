@@ -276,5 +276,68 @@ export function normalizeBunSnapshot(str: string): string {
     .replace(/\/[^\s)]+\.(js|ts|mjs|cjs):\d+:\d+/g, "file:NN:NN"); // File paths with line numbers
 }
 
+// ============================================================================
+// Unicode Surrogate Helpers for UTF-16 validation tests
+// ============================================================================
+
+/**
+ * Generate a random integer between min and max (inclusive)
+ */
+function randomIntBetween(min: number, max: number): number {
+  const lo = Math.ceil(min);
+  const hi = Math.floor(max);
+  return Math.floor(Math.random() * (hi - lo + 1)) + lo;
+}
+
+/**
+ * Generate a random lone high surrogate (U+D800-U+DBFF)
+ * These are invalid as standalone characters in UTF-16
+ */
+export function randomLoneHighSurrogate(): string {
+  return String.fromCharCode(randomIntBetween(0xd800, 0xdbff));
+}
+
+/**
+ * Generate a random lone low surrogate (U+DC00-U+DFFF)
+ * These are invalid as standalone characters in UTF-16
+ */
+export function randomLoneLowSurrogate(): string {
+  return String.fromCharCode(randomIntBetween(0xdc00, 0xdfff));
+}
+
+/**
+ * Generate a random lone surrogate (either high or low)
+ * Lone surrogates are invalid in well-formed UTF-16
+ */
+export function randomLoneSurrogate(): string {
+  return Math.random() < 0.5 ?
+      randomLoneHighSurrogate()
+    : randomLoneLowSurrogate();
+}
+
+/**
+ * Generate an invalid surrogate pair (low + high, wrong order)
+ * Valid UTF-16 requires high + low order; this returns the inverse
+ */
+export function randomInvalidSurrogatePair(): string {
+  const low = randomLoneLowSurrogate();
+  const high = randomLoneHighSurrogate();
+  return `${low}${high}`; // Wrong order - should be high+low
+}
+
+/**
+ * Run a callback and capture any thrown error (async version)
+ */
+export async function runWithErrorCallback(
+  cb: () => unknown,
+): Promise<Error | undefined> {
+  try {
+    await cb();
+  } catch (e) {
+    return e as Error;
+  }
+  return undefined;
+}
+
 // Re-export test utilities from bun:test
 export { beforeAll, describe, expect };

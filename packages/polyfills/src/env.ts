@@ -2,8 +2,8 @@
 
 import type { PolyfillBun } from "./types.ts";
 
-export function initEnv(bun: Partial<PolyfillBun>): void {
-  if (!("env" in bun)) {
-    bun.env = process.env;
+export function initEnv(Bun: Partial<PolyfillBun>): void {
+  if (!("env" in Bun)) {
+    Bun.env = process.env;
   }
 }
