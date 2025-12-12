@@ -21,7 +21,7 @@
     "fmt": "prettier . --write",
     "lint": "bun run --filter '*' lint",
     "postinstall": "simple-git-hooks",
-    "test": "AGENT=1 bun run --filter '*' test --drop console #--drop debugger",
+    "test": "AGENT=1 bun run --filter '*' test #--drop console --drop debugger",
     "typecheck": "bun run --filter '*' typecheck"
   },
   "devDependencies": {

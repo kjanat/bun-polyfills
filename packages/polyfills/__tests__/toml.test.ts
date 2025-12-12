@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { TOML } from "./toml";
+import { TOML } from "~/toml";
 
 describe("TOML", () => {
   describe("parse", () => {

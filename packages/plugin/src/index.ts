@@ -8,7 +8,7 @@
 //     plugins: [conditionalPolyfillPlugin],
 //   });
 
-import type { BunPlugin } from "bun";
+import type { BunPlugin, PluginBuilder } from "bun";
 
 /**
  * Bun build plugin that conditionally excludes polyfills when building for Bun target.
@@ -17,7 +17,7 @@ import type { BunPlugin } from "bun";
  */
 export const conditionalPolyfillPlugin: BunPlugin = {
   name: "conditional-polyfills",
-  setup(build) {
+  setup(build: PluginBuilder): void {
     const target = build.config.target;
 
     // Only stub polyfills for bun target

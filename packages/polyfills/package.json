@@ -18,37 +18,24 @@
   "engines": {
     "node": ">=22"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "module": "./dist/index.mjs",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./env": {
-      "types": "./dist/env.d.ts",
-      "import": "./dist/env.js"
-    },
-    "./file": {
-      "types": "./dist/file.d.ts",
-      "import": "./dist/file.js"
-    },
-    "./shell": {
-      "types": "./dist/shell.d.ts",
-      "import": "./dist/shell.js"
-    },
-    "./spawn": {
-      "types": "./dist/spawn.d.ts",
-      "import": "./dist/spawn.js"
-    },
-    "./modules": {
-      "types": "./dist/modules.d.ts",
-      "import": "./dist/modules.js"
-    },
-    "./types": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/types.js"
-    }
+    ".": "./dist/index.mjs",
+    "./compression": "./dist/compression.mjs",
+    "./crypto": "./dist/crypto.mjs",
+    "./env": "./dist/env.mjs",
+    "./file": "./dist/file.mjs",
+    "./glob": "./dist/glob.mjs",
+    "./modules": "./dist/modules.mjs",
+    "./process": "./dist/process.mjs",
+    "./shell": "./dist/shell.mjs",
+    "./spawn": "./dist/spawn.mjs",
+    "./toml": "./dist/toml.mjs",
+    "./types": "./dist/types.mjs",
+    "./utils": "./dist/utils.mjs",
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
@@ -64,8 +51,9 @@
     "shim"
   ],
   "scripts": {
-    "build": "bun run build:bun && bun run build:tsc",
+    "build": "tsdown",
     "build:bun": "bun build ./src/index.ts ./src/env.ts ./src/file.ts ./src/shell.ts ./src/spawn.ts ./src/modules.ts ./src/types.ts --outdir dist --target node",
+    "build:legacy": "bun run build:bun && bun run build:tsc",
     "build:tsc": "tsc --emitDeclarationOnly",
     "clean": "rm -rf dist",
     "fmt": "DIR=\"${PWD}\"; cd \"$(git rev-parse --show-toplevel)\" && bun run prettier \"${PWD}\" --write",

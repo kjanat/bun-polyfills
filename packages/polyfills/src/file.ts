@@ -85,7 +85,6 @@ class FileSinkImpl implements PolyfillFileSink {
   private fd: number | null = null;
   private highWaterMark: number;
   private bytesWritten = 0;
-  private _referenced = true;
   private closed = false;
   private readonly pathOrFd: string | number;
 
@@ -94,7 +93,7 @@ class FileSinkImpl implements PolyfillFileSink {
     this.highWaterMark = params?.highWaterMark ?? 16 * 1024; // 16KB default
   }
 
-  private ensureOpen(): void {
+  private ensureOpen(): number {
     if (this.closed) {
       throw new Error("FileSink is closed");
     }
@@ -105,6 +104,7 @@ class FileSinkImpl implements PolyfillFileSink {
         this.fd = fs.openSync(this.pathOrFd, "w");
       }
     }
+    return this.fd;
   }
 
   write(
@@ -138,10 +138,10 @@ class FileSinkImpl implements PolyfillFileSink {
 
   flush(): number {
     if (this.bufferSize === 0) return 0;
-    this.ensureOpen();
+    const fd = this.ensureOpen();
 
     const toWrite = Buffer.concat(this.buffer);
-    fs.writeSync(this.fd!, toWrite);
+    fs.writeSync(fd, toWrite);
     const flushed = this.bufferSize;
     this.bytesWritten += flushed;
     this.buffer = [];
@@ -172,11 +172,11 @@ class FileSinkImpl implements PolyfillFileSink {
   }
 
   ref(): void {
-    this._referenced = true;
+    // Node.js FileSink doesn't support ref/unref for process lifecycle
   }
 
   unref(): void {
-    this._referenced = false;
+    // Node.js FileSink doesn't support ref/unref for process lifecycle
   }
 }
 
@@ -189,16 +189,11 @@ function createBunFile(
   options?: { type?: string },
 ): PolyfillBunFile {
   // Resolve path
-  let filePath: string | null = null;
-  let fd: number | null = null;
-
-  if (typeof pathOrFd === "number") {
-    fd = pathOrFd;
-  } else if (pathOrFd instanceof URL) {
-    filePath = fileURLToPath(pathOrFd);
-  } else {
-    filePath = pathOrFd;
-  }
+  const fd = typeof pathOrFd === "number" ? pathOrFd : null;
+  const filePath =
+    typeof pathOrFd === "number" ? null
+    : pathOrFd instanceof URL ? fileURLToPath(pathOrFd)
+    : pathOrFd;
 
   // Lazy cached size
   let _size: number | null = null;
@@ -211,7 +206,8 @@ function createBunFile(
     get size(): number {
       if (_size !== null) return _size;
       try {
-        const stat = fd !== null ? fs.fstatSync(fd) : fs.statSync(filePath!);
+        const stat =
+          fd !== null ? fs.fstatSync(fd) : fs.statSync(filePath || "");
         _size = stat.size;
       } catch {
         _size = 0; // non-existent file
@@ -233,7 +229,8 @@ function createBunFile(
         fs.readSync(fd, buffer, 0, buffer.length, 0);
         return buffer.toString("utf-8");
       }
-      return fsPromises.readFile(filePath!, "utf-8");
+      if (filePath === null) throw new Error("No file path available");
+      return fsPromises.readFile(filePath, "utf-8");
     },
 
     async arrayBuffer(): Promise<ArrayBuffer> {
@@ -242,7 +239,8 @@ function createBunFile(
         data = Buffer.alloc(fs.fstatSync(fd).size);
         fs.readSync(fd, data, 0, data.length, 0);
       } else {
-        data = await fsPromises.readFile(filePath!);
+        if (filePath === null) throw new Error("No file path available");
+        data = await fsPromises.readFile(filePath);
       }
       return data.buffer.slice(
         data.byteOffset,
@@ -256,7 +254,8 @@ function createBunFile(
         data = Buffer.alloc(fs.fstatSync(fd).size);
         fs.readSync(fd, data, 0, data.length, 0);
       } else {
-        data = await fsPromises.readFile(filePath!);
+        if (filePath === null) throw new Error("No file path available");
+        data = await fsPromises.readFile(filePath);
       }
       return new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
     },
@@ -275,7 +274,8 @@ function createBunFile(
           ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
         });
       } else {
-        nodeStream = fs.createReadStream(filePath!, {
+        if (filePath === null) throw new Error("No file path available");
+        nodeStream = fs.createReadStream(filePath, {
           ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
         });
       }
@@ -330,7 +330,8 @@ function createBunFile(
               ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
             });
           } else {
-            nodeStream = fs.createReadStream(filePath!, {
+            if (filePath === null) throw new Error("No file path available");
+            nodeStream = fs.createReadStream(filePath, {
               start: begin,
               end: end !== undefined ? end - 1 : undefined,
               ...(chunkSize !== undefined && { highWaterMark: chunkSize }),
@@ -369,8 +370,9 @@ function createBunFile(
 
     async exists(): Promise<boolean> {
       if (fd !== null) return true; // fd exists if we have it
+      if (filePath === null) return false;
       try {
-        await fsPromises.access(filePath!);
+        await fsPromises.access(filePath);
         return true;
       } catch {
         return false;
@@ -381,14 +383,16 @@ function createBunFile(
       if (fd !== null) {
         return new FileSinkImpl(fd, params);
       }
-      return new FileSinkImpl(filePath!, params);
+      if (filePath === null) throw new Error("No file path available");
+      return new FileSinkImpl(filePath, params);
     },
 
     async delete(): Promise<void> {
       if (fd !== null) {
         throw new Error("Cannot delete file opened by fd");
       }
-      await fsPromises.unlink(filePath!);
+      if (filePath === null) throw new Error("No file path available");
+      await fsPromises.unlink(filePath);
     },
   };
 

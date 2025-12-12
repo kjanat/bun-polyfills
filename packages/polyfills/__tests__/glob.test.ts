@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { Glob } from "./glob";
+import { Glob } from "~/glob";
 
 const TEST_DIR = join(import.meta.dirname, "__glob_test_fixtures__");
 
@@ -124,8 +124,8 @@ describe("Glob", () => {
         glob.scanSync({ cwd: TEST_DIR, absolute: true }),
       );
 
-      expect(relative[0].startsWith("/")).toBe(false);
-      expect(absolute[0].startsWith("/")).toBe(true);
+      expect(relative[0]?.startsWith("/")).toBe(false);
+      expect(absolute[0]?.startsWith("/")).toBe(true);
       expect(absolute[0]).toContain(TEST_DIR);
     });
   });

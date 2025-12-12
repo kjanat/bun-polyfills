@@ -248,9 +248,15 @@ export function createTestBuilder(path: string) {
       const tempdir = this.tempdir || "NO_TEMP_DIR";
       if (this.expected_stdout !== undefined) {
         if (typeof this.expected_stdout === "string") {
-          expect(stdout.toString()).toEqual(
-            this.expected_stdout.replaceAll("$TEMP_DIR", tempdir),
+          const expected = this.expected_stdout.replaceAll(
+            "$TEMP_DIR",
+            tempdir,
           );
+          if (expected !== stdout.toString()) {
+            console.log("EXPECTED:", JSON.stringify(expected));
+            console.log("ACTUAL:", JSON.stringify(stdout.toString()));
+          }
+          expect(stdout.toString()).toEqual(expected);
         } else {
           this.expected_stdout(stdout.toString(), tempdir);
         }

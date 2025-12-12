@@ -30,7 +30,6 @@
         "typescript": "catalog:",
       },
       "devDependencies": {
-        "@arethetypeswrong/core": "catalog:bundler",
         "@biomejs/biome": "catalog:lint",
         "@kjanat/bun-polyfills-tsconfig": "workspace:*",
         "@types/bun": "catalog:",
@@ -52,12 +51,10 @@
         "@kjanat/bun-polyfills": "workspace:*",
       },
       "devDependencies": {
-        "@arethetypeswrong/core": "catalog:bundler",
         "@biomejs/biome": "catalog:lint",
         "@kjanat/bun-polyfills-tsconfig": "workspace:*",
         "@types/bun": "catalog:",
         "@typescript/native-preview": "catalog:",
-        "tsdown": "catalog:bundler",
         "typescript": "catalog:",
       },
       "peerDependencies": {
@@ -74,7 +71,6 @@
         "zx": "catalog:",
       },
       "devDependencies": {
-        "@arethetypeswrong/core": "catalog:bundler",
         "@biomejs/biome": "catalog:lint",
         "@kjanat/bun-polyfills-tsconfig": "workspace:*",
         "@types/bun": "catalog:",
