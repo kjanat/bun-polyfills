@@ -6,7 +6,6 @@ import npmStringWidth from "string-width";
 await initBunShims();
 
 // Force override Bun.stringWidth with our polyfill for testing purposes
-// @ts-ignore
 Bun.stringWidth = stringWidth;
 
 // Add type declaration for custom matchers

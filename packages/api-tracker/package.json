@@ -73,6 +73,7 @@
     "@biomejs/biome": "catalog:lint",
     "@kjanat/bun-polyfills-tsconfig": "workspace:*",
     "@types/bun": "catalog:",
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:",
     "react": "^19.2.1",

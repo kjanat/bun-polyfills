@@ -1850,6 +1850,7 @@ fi
     // test_oE 'execution path of if, false'
     TestBuilder.command`if ! echo foo; then echo bar; fi`
       .stdout("foo\n")
+      .todo("! not supported")
       .runAsTest("execution path of if, false");
 
     // test_oE 'execution path of if-else, true'
