@@ -71,8 +71,8 @@
     }
   },
   "dependencies": {
-    "minimatch": "^10.1.1",
-    "smol-toml": "^1.5.2",
+    "minimatch": "^10.1.2",
+    "smol-toml": "^1.6.0",
     "tinyglobby": "^0.2.15",
     "zx": "catalog:"
   },
